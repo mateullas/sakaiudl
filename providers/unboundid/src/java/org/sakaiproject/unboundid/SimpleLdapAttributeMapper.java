@@ -45,7 +45,6 @@ import com.unboundid.ldap.sdk.Attribute;
 import com.unboundid.ldap.sdk.migrate.ldapjdk.LDAPAttribute;
 import com.unboundid.ldap.sdk.migrate.ldapjdk.LDAPAttributeSet;
 import com.unboundid.ldap.sdk.migrate.ldapjdk.LDAPEntry;
-
 /**
  * Implements LDAP attribute mappings and filter generations using
  * an attribute map keyed by constants in 
@@ -286,6 +285,7 @@ public class SimpleLdapAttributeMapper implements LdapAttributeMapper {
         log.debug("mapLdapAttributeOntoUserData() preparing to map: [logical attr name = {}][physical attr name = {}][value = {}]",
             logicalAttrName, attribute.getName(), attrValue);
         
+
         if ( logicalAttrName.equals(AttributeMappingConstants.LOGIN_ATTR_MAPPING_KEY) ) {
             log.debug("mapLdapAttributeOntoUserData() mapping attribute to User.eid: [logical attr name = {}][physical attr name = {}][value = {}]",
                 logicalAttrName, attribute.getName(), attrValue);

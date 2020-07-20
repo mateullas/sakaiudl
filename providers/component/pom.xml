@@ -25,6 +25,14 @@
 			<artifactId>sakai-unboundid-provider</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>cat.udl.asic.provider</groupId>
+			<artifactId>sakai-udl-provider</artifactId>
+		</dependency>
+		<!--  <dependency>
+			<groupId>org.sakaiproject</groupId>
+			<artifactId>sakai-jldap-provider</artifactId>
+		</dependency>   -->
+		<dependency>
 			<groupId>org.sakaiproject</groupId>
 			<artifactId>sakai-kerberos-provider</artifactId>
 		</dependency>

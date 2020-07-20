@@ -148,35 +148,35 @@ public class CourseSetRoleResolver extends BaseRoleResolver {
 	private Set<String> getCourseSetEids(CourseManagementService cmService, Section section) {
 		// Look up the hierarchy for any course sets
 		CourseOffering co;
-		CanonicalCourse cc;
+		// CanonicalCourse cc;
 		try {
 			co = cmService.getCourseOffering(section.getCourseOfferingEid());
-			cc = cmService.getCanonicalCourse(co.getCanonicalCourseEid());
+			// cc = cmService.getCanonicalCourse(co.getCanonicalCourseEid());
 		} catch (IdNotFoundException ide) {
 			if(log.isDebugEnabled()) log.debug("Unable to find CM objects: " + ide);
 			return new HashSet<String>();
 		}
 		
 		if(log.isDebugEnabled()) log.debug("Found course offering " + co);
-		if(log.isDebugEnabled()) log.debug("Found canonical course " + cc);
+		// if(log.isDebugEnabled()) log.debug("Found canonical course " + cc);
 		
 		// Now that we have the CourseOffering, check for cross-listed courses
 		Set<CourseOffering> xListedCourseOfferings = cmService.getEquivalentCourseOfferings(co.getEid());
-		Set<CanonicalCourse> xListedCanonCourses = cmService.getEquivalentCanonicalCourses(cc.getEid());
+		// Set<CanonicalCourse> xListedCanonCourses = cmService.getEquivalentCanonicalCourses(cc.getEid());
 
 		// Collect all of the CourseSet EIDs connected to this course or an equivalent
 		Set<String> csEids = co.getCourseSetEids();
 		if(log.isDebugEnabled()) log.debug("Course offering " + co.getEid() + " is a member of " + csEids.size() + " course sets");
 
 		// Collect all of the CourseSet EIDs for which these cross listed course offerings are a member
-		for(CourseOffering xListCo : xListedCourseOfferings) {
+		/*for(CourseOffering xListCo : xListedCourseOfferings) {
 			String xListCcEid = xListCo.getCanonicalCourseEid();
 			CanonicalCourse xListCc = cmService.getCanonicalCourse(xListCcEid);
 			csEids.addAll(xListCc.getCourseSetEids());
 		}
 		for(CanonicalCourse xListCc : xListedCanonCourses) {
 			csEids.addAll(xListCc.getCourseSetEids());
-		}
+		} */
 		if(log.isDebugEnabled()) log.debug("Found " + csEids.size() + " course sets for section " + section.getEid() );
 		return csEids;
 	}

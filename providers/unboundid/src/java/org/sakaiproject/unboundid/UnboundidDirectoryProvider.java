@@ -24,6 +24,8 @@ package org.sakaiproject.unboundid;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -207,6 +209,15 @@ public class UnboundidDirectoryProvider implements UserDirectoryProvider, LdapCo
 	 * Implements things like user EID blacklists. */
 	private EidValidator eidValidator;
 
+	/**
+	 * Variable que estableix les prioritats
+	 */
+	private String priorityTypeList;
+	
+	/** UdL we need to create a filter wrapping to ensure that just one record is returned */ 
+	private String wrapFilter;
+	
+	
 	/**
 	 * Defaults to an anon-inner class which handles {@link LDAPEntry}(ies)
 	 * by passing them to {@link #mapLdapEntryOntoUserData(LDAPEntry)}, the
@@ -676,7 +687,11 @@ public class UnboundidDirectoryProvider implements UserDirectoryProvider, LdapCo
 				// We need to make sure this query isn't larger than maxQuerySize
 				if ((!userEdits.hasNext() || cnt == maxQuerySize) && !usersToSearchInLDAP.isEmpty()) {
 					String filter = ldapAttributeMapper.getManyUsersInOneSearch(usersToSearchInLDAP.keySet());
-					List<LdapUserData> ldapUsers = searchDirectory(filter, null, null, null, maxQuerySize);
+					filter = wrapFilter (filter,true);
+					
+
+					log.debug("getUsers(): [filter = " + filter + "]");
+					List<LdapUserData> ldapUsers = searchDirectory(filter, null, null, null, 0);
 				
 					for (LdapUserData ldapUserData : ldapUsers) {
 						String ldapEid = ldapUserData.getEid();
@@ -687,8 +702,10 @@ public class UnboundidDirectoryProvider implements UserDirectoryProvider, LdapCo
 							ldapEid = ldapEid.toLowerCase();
 
 						UserEdit ue = usersToSearchInLDAP.get(ldapEid);
-						mapUserDataOntoUserEdit(ldapUserData, ue);
-						usersToSearchInLDAP.remove(ldapEid);
+						if (ue!=null) {
+							mapUserDataOntoUserEdit (ldapUserData, ue);
+							usersToSearchInLDAP.remove(ldapEid);
+						}
 					}
 					
 					// see if there are any users that we could not find in the LDAP query
@@ -904,20 +921,50 @@ public class UnboundidDirectoryProvider implements UserDirectoryProvider, LdapCo
 	throws LDAPException {
 
 		log.debug("searchDirectoryForSingleEntry(): [filter = {}]", filter);
+		filter = wrapFilter (filter,false);
 
 		List<LdapUserData> results = searchDirectory(filter,
 				mapper,
 				searchResultPhysicalAttributeNames,
 				searchBaseDn, 
-				1);
+				0);
 		if ( results.isEmpty() ) {
 			return null;
+		}
+		
+		//filtre de preferències per escollir el millor compte d'usuari d'entre tots els candidats obtinguts a la cerca
+		if ( results.size() >1) {
+
+			LdapUserDataComparer comparator = new LdapUserDataComparer();
+			Collections.sort(results, comparator);		
 		}
 
 		return results.iterator().next();
 
 	}
 
+	public class LdapUserDataComparer implements Comparator<LdapUserData> {
+		  @Override
+		  public int compare(LdapUserData x, LdapUserData y) {
+			  
+			  String[] typesList = priorityTypeList.split(",");
+
+			  for (String tipus : typesList) {
+				  if(x.getType().equals(tipus))
+					  return -1;
+				  else if(y.getType().equals(tipus))
+					  return 1;
+			  }
+
+			  if(!x.getType().equals(""))
+				  return -1;
+			  else if(!y.getType().equals(""))
+				  return 1;
+			  return 0;
+		  }
+	}
+	
+	
 	/**
 	 * Execute a directory search using the specified filter
 	 * and connection. Maps each resulting {@link LDAPEntry}
@@ -1161,6 +1208,27 @@ public class UnboundidDirectoryProvider implements UserDirectoryProvider, LdapCo
 	public void setLdapUser(String ldapUser) {
 		this.ldapUser = ldapUser;
 	}
+	
+	public String getWrapFilter()
+	{
+		return wrapFilter;
+	}
+
+	public void setWrapFilter(String wrapFilter)
+	{
+		this.wrapFilter = wrapFilter;
+	}
+	
+	public String getPriorityTypeList()
+	{
+		return priorityTypeList;
+	}
+	
+	public void setPriorityTypeList(String priorityTypeList)
+	{
+		this.priorityTypeList = priorityTypeList;
+	}
+	
 
 	/**
 	 * {@inheritDoc}
@@ -1614,6 +1682,7 @@ public class UnboundidDirectoryProvider implements UserDirectoryProvider, LdapCo
 	@SuppressWarnings("rawtypes")
     public Collection findUsersByEmail(String email, UserFactory factory) {
 
+		String filter = ldapAttributeMapper.getFindUserByEmailFilter(email);
 		List<User> users = new ArrayList<User>();
 
                 if (!allowSearchExternal) {
@@ -1621,7 +1690,6 @@ public class UnboundidDirectoryProvider implements UserDirectoryProvider, LdapCo
                         return users;
                 }
 
-		String filter = ldapAttributeMapper.getFindUserByEmailFilter(email);
 		try {
 			List<LdapUserData> ldapUsers = searchDirectory(filter, null, null, null, maxResultSize);
 
@@ -1650,5 +1718,26 @@ public class UnboundidDirectoryProvider implements UserDirectoryProvider, LdapCo
 	{
 		this.searchAliases = searchAliases;
 	}
+	
+	private String wrapFilter (String filter,boolean many){
+		StringBuilder sb = new StringBuilder();
+
+		sb.append ("(&");
+		
+		if (wrapFilter!=null){
+			sb.append (wrapFilter);
+		}
+		if (!many){
+			sb.append ("(");
+		}
+		sb.append (filter);
+		sb.append (")");
+		if (!many){
+			sb.append (")");
+		}	
+		
+		return  sb.toString();
+	}
+	
 
 }

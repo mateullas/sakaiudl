@@ -189,6 +189,10 @@
 		  <value>true</value>
 		</property -->
 		
+		<property name="priorityTypeList">
+ 			<value>personUdL,aluDOCTORAT,aluEXTERNS</value>
+ 		</property>
+ 		
 		<!-- Optional. Defaults to an instance of 
 		org.sakaiproject.unboundid.SimpleLdapAttributeMapper -->
 		<property name="ldapAttributeMapper">
@@ -248,12 +252,13 @@
 				<entry key="aid"><value>krb5PrincipalName</value></entry>
 -->
 				<entry key="login"><value>uid</value></entry>         
-				<entry key="firstName"><value>givenName</value></entry> 
-				<entry key="preferredFirstName"><value>preferredName</value></entry>
-				<entry key="lastName"><value>sn</value></entry> 
-				<entry key="email"><value>mail</value></entry>  
-				<entry key="groupMembership"><value>groupMembership</value></entry>   
-				<entry key="jpegPhoto"><value>jpegPhoto</value></entry>   
+ 				<entry key="firstName"><value>givenName</value></entry> 
+ 				<entry key="preferredFirstName"><value>givenName</value></entry>
+ 				<entry key="lastName"><value>sn</value></entry> 
+ 				<entry key="email"><value>mail</value></entry>
+ 				<entry key="dni"><value>carLicense</value></entry>  
+ 				<entry key="tipus"><value>employeeType</value></entry>
+ 				<entry key="b64:jpegPhoto"><value>jpegPhoto</value></entry>     
 			</map>
 		</property>
 		
@@ -268,8 +273,8 @@
 		on LDAP attributes. Defaults to an instance of EmptyStringUserTypeMapper -->
 		<property name="userTypeMapper">
 			<!-- Select one of the following beans -->
-			<ref bean="org.sakaiproject.unboundid.EmptyStringUserTypeMapper" />
-			<!-- ref bean="org.sakaiproject.unboundid.EntryAttributeToUserTypeMapper" /-->
+			<!-- ref bean="org.sakaiproject.unboundid.EmptyStringUserTypeMapper" /-->
+			<ref bean="org.sakaiproject.unboundid.EntryAttributeToUserTypeMapper" />
 			<!-- ref bean="org.sakaiproject.unboundid.EntryContainerRdnToUserTypeMapper" /-->
 			<!-- ref bean="org.sakaiproject.unboundid.StringUserTypeMapper" /-->
 		</property>
@@ -315,26 +320,54 @@
 				<entry key="students"><value>student</value></entry> 
 			</map>
 		</property -->
-				
+				<property name="attributeValueToSakaiUserTypeMap">
+ 			<map>
+ 				<entry key="EPS"><value>aluEPS</value></entry> 
+ 				<entry key="ETSEA"><value>aluETSEA</value></entry> 
+ 				<entry key="FLL"><value>aluFLL</value></entry> 
+ 				<entry key="FI"><value>aluFI</value></entry> 
+ 				<entry key="EUI"><value>aluFI</value></entry>
+ 				<entry key="FM"><value>aluFM</value></entry> 
+ 				<entry key="FMED"><value>aluFM</value></entry>
+ 				<entry key="FDE"><value>aluFDE</value></entry>
+ 				<entry key="FCE"><value>aluFCE</value></entry>
+ 				<entry key="CFC"><value>aluCFC</value></entry>
+				<entry key="IL"><value>aluIL</value></entry>
+				<entry key="UESTIU"><value>aluUESTIU</value></entry>
+				<entry key="INEFC"><value>aluINEFC</value></entry>
+ 				<entry key="DOCTORAT"><value>aluDOCTORAT</value></entry>
+ 				<entry key="MOBILITAT"><value>aluMOBILITAT</value></entry> 
+ 				<entry key="EXTERNS"><value>aluEXTERNS</value></entry>
+ 				<entry key="PDIPAS"><value>personUdL</value></entry>
+ 			</map>
+ 		</property>
+
 		<!-- Required. The logical name of the LDAP attribute which
 		defines Sakai users' types. Value should be a key into the 
 		attribute mappings associated with this LdapAttributeMapper 
 		instance. -->
 		<property name="logicalAttributeName">
+			<value>tipus</value>
+		</property>
+
+		<!-- <property name="logicalAttributeName">
 			<value>groupMembership</value>
 		</property>
-				
+		-->
 		<!-- Optional. Defaults to false -->
 		<!--  property name="returnLiteralAttributeValueIfNoMapping">
 			<value>false</value>
 		</property -->
-				
+
 		<!-- Optional. Only considered if returnLiteralAttributeValueIfNoMapping
 			is false. Defaults to null. -->
 		<!--  property name="defaultSakaiUserType">
 			<null />
 		</property -->
-		
+		<property name="defaultSakaiUserType">
+ 			<value>altLDAP</value>
+ 		</property> 			
+						
 	</bean>
 	
 	<!-- EntryContainerRdnToUserTypeMapper calculates Sakai user

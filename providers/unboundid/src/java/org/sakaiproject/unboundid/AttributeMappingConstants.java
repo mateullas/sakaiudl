@@ -132,5 +132,10 @@ public abstract class AttributeMappingConstants {
 	 * TODO: probably not the best-factored place for this constant
 	 */
 	public static final String USER_DN_PROPERTY = "udp.dn";
+	/**
+	 * Pre Key to determine if the value we want to extrat should be saved as Base64 
+	 */
+	public static final String ENC_B64 = "b64:";
+	
 	
 }
