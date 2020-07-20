@@ -29,12 +29,29 @@
 	<util:map id="org.sakaiproject.coursemanagement.GroupProviderConfiguration">
 		<entry key="siteRoleResolutionOrder">
 			<list>
+				<!-- UDL Canviem els noms dels rols
 				<value>Instructor</value>
 				<value>Teaching Assistant</value>
 				<value>Student</value>
+				FI UDL -->
+				<value>Cap Estudis</value>
+				<value>Coordinador</value>
+				<value>Membre comissió</value>
+				<value>Professor</value>
+				<value>PAS</value>
+				<value>Genèric</value>				
+				<value>maintain</value>
+				<value>Professor de pràctiques</value>
+				<value>Docent</value>
+				<value>Estudiant</value>
+				<value>Erasmus</value>
+				<value>Convidat</value>
+				<value>access</value>
 			</list>
 		</entry>
-		<entry key="officialInstructorToSiteRole" value="Instructor"/>
+		<!-- UDL -->
+		<!--<entry key="officialInstructorToSiteRole" value="Instructor"/>-->
+		<entry key="officialInstructorToSiteRole" value="Professor"/>
 		<entry key="enrollmentStatusToSiteRole">
 			<map>
 				<entry key="enrolled" value="Student"/>
@@ -42,6 +59,7 @@
 			</map>
 		</entry>
 		<entry key="sectionRoleToSiteRole">
+		<!-- UDL Canviem els noms dels rols i afegim els nous rols per a espais de comunicació
 			<map>
 				<entry key="I" value="Instructor"/>
 				<entry key="GSI" value="Teaching Assistant"/>
@@ -57,6 +75,33 @@
 		<entry key="courseSetRoleToSiteRole">
 			<map>
 				<entry key="DeptAdmin" value="Instructor"/>
+			</map>
+		FI UDL -->
+		<map>
+				<entry key="I" value="Professor"/>
+				<entry key="G" value="Genèric"/>				
+				<entry key="GSI" value="Professor de pràctiques"/>
+				<entry key="IET" value="Docent"/>
+				<entry key="PAS" value="PAS"/>
+				<entry key="S" value="Estudiant"/>
+				<entry key="SERAS" value="Erasmus"/>							
+				<entry key="SET" value="Estudiant"/>
+				<entry key="SETERAS" value="Erasmus"/>
+			</map>
+		</entry>
+		<entry key="courseOfferingRoleToSiteRole">
+			<map>
+				<entry key="CAPEST" value="Cap Estudis" />
+				<entry key="CourseAdmin" value="Professor"/>
+				<entry key="CAET" value="Coordinador"/>								
+				<entry key="MCDOT" value="Membre comissió"/>
+				<entry key="I" value="Professor"/>
+			</map>
+		</entry>
+		<entry key="courseSetRoleToSiteRole">
+			<map>
+				<entry key="DeptAdmin" value="Professor"/>
+				<entry key="C" value="Convidat"/>
 			</map>
 		</entry>
 	</util:map>
@@ -109,6 +154,395 @@
 		</property>
 	</bean>
 
+	<bean
+		id="cat.udl.asic.provider.GroupProvider"
+		class="cat.udl.asic.provider.UdLGroupProvider"						      
+		init-method="init"
+		destroy-method="destroy"
+		>
+			<property name="cmProvider"><ref bean="org.sakaiproject.coursemanagement.impl.provider.CourseManagementGroupProvider" ></ref></property>
+			<property name="providers">
+				<map>	
+					<entry key="udl.aluEPS"><ref bean="cat.udl.asic.provider.EspaiAlumnesEPS"/></entry>
+					<entry key="udl.aluETSEA"><ref bean="cat.udl.asic.provider.EspaiAlumnesETSEA"/></entry>
+					<entry key="udl.aluFLL"><ref bean="cat.udl.asic.provider.EspaiAlumnesFLL"/></entry>
+					<entry key="udl.aluFI"><ref bean="cat.udl.asic.provider.EspaiAlumnesFI"/></entry>
+					<entry key="udl.aluFM"><ref bean="cat.udl.asic.provider.EspaiAlumnesFM"/></entry>
+					<entry key="udl.aluFDE"><ref bean="cat.udl.asic.provider.EspaiAlumnesFDE"/></entry>
+					<entry key="udl.aluFCE"><ref bean="cat.udl.asic.provider.EspaiAlumnesFCE"/></entry>
+					<entry key="udl.aluINEFC"><ref bean="cat.udl.asic.provider.EspaiAlumnesINEFC"/></entry>
+					<entry key="udl.aluDOCTORAT"><ref bean="cat.udl.asic.provider.EspaiAlumnesDOCTORAT"/></entry>
+					<entry key="udl.aluMOBILITAT"><ref bean="cat.udl.asic.provider.EspaiAlumnesMOBILITAT"/></entry>
+					<entry key="udl.aluEXTERNS"><ref bean="cat.udl.asic.provider.EspaiAlumnesEXTERNS"/></entry>
+					<entry key="udl.aluCFC"><ref bean="cat.udl.asic.provider.EspaiAlumnesCFC"/></entry>
+					<entry key="udl.aluIL"><ref bean="cat.udl.asic.provider.EspaiAlumnesIL"/></entry>
+					<entry key="udl.aluUESTIU"><ref bean="cat.udl.asic.provider.EspaiAlumnesUESTIU"/></entry>
+					<entry key="udl.aluUdL"><ref bean="cat.udl.asic.provider.EspaiAlumnes"/></entry>
+					<entry key="udl.intranet"><ref bean="cat.udl.asic.provider.EspaiIntranet"/></entry>
+               		<entry key="udl.paspdi"><ref bean="cat.udl.asic.provider.EspaiPASPDI"/></entry>
+               		
+               </map>
+			</property>
+	
+	</bean>
+	
+	
+			<bean 
+			id="cat.udl.asic.provider.EspaiAlumnes"
+			class="cat.udl.asic.provider.UserTypeProvider"
+			init-method="init"
+			destroy-method="destroy"
+			>
+			
+			<property name="rolemap">
+				<map>
+					<entry key="aluEPS">
+						<value>access</value>
+					</entry>
+					<entry key="aluETSEA">
+						<value>access</value>
+					</entry>
+					<entry key="aluFLL">
+						<value>access</value>
+					</entry>
+					<entry key="aluFI">
+						<value>access</value>
+					</entry>
+					<entry key="aluFM">
+						<value>access</value>
+					</entry>
+					<entry key="aluFDE">
+						<value>access</value>
+					</entry>
+					<entry key="aluFCE">
+						<value>access</value>
+					</entry>
+					<entry key="aluDOCTORAT">
+						<value>access</value>
+					</entry>
+					<entry key="aluMOBILITAT">
+						<value>access</value>
+					</entry>
+					<entry key="aluCFC">
+						<value>access</value>
+					</entry>
+					<entry key="aluIL">
+						<value>access</value>
+					</entry>
+					<entry key="aluUESTIU">
+						<value>access</value>
+					</entry>
+					<entry key="aluEXTERNS">
+						<value>access</value>
+					</entry>
+
+				</map>
+			</property>		
+	</bean>
+	
+	<bean 
+			id="cat.udl.asic.provider.EspaiAlumnesEPS"
+			class="cat.udl.asic.provider.UserTypeProvider"
+			init-method="init"
+			destroy-method="destroy"
+			>
+			
+			<property name="rolemap">
+				<map>
+					<entry key="aluEPS">
+						<value>access</value>
+					</entry>
+				</map>
+			</property>		
+	</bean>
+	
+	<bean 
+			id="cat.udl.asic.provider.EspaiAlumnesETSEA"
+			class="cat.udl.asic.provider.UserTypeProvider"
+			init-method="init"
+			destroy-method="destroy"
+			>
+			
+			<property name="rolemap">
+				<map>
+					<entry key="aluETSEA">
+						<value>access</value>
+					</entry>
+				</map>
+			</property>		
+	</bean>
+	
+
+	<bean 
+			id="cat.udl.asic.provider.EspaiAlumnesFLL"
+			class="cat.udl.asic.provider.UserTypeProvider"
+			init-method="init"
+			destroy-method="destroy"
+			>
+			
+			<property name="rolemap">
+				<map>
+					<entry key="aluFLL">
+						<value>access</value>
+					</entry>
+				</map>
+			</property>		
+	</bean>
+	
+	<bean 
+			id="cat.udl.asic.provider.EspaiAlumnesFI"
+			class="cat.udl.asic.provider.UserTypeProvider"
+			init-method="init"
+			destroy-method="destroy"
+			>
+			
+			<property name="rolemap">
+				<map>
+					<entry key="aluFI">
+						<value>access</value>
+					</entry>
+				</map>
+			</property>		
+	</bean>
+
+	<bean 
+			id="cat.udl.asic.provider.EspaiAlumnesFM"
+			class="cat.udl.asic.provider.UserTypeProvider"
+			init-method="init"
+			destroy-method="destroy"
+			>
+			
+			<property name="rolemap">
+				<map>
+					<entry key="aluFM">
+						<value>access</value>
+					</entry>
+				</map>
+			</property>		
+	</bean>
+	
+	<bean 
+			id="cat.udl.asic.provider.EspaiAlumnesFDE"
+			class="cat.udl.asic.provider.UserTypeProvider"
+			init-method="init"
+			destroy-method="destroy"
+			>
+			
+			<property name="rolemap">
+				<map>
+					<entry key="aluFDE">
+						<value>access</value>
+					</entry>
+				</map>
+			</property>		
+	</bean>
+	
+	<bean 
+			id="cat.udl.asic.provider.EspaiAlumnesFCE"
+			class="cat.udl.asic.provider.UserTypeProvider"
+			init-method="init"
+			destroy-method="destroy"
+			>
+			
+			<property name="rolemap">
+				<map>
+					<entry key="aluFCE">
+						<value>access</value>
+					</entry>
+				</map>
+			</property>		
+	</bean>
+	
+	<bean 
+			id="cat.udl.asic.provider.EspaiAlumnesINEFC"
+			class="cat.udl.asic.provider.UserTypeProvider"
+			init-method="init"
+			destroy-method="destroy"
+			>
+			
+			<property name="rolemap">
+				<map>
+					<entry key="aluINEFC">
+						<value>access</value>
+					</entry>
+				</map>
+			</property>		
+	</bean>
+	
+	<bean 
+			id="cat.udl.asic.provider.EspaiAlumnesDOCTORAT"
+			class="cat.udl.asic.provider.UserTypeProvider"
+			init-method="init"
+			destroy-method="destroy"
+			>
+			
+			<property name="rolemap">
+				<map>
+					<entry key="aluDOCTORAT">
+						<value>access</value>
+					</entry>
+				</map>
+			</property>		
+	</bean>
+	
+	<bean 
+			id="cat.udl.asic.provider.EspaiAlumnesMOBILITAT"
+			class="cat.udl.asic.provider.UserTypeProvider"
+			init-method="init"
+			destroy-method="destroy"
+			>
+			
+			<property name="rolemap">
+				<map>
+					<entry key="aluMOBILITAT">
+						<value>access</value>
+					</entry>
+				</map>
+			</property>		
+	</bean>
+
+	
+	<bean 
+			id="cat.udl.asic.provider.EspaiAlumnesEXTERNS"
+			class="cat.udl.asic.provider.UserTypeProvider"
+			init-method="init"
+			destroy-method="destroy"
+			>
+			
+			<property name="rolemap">
+				<map>
+					<entry key="aluEXTERNS">
+						<value>access</value>
+					</entry>
+				</map>
+			</property>		
+	</bean>
+		
+	<bean 
+			id="cat.udl.asic.provider.EspaiAlumnesCFC"
+			class="cat.udl.asic.provider.UserTypeProvider"
+			init-method="init"
+			destroy-method="destroy"
+			>
+			
+			<property name="rolemap">
+				<map>
+					<entry key="aluCFC">
+						<value>access</value>
+					</entry>
+				</map>
+			</property>		
+	</bean>
+
+	<bean 
+			id="cat.udl.asic.provider.EspaiAlumnesIL"
+			class="cat.udl.asic.provider.UserTypeProvider"
+			init-method="init"
+			destroy-method="destroy"
+			>
+			
+			<property name="rolemap">
+				<map>
+					<entry key="aluIL">
+						<value>access</value>
+					</entry>
+				</map>
+			</property>		
+	</bean>
+	
+	<bean 
+			id="cat.udl.asic.provider.EspaiAlumnesUESTIU"
+			class="cat.udl.asic.provider.UserTypeProvider"
+			init-method="init"
+			destroy-method="destroy"
+			>
+			
+			<property name="rolemap">
+				<map>
+					<entry key="aluUESTIU">
+						<value>access</value>
+					</entry>
+				</map>
+			</property>		
+	</bean>		
+	
+	<bean 
+			id="cat.udl.asic.provider.EspaiIntranet"
+			class="cat.udl.asic.provider.UserTypeProvider"
+			init-method="init"
+			destroy-method="destroy"
+			>
+			
+			<property name="rolemap">
+				<map>
+					<entry key="personUdL">
+						<value>access</value>
+					</entry>
+					<entry key="aluEPS">
+						<value>access</value>
+					</entry>
+					<entry key="aluETSEA">
+						<value>access</value>
+					</entry>
+					<entry key="aluFLL">
+						<value>access</value>
+					</entry>
+					<entry key="aluFI">
+						<value>access</value>
+					</entry>
+					<entry key="aluFM">
+						<value>access</value>
+					</entry>
+					<entry key="aluFDE">
+						<value>access</value>
+					</entry>
+					<entry key="aluFCE">
+						<value>access</value>
+					</entry>
+					<entry key="aluDOCTORAT">
+						<value>access</value>
+					</entry>
+					<entry key="aluMOBILITAT">
+						<value>access</value>
+					</entry>
+					<entry key="aluEXTERNS">
+						<value>access</value>
+					</entry>
+					<entry key="aluCFC">
+						<value>access</value>
+					</entry>
+					<entry key="aluIL">
+						<value>access</value>
+					</entry>
+					<entry key="aluUESTIU">
+						<value>access</value>
+					</entry>
+				</map>
+			</property>		
+	</bean>
+
+
+	<bean 
+			id="cat.udl.asic.provider.EspaiPASPDI"
+			class="cat.udl.asic.provider.UserPropertiesProvider"
+			init-method="init"
+			destroy-method="destroy"
+			>
+			
+			<property name="properties">
+				<map>
+					<entry key="tipus">
+						<map>
+							<entry key="PDIPAS"><value>access</value></entry>
+						</map>
+					</entry>
+					
+				</map>
+			</property>		
+	</bean>
+
+	
+
 <!-- Uncomment to use the sample GroupProvider (read the code to see exactly what it does!)
 
                 Make sure to remove any other GroupProviders as there can only be one group provider active at any time.
@@ -157,7 +591,7 @@
 -->
 
 <!-- Uncomment and configure to use the UnboundidDirectoryProvider -->
-	<!--  import resource="unboundid-ldap.xml" / -->
+	<import resource="unboundid-ldap.xml" />
 
 <!-- Uncomment and configure to use the Candidate Details Provider -->  
 	<!--  import resource="candidate-details.xml"/ -->

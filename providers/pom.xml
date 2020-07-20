@@ -12,16 +12,17 @@
   <artifactId>providers-base</artifactId>
   <packaging>pom</packaging>
   <modules>
-    <module>allhands</module>
+    <!--  <module>allhands</module> -->
     <module>cm-authz-provider</module>
     <module>component</module>
     <module>federating</module>
     <module>imsent</module>
     <module>userdetail</module>
-    <module>kerberos</module>
-    <module>openldap</module>
+    <!--   <module>kerberos</module>
+    <module>openldap</module> -->
     <module>sample</module>
     <module>unboundid</module>
+    <module>udl</module>
   </modules>
 
 
@@ -42,6 +43,11 @@
         <artifactId>sakai-unboundid-provider</artifactId>
         <version>${project.version}</version>
       </dependency>
+      <dependency>
+        <groupId>cat.udl.asic.provider</groupId>
+        <artifactId>sakai-udl-provider</artifactId>
+        <version>${project.version}</version>
+    </dependency>
       <dependency>
         <groupId>org.sakaiproject</groupId>
         <artifactId>sakai-userdetail-provider</artifactId>
