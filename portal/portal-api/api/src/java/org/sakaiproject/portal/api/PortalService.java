@@ -338,6 +338,6 @@ public interface PortalService
 	/**
 	 * @return the quick links for display in the top navigation bar. Will return and empty List if no quick links are set.
 	 */
-	public List<Map> getQuickLinks(String siteSkin);
+	public List<Map> getQuickLinks(String siteSkin,String userId);
 
 }

@@ -599,7 +599,7 @@ public class SiteHandler extends WorksiteHandler
 		if (userId != null) {
 			String skin = getSiteSkin(siteId);
 			String quickLinksTitle = portalService.getQuickLinksTitle(skin);
-			List<Map> quickLinks = portalService.getQuickLinks(skin);
+			List<Map> quickLinks = portalService.getQuickLinks(skin,userId);
 			if (CollectionUtils.isNotEmpty(quickLinks)) {
 				rcontext.put("quickLinksInfo", quickLinksTitle);
 				rcontext.put("quickLinks", quickLinks);

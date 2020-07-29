@@ -66,6 +66,11 @@ import org.sakaiproject.tool.cover.SessionManager;
 
 import lombok.extern.slf4j.Slf4j;
 
+import org.sakaiproject.user.api.User;
+import org.sakaiproject.user.api.UserDirectoryService;
+import org.sakaiproject.user.api.UserNotDefinedException;
+
+
 /**
  * @author ieb
  * @since Sakai 2.4
@@ -94,6 +99,8 @@ public class PortalServiceImpl implements PortalService
 	private ContentHostingService contentHostingService;
 	
 	private EditorRegistry editorRegistry;
+	
+	private UserDirectoryService userDirectoryService;
 	
 	private Editor noopEditor = new BaseEditor("noop", "noop", "", "");
 
@@ -534,6 +541,10 @@ public class PortalServiceImpl implements PortalService
 		return contentHostingService;
 	}
 
+	public UserDirectoryService getUserDirectoryService() {
+		return userDirectoryService;
+	}
+	
 	/**
 	 * @param portalLinks the portal icons to set
 	 * @superseded by quickLinks functionality also in this class.
@@ -547,6 +558,11 @@ public class PortalServiceImpl implements PortalService
 		this.contentHostingService = contentHostingService;
 	}
 
+	public void setUserDirectoryService(UserDirectoryService userDirectoryService) {
+		this.userDirectoryService = userDirectoryService;
+	}
+
+	
 	public String getContentItemUrl(Site site) {
 
 		if ( site == null ) return null;
@@ -644,19 +660,23 @@ public class PortalServiceImpl implements PortalService
 		return serverConfigurationService.getString("portal.quicklink." + siteSkin + ".info", serverConfigurationService.getString("portal.quicklink.info", ""));
 	}
 
-	public List<Map> getQuickLinks(String siteSkin){
+	public List<Map> getQuickLinks(String siteSkin, String userId){
 		/* Find the quick links (if they are in the properties file) ready for display in the top navigation bar.
 		 * First try with the skin name as there may be different quick links per site, then try with no skin. */
 		List<String> linkUrls = null;
 		List<String> linkTitles = null;
 		List<String>linkNames = null;
 		List<String> linkIcons = null;
+		List<String> linkUserTypes = null;
+		String userType = null;
+		
 
 		//A null check really isn't needed here sin siteSkin should always be set (or it can just turn into the string "null") but it's here anyway)
 		if (siteSkin != null) {
 			linkUrls = Arrays.asList(ArrayUtils.nullToEmpty(serverConfigurationService.getStrings("portal.quicklink." + siteSkin + ".url")));
 			linkTitles = Arrays.asList(ArrayUtils.nullToEmpty(serverConfigurationService.getStrings("portal.quicklink." + siteSkin + ".title")));
 			linkNames = Arrays.asList(ArrayUtils.nullToEmpty(serverConfigurationService.getStrings("portal.quicklink." + siteSkin + ".name")));
+			linkUserTypes = Arrays.asList(ArrayUtils.nullToEmpty(serverConfigurationService.getStrings("portal.quicklink." + siteSkin + ".usertypes")));			
 			linkIcons = Arrays.asList(ArrayUtils.nullToEmpty(serverConfigurationService.getStrings("portal.quicklink." + siteSkin + ".icon")));
 		}
 
@@ -665,22 +685,57 @@ public class PortalServiceImpl implements PortalService
 			linkUrls = Arrays.asList(ArrayUtils.nullToEmpty(serverConfigurationService.getStrings("portal.quicklink.url")));
 			linkTitles = Arrays.asList(ArrayUtils.nullToEmpty(serverConfigurationService.getStrings("portal.quicklink.title")));
 			linkNames = Arrays.asList(ArrayUtils.nullToEmpty(serverConfigurationService.getStrings("portal.quicklink.name")));
+			linkUserTypes = Arrays.asList(ArrayUtils.nullToEmpty(serverConfigurationService.getStrings("portal.quicklink.usertypes")));
 			linkIcons = Arrays.asList(ArrayUtils.nullToEmpty(serverConfigurationService.getStrings("portal.quicklink.icon")));
 		}
 
 		List<Map> quickLinks = new ArrayList<Map>(linkUrls.size());
 		if (!linkUrls.isEmpty()) {
-			if (linkUrls.size() != linkTitles.size() || linkUrls.size() != linkNames.size() || linkUrls.size() != linkIcons.size()) {
+			if (linkUrls.size() != linkTitles.size() || linkUrls.size() != linkNames.size() || linkUrls.size() != linkIcons.size() || linkUrls.size() != linkUserTypes.size()) {
 				log.info("All portal.quicklink variables must be defined and the same size for quick links feature to work. One or more is not configured correctly.");
 				return new ArrayList<Map>();
 			}
+			
+			try {
+				User currentUser = userDirectoryService.getUser(userId);
+				userType = currentUser.getType();
+			} catch (UserNotDefinedException uex) {
+				if (log.isDebugEnabled()) {
+					log.debug(uex.getMessage());
+				}
+			}
+
 			for (int i = 0; i < linkUrls.size(); i++) {
 				String url = linkUrls.get(i);
 				String title = linkTitles.get(i);
 				String name = linkNames.get(i);
 				String icon = linkIcons.get(i);
+				String allowedUserTypesString = linkUserTypes.get(i);
+				
+				boolean quickLinkAllowed = false;
 
-				if (url != null) {
+				if (userType != null && allowedUserTypesString != null) {
+					String [] allowedUserTypes = allowedUserTypesString.split (",");
+
+					//In case the property has no elements allow everybody
+					if (allowedUserTypes.length==0 || (allowedUserTypes.length == 1 && "".equals(allowedUserTypes[0]))){
+						quickLinkAllowed = true;
+					}
+
+					for (int allwdPos = 0; allwdPos < allowedUserTypes.length; allwdPos++) {
+						String allowedtype = allowedUserTypes[allwdPos].trim();
+
+						if (allowedtype.equals (userType)) {
+							quickLinkAllowed = true;
+						}
+					}
+
+
+				} else {
+					quickLinkAllowed = true;
+				}
+
+				if (url != null && quickLinkAllowed) {					
 					Map<String, String> linkDetails = new HashMap<String, String>();
 					linkDetails.put("url", url);
 					if (name != null) {

@@ -17,6 +17,8 @@
             <property name="editorRegistry" ref="org.sakaiproject.portal.api.EditorRegistry" />
             <property name="portalLinks" value=""/>
             <property name="contentHostingService" ref="org.sakaiproject.content.api.ContentHostingService" />
+            <property name="userDirectoryService"  ref="org.sakaiproject.user.api.UserDirectoryService" />
+            
     </bean>
     <bean id="org.sakaiproject.portal.api.PortalService.portletRegistryListener"
           class="org.sakaiproject.portal.service.SakaiPortletRegistryListener"
