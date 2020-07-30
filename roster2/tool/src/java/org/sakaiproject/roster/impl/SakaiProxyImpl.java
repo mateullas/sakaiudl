@@ -757,10 +757,19 @@ public class SakaiProxyImpl implements SakaiProxy, Observer {
 		rosterMember.setDisplayName(user.getDisplayName());
 		rosterMember.setSortName(user.getSortName());
 
+		String propDNI = user.getProperties().getProperty("dni");
+		String dni = "";
+
+		if (propDNI !=null){
+			dni = propDNI;
+		}
+		rosterMember.setDni (dni);
+
 		SakaiPerson sakaiPerson = sakaiPersonManager.getSakaiPerson(userId, sakaiPersonManager.getUserMutableType());
 		if (sakaiPerson != null) {
 			rosterMember.setPronouns(sakaiPerson.getPronouns());
 		}
+
 
 		// See if there is a pronunciation available for the user
 		String pronunciation = pronunceMap.get(user.getId());

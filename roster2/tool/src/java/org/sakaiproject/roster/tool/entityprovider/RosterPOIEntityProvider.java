@@ -465,6 +465,8 @@ public class RosterPOIEntityProvider extends AbstractEntityProvider implements
 
 			final List<String> row = new ArrayList<String>();
 
+			row.add (member.getDni());
+
 			if (this.sakaiProxy.getFirstNameLastName()) {
 				row.add(member.getDisplayName());
 			} else {
@@ -490,6 +492,36 @@ public class RosterPOIEntityProvider extends AbstractEntityProvider implements
 		}
 	}
 
+	private void addGroupMembershipUngroupedRows(List<List<String>> dataInRows,
+			List<RosterMember> rosterMembers, List<String> header) {
+
+		dataInRows.add(header);
+		// blank line
+		dataInRows.add(new ArrayList<String>());
+
+		for (final RosterMember member : rosterMembers) {
+
+			final List<String> row = new ArrayList<String>();
+
+			row.add (member.getDni());
+
+			if (sakaiProxy.getFirstNameLastName()) {
+				row.add(member.getDisplayName());
+			} else {
+				row.add(member.getSortName());
+			}
+
+			if (sakaiProxy.getViewUserDisplayId()) {
+				row.add(member.getDisplayId());
+			}
+
+			row.add(member.getRole());
+			row.add(member.getGroupsToString());
+
+			dataInRows.add(row);
+		}
+	}
+	
 	private void addEnrollmentStatusRows(final List<List<String>> dataInRows,
 			final List<RosterMember> enrollmentSet, /* RosterSite site, */
 			final List<String> header, final String enrollmentSetTitle,
@@ -592,6 +624,7 @@ public class RosterPOIEntityProvider extends AbstractEntityProvider implements
 		final String userId = this.developerHelperService.getCurrentUserId();
 
 		final List<String> header = new ArrayList<>();
+		header.add(rl.getString("facet_dni"));
 		header.add(rl.getString("facet_name"));
 
 		if (this.sakaiProxy.getViewUserDisplayId()) {

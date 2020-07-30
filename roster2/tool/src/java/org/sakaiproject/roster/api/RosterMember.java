@@ -69,7 +69,9 @@ public class RosterMember {
 	private int connectionStatus; // connection status to the current user
 	private int totalSiteVisits;
 	private long lastVisitTime;
-
+	@Getter @Setter
+	private String dni;
+	
 	public void addGroup(String groupId, String groupTitle) {
 
 		if (null == groupId) {
