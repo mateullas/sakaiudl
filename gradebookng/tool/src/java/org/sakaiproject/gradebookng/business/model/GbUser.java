@@ -57,6 +57,9 @@ public class GbUser implements GbUserBase, Serializable, Comparable<GbUser> {
 	private final String lastName;
 
 	private final String studentNumber;
+	
+	@Getter
+	private final String DNI;
 
 	private final String sortName;
 
@@ -75,6 +78,7 @@ public class GbUser implements GbUserBase, Serializable, Comparable<GbUser> {
 		this.firstName = FormatHelper.htmlEscape(u.getFirstName());
 		this.lastName = FormatHelper.htmlEscape(u.getLastName());
 		this.studentNumber = FormatHelper.htmlEscape(studentNumber);
+		this.DNI = (u.getProperties().getProperty("dni") != null) ? u.getProperties().getProperty("dni") : "";
 		this.sections = Collections.emptyList();
 		this.sortName = u.getSortName();
 	}
