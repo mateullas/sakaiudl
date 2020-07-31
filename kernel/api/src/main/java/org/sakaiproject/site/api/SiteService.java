@@ -84,6 +84,9 @@ public interface SiteService extends EntityProducer
 	/** Name for the event of adding a project site */ 
 	static final String SECURE_ADD_PROJECT_SITE = "site.add.project";
 
+	/** Name for the event of adding a projectedocent site */ 
+	static final String SECURE_ADD_PROJECTEDOCENT_SITE = "site.add.projectedocent";
+
 	/** Name for the event of creating a site from a sakai archive (KNL-1210) */
 	static final String SECURE_IMPORT_ARCHIVE = "site.import.archive";
 	
@@ -565,6 +568,12 @@ public interface SiteService extends EntityProducer
 	 * @return
 	 */
 	boolean allowAddProjectSite();
+
+	/**
+	 *  Can the user add sites of type ProjecteDocent as defined by projectedocentSiteType in sakai.properties
+	 * @return
+	 */
+	boolean allowAddProjectedocentSite();
 
 	/**
 	 * Can the user create sites with a sakai archive 

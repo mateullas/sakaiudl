@@ -55,16 +55,22 @@
          *#
         <div id="siteTypeList" class="indnt3">
             #foreach ($type in $siteTypes)
+				#set($bundle_tipus="site.type.")
+            			#set($bundle_tipus_descr= "site.description.")
+                		#set($bundle_tipus=$bundle_tipus.concat($type)) 
+                		#set($bundle_tipus_descr=$bundle_tipus_descr.concat($type))   
 				#set($courseTypeWithPerm    = (($courseSiteTypeStrings.contains($type) || $type == "course")    && $canAddCourse ))
 				#set($portfolioTypeWithPerm = (($portfolioSiteTypeStrings.contains($type) || $type == "portfolio") && $canAddPortfolio )) 
-				#set($projectTypeWithPerm   = (($projectSiteTypeStrings.contains($type)   || $type == "project")   && $canAddProject )) 
 				#set($otherCustomType = ( (!$courseSiteTypeStrings.contains($type)) && (!$projectSiteTypeStrings.contains($type)) && (!$portfolioSiteTypeStrings.contains($type))))
-				#if (($courseTypeWithPerm) || ($portfolioTypeWithPerm) || ($projectTypeWithPerm) || ($otherCustomType))
+				#set($projectTypeWithPerm   = ((($projectSiteTypeStrings.contains($type)   && $type == "project")    || $type == "project")   && $canAddProject && $maxProjectNotReached)) 
+				#set($projectedocentTypeWithPerm   = ((($projectedocentSiteTypeStrings.contains($type)  && $type == "projectedocent")    || $type == "projectedocent") && $canAddProjectedocent ))
+				#if (($courseTypeWithPerm) || ($portfolioTypeWithPerm) || ($projectTypeWithPerm) || ($projectedocentTypeWithPerm)) 
                     <p class="checkbox indnt1">
                         <input type="radio" name="itemType" id="$type" value="$type" #if ($type == $typeSelected) checked="checked" #end/>
                         <label for = "$type">
-                            $tlang.getFormattedMessage("sitetype.websit", $type)
-                        </label>    
+                             $tlang.getFormattedMessage("sitetype.websit", $tlang.getString($bundle_tipus)) #if ($type == "project" && $maxNumOfProjectSites != "unlimited") &nbsp;&nbsp; ($tlang.getFormattedMessage("sitetype.actualnumofprojects",$actualNumOfProjectSites,$maxNumOfProjectSites)) #end
+                        </label>   
+                         <span class="textPanelFooter" style="display: block; margin-left: 40px;" /> $tlang.getString($bundle_tipus_descr) </span> 
                     </p>        
                     #if ($courseTypeWithPerm)
                         <div class="indnt3" id="termList" style="display:none;">
@@ -98,8 +104,10 @@
                         #end
                         </div>  
                     #end ## end of #if ($courseTypeWithPerm)
-                #end ## end of #if (courseTypeWithPerm || portfolioTypeWithPerm || projectTypeWithPerm))
-            #end  ##end of #foreach ($type in $siteTypes)
+                 ##end ## end of #if (courseTypeWithPerm || portfolioTypeWithPerm || projectTypeWithPerm))
+                #else
+					#if ($type == "project" && $canAddProject && !$maxProjectNotReached) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $tlang.getFormattedMessage("sitetype.maxnumofprojects",$maxNumOfProjectSites) #end
+				#end            #end  ##end of #foreach ($type in $siteTypes)
         </div>
         #if ($templateSites.size() > 0)
             ## if templates enabled

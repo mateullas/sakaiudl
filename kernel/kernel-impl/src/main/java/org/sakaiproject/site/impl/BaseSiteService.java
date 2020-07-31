@@ -546,6 +546,7 @@ public abstract class BaseSiteService implements SiteService, Observer
 			functionManager().registerFunction(SECURE_REMOVE_SOFTLY_DELETED_SITE);
 			functionManager().registerFunction(SECURE_ADD_PROJECT_SITE);
 			functionManager().registerFunction(SECURE_IMPORT_ARCHIVE);
+			functionManager().registerFunction(SECURE_ADD_PROJECTEDOCENT_SITE);
 			
                         
             // sfoster9@uwo.ca
@@ -1188,6 +1189,9 @@ public abstract class BaseSiteService implements SiteService, Observer
 		else if (id != null && isProjectSite(id)) {
 			return unlockCheck(SECURE_ADD_PROJECT_SITE, siteReference(id));
 		}
+		else if (id != null && isProjectedocentSite(id)) {
+			return unlockCheck(SECURE_ADD_PROJECTEDOCENT_SITE, siteReference(id));
+		}
 		else
 		{
 			return unlockCheck(SECURE_ADD_SITE, siteReference(id));
@@ -1288,6 +1292,24 @@ public abstract class BaseSiteService implements SiteService, Observer
 		
 		return rv;
 	}
+
+	private boolean isProjectedocentSite(String siteId) {
+		boolean rv = false;
+		try {
+			Site s = getSite(siteId);
+			if (serverConfigurationService().getString("projectedocentSiteType", "projectedocent").equals(s.getType())) 
+				return true;
+
+		} catch (IdUnusedException e) {
+			log.warn("isProjectedocentSite(): no site with id: " + siteId);
+		}
+			return rv;
+	}
+
+	public boolean allowAddProjectedocentSite() {
+		return unlockCheck(SECURE_ADD_PROJECTEDOCENT_SITE, siteReference(null));
+	}
+	
 	
 	public boolean allowAddCourseSite() {
 		return unlockCheck(SECURE_ADD_COURSE_SITE, siteReference(null));
@@ -1347,6 +1369,10 @@ public abstract class BaseSiteService implements SiteService, Observer
 		// KNL-952
 		if (getSiteTypeStrings("project").contains(type)) {
 			unlock(SECURE_ADD_PROJECT_SITE, siteReference(id));
+		}
+
+		if (getSiteTypeStrings("projectedocent").contains(type)) {
+			unlock(SECURE_ADD_PROJECTEDOCENT_SITE, siteReference(id));
 		}
 
 		// reserve a site with this id from the info store - if it's in use, this will return null
