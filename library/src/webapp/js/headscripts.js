@@ -749,6 +749,11 @@ function includeWebjarLibrary(library) {
 			jsReferences.push('/dist/min/dropzone.min.js');
 			cssReferences.push('/dist/min/dropzone.min.css');
 			break;
+		case 'dropzone-udl':
+			libraryVersion = '5.2.0';
+			document.write(`<script src="${webjars}/dropzone/${libraryVersion}/dropzone.js${ver}"></script>`);
+			document.write(`<script src="${webjars}/dropzone/${libraryVersion}/min/dropzone.min.css${ver}"></script>`);
+                        break;
 		case 'select2':
 			libraryVersion = "4.0.13";
 			jsReferences.push('/js/select2.full.min.js');

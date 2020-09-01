@@ -22,6 +22,17 @@
 		<!-- Empty defaults for a11y-->
 		<ckeditor-a11y-extra-plugins></ckeditor-a11y-extra-plugins>
 	</properties>
+	<repositories>
+		<repository>
+			<id>proasic</id>
+			<name>UdL local repository</name>
+			<layout>default</layout>
+			<url>http://proasic.udl.cat/m2</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>org.sakaiproject.kernel</groupId>
@@ -89,9 +100,9 @@
 		</dependency>
 		<!--Used in Resources, drag&drop resources -->
 		<dependency>
-			<groupId>org.webjars.npm</groupId>
-			<artifactId>dropzone</artifactId>
-			<version>5.9.2</version>
+			<groupId>org.webjars</groupId>
+			<artifactId>dropzone-udl</artifactId>
+			<version>5.2.0</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>

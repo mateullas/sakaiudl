@@ -1,6 +1,6 @@
 <!-- resources/sakai_create_uploads.vm, use with org.sakaiproject.tool.content.ResourcesHelperAction.java -->
 <script type="text/javascript">
-    includeWebjarLibrary('dropzone');
+    includeWebjarLibrary('dropzone-udl');
 </script>
 
 <div class="portletBody specialLink">
@@ -174,6 +174,11 @@ Dropzone.options.fileUploader = {
     parallelUploads: 1,
     uploadMultiple: false,
     addRemoveLinks: true,
+    editFileName: true,
+    editHtmlElement: "<i id=\"editFileName\" class=\"fa fa-edit\"></i>",
+    dictEditText: "$tlang.getString("dragndrop.dictEditText")",
+    dictFilenameMaxLength: "245",
+    dictChangeFilenameMessage: "$tlang.getString("dragndrop.dictChangeFilenameMessage")",
     maxFilesize: $uploadMaxSize, // MB
     timeout: 0, // Dropzone 4.4.0 introduced a 30sec default timeout
     previewTemplate: document.getElementById('preview-template').innerHTML,
@@ -225,6 +230,9 @@ Dropzone.options.fileUploader = {
         this.on("sending", function(file, xhr, formData) {
             var overwrite = document.querySelector('input[name="overwrite"]:checked').value;
             formData.append("overwrite",overwrite);
+	    var oldFileName = file.name;
+	    var newName = document.getElementById(oldFileName).name;
+            file.upload.filename = newName;
             formData.append("fullPath",file.fullPath);
             #if($model.isDropbox() || $model.isUserSite() || !$availability_is_enabled)
                 formData.append("hidden", false);
