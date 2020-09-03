@@ -487,6 +487,10 @@ public class PublishAssessmentListener
 		  }
 		  message.append(". ");
 		  message.append(rl.getString("submit_when_time_is_up"));
+		  message.append(newline);
+		  message.append(rl.getString("assessment_advice_title_timed"));
+		  message.append(newline);
+		  message.append(rl.getString("assessment_advice_timed"));
 	  }
 	  else {
 		  message.append(rl.getString("there_is_no_time_limit"));
@@ -549,6 +553,15 @@ public class PublishAssessmentListener
 		}
 	  }
 	  message.append(newline);
+	  message.append(rl.getString("assessment_advice_title"));
+	  message.append(newline);
+	  message.append(rl.getString("assessment_advice_1"));
+	  message.append(newline);
+	  message.append(rl.getString("assessment_advice_2"));
+	  message.append(newline);
+	  message.append(rl.getString("assessment_advice_3"));
+	  message.append(newline);
+
 	  message.append(newline);
 
 	  // Autosubmit

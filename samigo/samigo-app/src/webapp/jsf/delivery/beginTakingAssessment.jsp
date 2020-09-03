@@ -113,12 +113,17 @@
         <h:outputFormat value="#{deliveryMessages.begin_assessment_msg_timed_wo_due_date}" escape="false" rendered="#{delivery.deadline == null}">
                 <f:param value="#{delivery.timeLimitString}"/>
         </h:outputFormat>
+        <h:outputText value="</br><b>#{deliveryMessages.begin_assessment_advice_title_timed}</b>" escape="false"/>
+		<h:outputText value="#{deliveryMessages.begin_assessment_advice_timed}</br>" escape="false"/>
+        
     </h:panelGroup>
     
     <h:outputFormat value="#{deliveryMessages.begin_assessment_msg_timed_continue}" escape="false" rendered="#{delivery.hasTimeLimit && !delivery.firstTimeTaking}">
                 <f:param value="#{delivery.beginTimeString}"/>
                 <f:param value="#{delivery.adjustedTimedAssesmentDueDateString}"/>
     </h:outputFormat>
+    <h:outputText value="</br><b>#{deliveryMessages.begin_assessment_advice_title_timed}</b>" escape="false" rendered="#{delivery.hasTimeLimit && !delivery.firstTimeTaking}"/>
+    <h:outputText value="#{deliveryMessages.begin_assessment_advice_timed}</br>" escape="false" rendered="#{delivery.hasTimeLimit && !delivery.firstTimeTaking}"/>
     
     <h:outputFormat value="#{deliveryMessages.time_expired2}" escape="false" rendered="#{delivery.hasTimeLimit && !delivery.firstTimeTaking && delivery.timeExpired}" />
     
@@ -178,6 +183,7 @@
     	</h:outputFormat>
     </h:panelGroup>
     
+    <h:outputText value=" "/>     
 	    <!--  Grading Message -->
 		<h:outputText value=" #{deliveryMessages.begin_assessment_msg_highest}" rendered="#{delivery.scoringType == 1 && (delivery.settings.unlimitedAttempts || delivery.settings.maxAttempts > 1)}" escape="false"/>
 		<h:outputText value=" #{deliveryMessages.begin_assessment_msg_latest}" rendered="#{delivery.scoringType == 2 && (delivery.settings.unlimitedAttempts || delivery.settings.maxAttempts > 1)}" escape="false"/>
@@ -192,6 +198,10 @@
     </h:panelGroup>
 
     <h:outputText value=" "/>
+    <h:outputText value = "<b>#{deliveryMessages.begin_assessment_advice_title}</b>" escape="false" />
+    <h:outputText value=" "/>
+    <h:outputText value = "#{deliveryMessages.begin_assessment_advice_1}" escape="false" />
+    <h:outputText value = "#{deliveryMessages.begin_assessment_advice_2}" escape="false" />   
     <h:outputText value=" "/>
     
     <h:panelGroup rendered="#{delivery.recURL != null && delivery.recURL != ''}">
