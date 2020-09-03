@@ -59,7 +59,8 @@ public class UrkundSubmissionData {
 	    },
 	    "Subject": null,
 	    "Message": null,
-	    "Anonymous": false
+	    "Anonymous": false,
+	    "AutoDeleteDocument": false
 	  }
 	]
 	 * */

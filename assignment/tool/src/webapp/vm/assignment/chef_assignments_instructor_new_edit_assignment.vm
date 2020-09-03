@@ -835,16 +835,16 @@ function showExternalIframe(title, doreload) {
 				#else
 					<div id="reviewServiceOptions" style="display:none" class="indnt3">
 				#end
-					<div class="checkbox">
-						<label for="$name_AllowStudentView">
-						#if ($!value_AllowStudentView.equals("true"))
-							<input id="$name_AllowStudentView" name="$name_AllowStudentView" type="checkbox" value="true" checked="checked" />
-						#else
-							<input id="$name_AllowStudentView" name="$name_AllowStudentView" type="checkbox" value="true" />
-						#end
-							$tlang.getString("review.allow")
-						</label>
-					</div>
+					##<div class="checkbox">
+					##	<label for="$name_AllowStudentView">
+						##if ($!value_AllowStudentView.equals("true"))
+						##	<input id="$name_AllowStudentView" name="$name_AllowStudentView" type="checkbox" value="true" checked="checked" />
+						##else
+						##	<input id="$name_AllowStudentView" name="$name_AllowStudentView" type="checkbox" value="true" />
+						##end
+						##	$tlang.getString("review.allow")
+						##</label>
+					##</div>
 
 					<!-- Start TII custom options -->
 					#if($reviewServiceProviderId == $turnitinProviderId)
