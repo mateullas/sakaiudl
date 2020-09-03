@@ -171,6 +171,11 @@ public class PortletIFrame extends GenericPortlet {
     /** Support an external url defined in sakai.properties, in config and context. */
     protected final static String SAKAI_PROPERTIES_URL_KEY = "sakai.properties.url.key";
 
+    /** Special value for worksite. */
+    protected final static String SPECIAL_INTRANET = "intranet";
+    protected final static String SPECIAL_UTILITATS = "utilitats";
+    protected final static String SPECIAL_EXPEDIENT = "expedient";
+
     /** If set, always hide the OPTIONS button */
     protected final static String HIDE_OPTIONS = "hide.options";
 
@@ -641,6 +646,15 @@ public class PortletIFrame extends GenericPortlet {
 				    {
 				    }
 			    }
+			    else if (SPECIAL_INTRANET.equals(special)) {
+					context.put("heading", rb.getString("gen.custom.intranet"));
+			    } 
+			    else if (SPECIAL_UTILITATS.equals(special)) {
+					context.put("heading", rb.getString("gen.custom.utilitats"));
+			    } 
+			    else if (SPECIAL_EXPEDIENT.equals(special)) {				
+					context.put("heading", rb.getString("gen.custom.expedient"));
+			    }
 			    else if (SPECIAL_ANNOTATEDURL.equals(special))
 			    {
 				
@@ -687,6 +701,8 @@ public class PortletIFrame extends GenericPortlet {
             String template = "/vm/edit.vm";
             if (SPECIAL_SITE.equals(special)) template = "/vm/edit-site.vm";
             if (SPECIAL_WORKSITE.equals(special)) template = "/vm/edit-site.vm";
+	    if (SPECIAL_INTRANET.equals(special)) template = "/vm/edit-intranet.vm";
+    	    if (SPECIAL_EXPEDIENT.equals(special)) template = "/vm/edit-expedient.vm";
             if (SPECIAL_ANNOTATEDURL.equals(special)) template = "/vm/edit-annotatedurl.vm";
             // log.info("EDIT TEMP="+template+" special="+special);
 
@@ -856,7 +872,7 @@ public class PortletIFrame extends GenericPortlet {
 				else page.setTitleCustom(true);
 
 				// for web content tool, if it is a site page tool, and the only tool on the page, update the page title / popup.
-				if (toolConfig != null && ! SPECIAL_WORKSITE.equals(special) && ! SPECIAL_WORKSPACE.equals(special) )
+				if (toolConfig != null && !SPECIAL_WORKSITE.equals(special) && !SPECIAL_WORKSPACE.equals(special) && !SPECIAL_INTRANET.equals(special) && !SPECIAL_EXPEDIENT.equals(special) )
 				{
 					// if this is the only tool on that page, update the page's title also
 					if ((page.getTools() != null) && (page.getTools().size() == 1))
@@ -975,6 +991,18 @@ public class PortletIFrame extends GenericPortlet {
             {
                 special = SPECIAL_ANNOTATEDURL;
             }
+	    else if ("true".equals(config.getProperty("intranet"))) 
+	    {
+		special = SPECIAL_INTRANET;
+            }
+	    else if ("true".equals(config.getProperty("utilitats"))) 
+	    {
+		special = SPECIAL_UTILITATS;
+	    }
+	    else if ("true".equals(config.getProperty("expedient"))) 
+	    {
+		special = SPECIAL_EXPEDIENT;
+	    }
         }
         return special;
     }
@@ -1020,6 +1048,18 @@ public class PortletIFrame extends GenericPortlet {
 			}
 		} 
 		
+		else if (SPECIAL_INTRANET.equals(special)) 
+		{
+			rv = StringUtils.trimToNull(getLocalizedURL("intranet.info.url"));
+		} 
+		else if (SPECIAL_UTILITATS.equals(special)) 
+		{
+			rv = StringUtils.trimToNull(getLocalizedURL("utilitats.info.url"));
+		} 
+		else if (SPECIAL_EXPEDIENT.equals(special)) {
+			rv = StringUtils.trimToNull(getLocalizedURL("expedient.info.url")); 
+		}
+
 		else if (sakaiPropertiesUrlKey != null && sakaiPropertiesUrlKey.length() > 1)
 		{
 			// set the url to a string defined in sakai.properties

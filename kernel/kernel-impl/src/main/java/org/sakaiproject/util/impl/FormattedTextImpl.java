@@ -1415,9 +1415,9 @@ public class FormattedTextImpl implements FormattedText
             if (siteTitleCutMethod.length==2) {
                 cutMethod[0] = Integer.parseInt(siteTitleCutMethod[0]);
                 cutMethod[1] = Integer.parseInt(siteTitleCutMethod[1]);
-                if (cutMethod[0]+cutMethod[1]!=100) {
+                /* if (cutMethod[0]+cutMethod[1]!=100) {
                     throw new Exception("Invalid cut method values: "+cutMethod[0]+" + "+cutMethod[1]+" != 100");
-                }
+                }*/
             }
         } catch (Throwable ex) {
             cutMethod[0] = 100; cutMethod[1] = 0;
@@ -1443,11 +1443,15 @@ public class FormattedTextImpl implements FormattedText
             result = result.trim();
             if ( result.length() > siteTitleMaxLength && siteTitleMaxLength >= 10 ) {
                 int[] siteTitleCutMethod = getCutMethod(cutMethod);
-                int begin = Math.round(((siteTitleMaxLength-cutSeparator.length())*siteTitleCutMethod[0])/100);
+                /* int begin = Math.round(((siteTitleMaxLength-cutSeparator.length())*siteTitleCutMethod[0])/100);
                 int end = Math.round(((siteTitleMaxLength-cutSeparator.length())*siteTitleCutMethod[1])/100);
                 // Adjust odd character to the begin
                 begin += (siteTitleMaxLength - (begin + cutSeparator.length() + end));
-                result = ((begin>0)?result.substring(0,begin):"") + cutSeparator +((end>0)?result.substring(result.length()-end):"");
+                result = ((begin>0)?result.substring(0,begin):"") + cutSeparator +((end>0)?result.substring(result.length()-end):"");*/
+		int cutTail = siteTitleCutMethod[1];
+                int cutPoint = result.length() - cutTail;
+                result = ((cutPoint>0) ? result.substring(0,siteTitleMaxLength - (cutTail + cutSeparator.length())) : "") + cutSeparator +((cutTail>0) ? result.substring(result.length()-cutTail): "");
+
             } else if ( result.length() > siteTitleMaxLength ) {
                 result = result.substring(0,siteTitleMaxLength);
             }
@@ -1455,6 +1459,25 @@ public class FormattedTextImpl implements FormattedText
         return result;
     }
 
+    protected String getUdLResumeTitle(String fullTitle,int cutTail,int siteTitleMaxLength,String cutSeparator) {
+		String titleStr = fullTitle;
+
+		if ( titleStr != null )
+		{
+			titleStr = titleStr.trim();
+			if ( titleStr.length() > siteTitleMaxLength && siteTitleMaxLength >= 10 )
+			{
+
+			}
+			else if ( titleStr.length() > siteTitleMaxLength )
+			{
+				titleStr = titleStr.substring(0,siteTitleMaxLength);
+			}
+			//titleStr = titleStr.trim();
+		}
+
+		return titleStr;
+	}
 
     // PRIVATE STUFF
 

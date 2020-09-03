@@ -96,6 +96,63 @@
 
 		<category name="widget" />
 		
+	</tool>
+
+        <tool
+            id="sakai.iframe.intranet"
+            title="Intranet page"
+            description="Display intranet information">
+
+        <configuration name="height" value="600px" type="final" />
+
+        <configuration name="special" value="intranet" type="final" />
+        <configuration name="reset.button" value="false" type="final" />
+
+        <!-- Allow this to be set -->
+        <configuration name="functions.require" />
     </tool>
+
+    <tool
+         id="sakai.iframe.utilitats"
+         title="Utilities page"
+         description="Display utils information">
+
+        <configuration name="height" value="600px" type="final" />
+
+        <configuration name="special" value="utilitats" type="final" />
+        <configuration name="reset.button" value="false" type="final" />
+
+        <!-- Allow this to be set -->
+        <configuration name="functions.require" />
+    </tool>
+
+    <tool
+            id="sakai.iframe.expedient"
+            title="Academic record page"
+            description="Display academic record information">
+
+        <configuration name="height" value="600px" type="final" />
+
+        <configuration name="special" value="expedient" type="final" />
+        <configuration name="reset.button" value="false" type="final" />
+
+        <!-- Allow this to be set -->
+        <configuration name="functions.require" />
+    </tool>
+
+     <tool
+	        id="sakai.iframe.biblioteca"
+            title="Biblioteca"
+            description="Bilioteca">
+
+	<configuration name="source" value="https://biblioguies.udl.cat/campusvirtual" type="final"/>
+        <configuration name="height" value="2400px" type="final" />
+        <configuration name="popup" value="false" type="final" />
+        <configuration name="reset.button" value="false" type="final" />
+
+        <!-- Allow this to be set -->
+        <configuration name="functions.require" />
+    </tool>
+
 
 </registration>
