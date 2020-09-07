@@ -1,0 +1,52 @@
+<div class="Mrphs-container Mrphs-container--footer">
+    <footer id="footer" role="contentinfo" class="Mrphs-footer">
+        <div class="row">
+            <div class="col-sm-4 col-xs-12">
+                <div class="Mrphs-footer-box">
+                    <h4>${rloader.support}</h4>
+                    <ul>
+                        <li>${rloader.help_center}</li>
+                        <li>${rloader.teachers}
+                            <ul>
+                                <li>${rloader.teachers_technical_support}</li>
+                                <li>${rloader.teachers_technical_problems}</li>
+                            </ul>
+                        </li>
+                        <li>${rloader.students}
+                            <ul>
+                                <li>${rloader.students_technical_support}</li>
+                                <li>${rloader.students_user_support}</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-sm-4 col-xs-12">
+                <div class="Mrphs-footer-box">
+                    <h4>${institution}</h4>
+                    <ul>
+                        <li>${rloader.legal_notice}</li>
+                        <li>${rloader.materials_publishment_protocol}</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-sm-4 col-xs-12">
+                <div class="Mrphs-footer-box">
+                    <h4>${rloader.campus_platform}</h4>
+                    <p>${rloader.powered_by_sakai}</p>
+                    <p>${bottomNavCopyright}</p>
+                    <p>${rloader.site_buildinfo_label} Sakai ${bottomNavSakaiVersion} - Server ${bottomNavServer}
+
+                    #if ($showServerTime == "true")
+                        <br/>
+                        ${rloader.site_servertime_label}
+                        <span id="serverTime" class="Mrphs-footer--server-time" data-servertzdisplay="${serverTzDisplay}" data-serverdateandgmtoffset="${serverTzGMTOffset}"></span>
+                    #end
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
