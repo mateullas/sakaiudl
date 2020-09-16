@@ -45,6 +45,8 @@ import com.unboundid.ldap.sdk.Attribute;
 import com.unboundid.ldap.sdk.migrate.ldapjdk.LDAPAttribute;
 import com.unboundid.ldap.sdk.migrate.ldapjdk.LDAPAttributeSet;
 import com.unboundid.ldap.sdk.migrate.ldapjdk.LDAPEntry;
+
+import org.apache.commons.codec.binary.Base64;
 /**
  * Implements LDAP attribute mappings and filter generations using
  * an attribute map keyed by constants in 
@@ -284,7 +286,21 @@ public class SimpleLdapAttributeMapper implements LdapAttributeMapper {
 
         log.debug("mapLdapAttributeOntoUserData() preparing to map: [logical attr name = {}][physical attr name = {}][value = {}]",
             logicalAttrName, attribute.getName(), attrValue);
-        
+
+	 //We check if b64 is needed
+        if (logicalAttrName.startsWith(AttributeMappingConstants.ENC_B64)) {
+			byte[] encoded = Base64.encodeBase64(unboundidAttribute.getValueByteArray());
+			log.debug("mapLdapAttributeOntoUserData() preparing to map: [logical attr name = "
+					+ logicalAttrName
+					+ "][physical attr name = "
+					+ attribute.getName() + "][value = " 
+					+ new String(encoded));
+			attrValue = new String(encoded);
+		}
+
+         log.debug("mapLdapAttributeOntoUserData() preparing to map: [logical attr name = " + logicalAttrName + 
+        			"][physical attr name = " + attribute.getName() + "][value = " + attrValue + "]");  
+      
 
         if ( logicalAttrName.equals(AttributeMappingConstants.LOGIN_ATTR_MAPPING_KEY) ) {
             log.debug("mapLdapAttributeOntoUserData() mapping attribute to User.eid: [logical attr name = {}][physical attr name = {}][value = {}]",
