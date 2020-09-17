@@ -41,7 +41,7 @@ export class GraderToggle extends SakaiElement {
   render() {
 
     return html`
-      <label>
+      <label style="display:none;">
         <input type="checkbox" ?checked=${this.checked} @click=${this.toggleChecked} />
         ${this.i18n.use_grader}
       </label>
