@@ -174,6 +174,7 @@ public class PortletIFrame extends GenericPortlet {
     /** Special value for worksite. */
     protected final static String SPECIAL_INTRANET = "intranet";
     protected final static String SPECIAL_UTILITATS = "utilitats";
+	protected final static String SPECIAL_ACTES = "actes";
     protected final static String SPECIAL_EXPEDIENT = "expedient";
 
     /** If set, always hide the OPTIONS button */
@@ -435,6 +436,14 @@ public class PortletIFrame extends GenericPortlet {
         // Only check http:// and https:// urls
         if ( ! (url.startsWith("http://") || url.startsWith("https://")) ) return false;
 
+    	Properties config = getAllProperties(placement);
+		String special = getSpecial(config);
+		
+		//Canvi udl per que l'eina actes sempre l'obri en mode popup
+		if (special!= null && (SPECIAL_ACTES.equals(special) || SPECIAL_EXPEDIENT.equals(special))){
+			return true;
+		}
+
         // Check the "Always POPUP" and "Always INLINE" regular expressions
         String pattern = null;
         Pattern p = null;
@@ -650,8 +659,11 @@ public class PortletIFrame extends GenericPortlet {
 					context.put("heading", rb.getString("gen.custom.intranet"));
 			    } 
 			    else if (SPECIAL_UTILITATS.equals(special)) {
-					context.put("heading", rb.getString("gen.custom.utilitats"));
-			    } 
+					context.put("heading", rb.getString("gen.custom.utilitats"));			 
+				}
+			    else if (SPECIAL_ACTES.equals(special)) {
+					context.put("heading", rb.getString("gen.custom.actes"));
+				}
 			    else if (SPECIAL_EXPEDIENT.equals(special)) {				
 					context.put("heading", rb.getString("gen.custom.expedient"));
 			    }
@@ -701,7 +713,8 @@ public class PortletIFrame extends GenericPortlet {
             String template = "/vm/edit.vm";
             if (SPECIAL_SITE.equals(special)) template = "/vm/edit-site.vm";
             if (SPECIAL_WORKSITE.equals(special)) template = "/vm/edit-site.vm";
-	    if (SPECIAL_INTRANET.equals(special)) template = "/vm/edit-intranet.vm";
+            if (SPECIAL_INTRANET.equals(special)) template = "/vm/edit-intranet.vm";
+            if (SPECIAL_ACTES.equals(special))  template = "/vm/edit-actes.vm";
     	    if (SPECIAL_EXPEDIENT.equals(special)) template = "/vm/edit-expedient.vm";
             if (SPECIAL_ANNOTATEDURL.equals(special)) template = "/vm/edit-annotatedurl.vm";
             // log.info("EDIT TEMP="+template+" special="+special);
@@ -872,7 +885,7 @@ public class PortletIFrame extends GenericPortlet {
 				else page.setTitleCustom(true);
 
 				// for web content tool, if it is a site page tool, and the only tool on the page, update the page title / popup.
-				if (toolConfig != null && !SPECIAL_WORKSITE.equals(special) && !SPECIAL_WORKSPACE.equals(special) && !SPECIAL_INTRANET.equals(special) && !SPECIAL_EXPEDIENT.equals(special) )
+				if (toolConfig != null && ! SPECIAL_WORKSITE.equals(special) && !SPECIAL_WORKSPACE.equals(special) && !SPECIAL_INTRANET.equals(special) && !SPECIAL_ACTES.equals(special) && !SPECIAL_EXPEDIENT.equals(special) )
 				{
 					// if this is the only tool on that page, update the page's title also
 					if ((page.getTools() != null) && (page.getTools().size() == 1))
@@ -998,7 +1011,11 @@ public class PortletIFrame extends GenericPortlet {
 	    else if ("true".equals(config.getProperty("utilitats"))) 
 	    {
 		special = SPECIAL_UTILITATS;
-	    }
+		}
+	    else if ("true".equals(config.getProperty("actes"))) 
+	    {
+		special = SPECIAL_ACTES;
+		}
 	    else if ("true".equals(config.getProperty("expedient"))) 
 	    {
 		special = SPECIAL_EXPEDIENT;
@@ -1056,7 +1073,12 @@ public class PortletIFrame extends GenericPortlet {
 		{
 			rv = StringUtils.trimToNull(getLocalizedURL("utilitats.info.url"));
 		} 
-		else if (SPECIAL_EXPEDIENT.equals(special)) {
+		else if (SPECIAL_ACTES.equals(special)) 
+		{
+			rv = StringUtils.trimToNull(getLocalizedURL("actes.info.url"));
+		} 
+		else if (SPECIAL_EXPEDIENT.equals(special)) 
+		{
 			rv = StringUtils.trimToNull(getLocalizedURL("expedient.info.url")); 
 		}
 

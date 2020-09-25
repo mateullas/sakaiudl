@@ -139,6 +139,21 @@
         <!-- Allow this to be set -->
         <configuration name="functions.require" />
     </tool>
+    
+	<tool
+            id="sakai.iframe.actes"
+            title="Actes page"
+            description="Display actes information">
+
+        <configuration name="height" value="600px" type="final" />
+        <configuration name="popup" value="false" type="final" />
+
+        <configuration name="special" value="actes" type="final" />
+        <configuration name="reset.button" value="false" type="final" />
+
+        <!-- Allow this to be set -->
+        <configuration name="functions.require" />
+    </tool>
 
      <tool
 	        id="sakai.iframe.biblioteca"
