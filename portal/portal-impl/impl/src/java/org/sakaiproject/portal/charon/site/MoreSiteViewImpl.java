@@ -414,6 +414,8 @@ public class MoreSiteViewImpl extends AbstractSiteViewImpl
 				} else if (	"projectedocent".equals(siteType) ||
 							"coord".equals (siteType)) {				
 						result.sitesInLeftPane.get(term).add(site);
+				}
+				else{
 					result.sitesInRightPane.get(term).add(site);
 				}
 			}
