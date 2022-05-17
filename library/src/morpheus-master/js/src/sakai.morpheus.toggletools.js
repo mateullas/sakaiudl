@@ -1,3 +1,4 @@
+  $PBJQ("sakai-maximise-button").each((i ,e) => e.setMaximised());
 /**
 * For toggling the Minimize and Maximize tools menu in Morpheus: Adds classes to the <body>
 */
