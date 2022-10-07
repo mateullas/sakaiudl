@@ -19,6 +19,10 @@ body.is-logged-out{
 	}
 }
 
+#toolMenu .Mrphs-toolsNav__menuitem--link .Mrphs-toolsNav__menuitem--title, #toolMenu .Mrphs-toolsNav__menuitem--link .Mrphs-toolsNav__menuitem--status-block {
+  display: inline;
+}
+
 // Prevent tool menu collapsed styles being applied when using a mobile sized screen - an issue
 // when switching between phone and non-phone sized screens.
 @media #{$nonPhone} {
