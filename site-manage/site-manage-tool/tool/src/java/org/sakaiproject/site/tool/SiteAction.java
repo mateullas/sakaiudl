@@ -332,7 +332,7 @@ public class SiteAction extends PagedResourceActionII {
 	private static final String STATE_TERM_VIEW_SELECTED = "site.termview.selected";
 
 	/** Canvi UDL per número màxim d'espais tipus projecte */
-	private final static String PROJECT_SITES_MAXNUM = ServerConfigurationService
+	private final static String PROJECT_SITES_MAXNUM = serverConfigurationService
 			.getString("maxNumOfProjectSites","0");
 
 	/*******************
@@ -1541,7 +1541,7 @@ public class SiteAction extends PagedResourceActionII {
 		context.put("courseSiteTypeStrings", siteService.getSiteTypeStrings("course"));
 		context.put("portfolioSiteTypeStrings", siteService.getSiteTypeStrings("portfolio"));
 		context.put("projectSiteTypeStrings", siteService.getSiteTypeStrings("project"));
-		context.put("projectedocentSiteTypeStrings", SiteService.getSiteTypeStrings("projectedocent"));
+		context.put("projectedocentSiteTypeStrings", siteService.getSiteTypeStrings("projectedocent"));
 		
 		//can the user create course sites?
 		context.put(STATE_SITE_ADD_COURSE, siteService.allowAddCourseSite());
@@ -1559,7 +1559,7 @@ public class SiteAction extends PagedResourceActionII {
 
 		// can the user create projectedocent sites?
 		context.put("projectedocentSiteType", STATE_PROJECTEDOCENT_SITE_TYPE);
-		context.put(STATE_SITE_ADD_PROJECTEDOCENT, SiteService.allowAddProjectedocentSite());
+		context.put(STATE_SITE_ADD_PROJECTEDOCENT, siteService.allowAddProjectedocentSite());
 
 		Site site = getStateSite(state);
 
@@ -1808,7 +1808,7 @@ public class SiteAction extends PagedResourceActionII {
 				}
 
 			}
-			context.put("templateControls", ServerConfigurationService.getString("site.setup.templateControls",ServerConfigurationService.getString("templateControls", "")));
+			context.put("templateControls", serverConfigurationService.getString("site.setup.templateControls",serverConfigurationService.getString("templateControls", "")));
 			// put selected/default site type into context
 			String typeSelected = (String) state.getAttribute(STATE_TYPE_SELECTED);
 			context.put("typeSelected", state.getAttribute(STATE_TYPE_SELECTED) != null?state.getAttribute(STATE_TYPE_SELECTED):types.get(0));
@@ -3438,10 +3438,10 @@ public class SiteAction extends PagedResourceActionII {
 			context.put("requireAuthorizer", serverConfigurationService.getString(SAK_PROP_REQUIRE_AUTHORIZER, "true").equals("true")?Boolean.TRUE:Boolean.FALSE);
 			
 			// SAK-21706/SAK-23255
-			context.put( CONTEXT_IS_ADMIN, SecurityService.isSuperUser() );
-			context.put( CONTEXT_SKIP_MANUAL_COURSE_CREATION, ServerConfigurationService.getBoolean( SAK_PROP_SKIP_MANUAL_COURSE_CREATION, Boolean.FALSE ) );
-			context.put( CONTEXT_SKIP_COURSE_SECTION_SELECTION, ServerConfigurationService.getBoolean( SAK_PROP_SKIP_COURSE_SECTION_SELECTION, Boolean.FALSE ) );
-			context.put( CONTEXT_FILTER_TERMS, ServerConfigurationService.getBoolean( SAK_PROP_FILTER_TERMS, Boolean.FALSE ) );
+			context.put( CONTEXT_IS_ADMIN, securityService.isSuperUser() );
+			context.put( CONTEXT_SKIP_MANUAL_COURSE_CREATION, serverConfigurationService.getBoolean( SAK_PROP_SKIP_MANUAL_COURSE_CREATION, Boolean.FALSE ) );
+			context.put( CONTEXT_SKIP_COURSE_SECTION_SELECTION, serverConfigurationService.getBoolean( SAK_PROP_SKIP_COURSE_SECTION_SELECTION, Boolean.FALSE ) );
+			context.put( CONTEXT_FILTER_TERMS, serverConfigurationService.getBoolean( SAK_PROP_FILTER_TERMS, Boolean.FALSE ) );
 			
 			return (String) getContext(data).get("template") + TEMPLATE[37];
 		case 42:
@@ -10671,7 +10671,7 @@ private Map<String, List<MyTool>> getTools(SessionState state, String type, Site
 								for (Group gd : gds){
 									site.removeGroup(gd);
 								}
-								SiteService.save(site);
+								siteService.save(site);
 								gds.clear();
 							}
 							deleteGroup = false;
@@ -15844,13 +15844,13 @@ private Map<String, List<MyTool>> getTools(SessionState state, String type, Site
 
 	private int maxProjectSitesReached(){
 
-		String cuEid = UserDirectoryService.getCurrentUser().getEid();
+		String cuEid = userDirectoryService.getCurrentUser().getEid();
 
 		int maxNumInt = Integer.parseInt(PROJECT_SITES_MAXNUM);
 
 		if(maxNumInt > 0)
 		{
-			List<Site> mySitesUpdate = SiteService.getSites(org.sakaiproject.site.api.SiteService.SelectionType.UPDATE,"project", null, null, null, null);
+			List<Site> mySitesUpdate = siteService.getSites(org.sakaiproject.site.api.SiteService.SelectionType.UPDATE,"project", null, null, null, null);
 
 			int countMySites = 0;
 
