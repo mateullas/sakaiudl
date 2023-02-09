@@ -62,6 +62,13 @@ import lombok.extern.slf4j.Slf4j;
 public class CourseManagementServiceHibernateImpl extends HibernateDaoSupport implements CourseManagementService {
 
 	private static final ResourceLoader enrollmentsMessages = new ResourceLoader("enrollmentstatus");
+	public void init() {
+		log.info("Initializing " + getClass().getName());
+	}
+
+	public void destroy() {
+		log.info("Destroying " + getClass().getName());
+	}
 
 	/**
 	 * A generic approach to finding objects by their eid.  This is "coding by convention",
