@@ -111,30 +111,57 @@
     <bean id="org.sakaiproject.ignite.cache.list.core"
           class="java.util.ArrayList">
         <constructor-arg>
-            <list>
+            <list> 
                 <bean parent="org.sakaiproject.ignite.cache.atomic">
                     <property name="name" value="org.sakaiproject.coursemanagement.impl.AcademicSessionCmImpl"/>
-                </bean>
+	    </bean>
+	         <bean parent="org.sakaiproject.ignite.cache.atomic">
+                    <property name="name" value="cat.udl.asic.cm.impl.AcademicSessionUdlCmImpl"/>
+            </bean>
                 <bean parent="org.sakaiproject.ignite.cache.atomic">
                     <property name="name" value="org.sakaiproject.coursemanagement.impl.CrossListingCmImpl"/>
                 </bean>
                 <bean parent="org.sakaiproject.ignite.cache.atomic">
                     <property name="name" value="org.sakaiproject.coursemanagement.impl.EnrollmentCmImpl"/>
-                </bean>
+	        </bean>
+	        <bean parent="org.sakaiproject.ignite.cache.atomic">
+			<property name="name" value="cat.udl.asic.cm.impl.EnrollmentUdlCmImpl"/>
+		</bean>
                 <bean parent="org.sakaiproject.ignite.cache.atomic">
                     <property name="name" value="org.sakaiproject.coursemanagement.impl.EnrollmentSetCmImpl"/>
-                </bean>
+	        </bean>
+                <bean parent="org.sakaiproject.ignite.cache.atomic">
+			<property name="name" value="cat.udl.asic.cm.impl.EnrollmentSetUdlCmImpl"/>
+		</bean>
                 <bean parent="org.sakaiproject.ignite.cache.atomic">
                     <property name="name" value="org.sakaiproject.coursemanagement.impl.MeetingCmImpl"/>
                 </bean>
                 <bean parent="org.sakaiproject.ignite.cache.atomic">
-                    <property name="name" value="org.sakaiproject.coursemanagement.impl.MembershipCmImpl"/>
+			<property name="name" value="org.sakaiproject.coursemanagement.impl.MembershipCmImpl"/>
+		</bean>	
+	        <bean parent="org.sakaiproject.ignite.cache.atomic">
+                    <property name="name" value="cat.udl.asic.cm.impl.MembershipUdlCmImpl"/>
                 </bean>
                 <bean parent="org.sakaiproject.ignite.cache.atomic">
                     <property name="name" value="org.sakaiproject.coursemanagement.impl.AbstractMembershipContainerCmImpl"/>
+	        </bean>
+                <bean parent="org.sakaiproject.ignite.cache.atomic">
+                    <property name="name" value="cat.udl.asic.cm.impl.MembershipContainerUdlCmImpl"/>
                 </bean>
                 <bean parent="org.sakaiproject.ignite.cache.atomic">
                     <property name="name" value="org.sakaiproject.coursemanagement.impl.SectionCategoryCmImpl"/>
+	        </bean>
+                <bean parent="org.sakaiproject.ignite.cache.atomic">
+                    <property name="name" value="cat.udl.asic.cm.impl.SectionCategoryUdlCmImpl"/>
+	        </bean>
+                <bean parent="org.sakaiproject.ignite.cache.atomic">
+                    <property name="name" value="cat.udl.asic.cm.impl.SectionUdlCmImpl"/>
+	        </bean>
+                <bean parent="org.sakaiproject.ignite.cache.atomic">
+                    <property name="name" value="cat.udl.asic.cm.impl.CourseOfferingUdlCmImpl"/>
+	        </bean>
+                <bean parent="org.sakaiproject.ignite.cache.atomic">
+                    <property name="name" value="cat.udl.asic.cm.impl.CourseSetUdlCmImpl"/>
                 </bean>
                 <bean parent="org.sakaiproject.ignite.cache.atomic">
                     <property name="name" value="org.sakaiproject.lessonbuildertool.ChecklistItemStatusImpl"/>
