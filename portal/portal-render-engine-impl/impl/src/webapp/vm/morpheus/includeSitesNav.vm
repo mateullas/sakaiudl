@@ -12,7 +12,21 @@
                             <span class="Mrphs-sitesNav__menuitem--myworkspace-label">${rloader.sit_mywor}</span>
                         </a>
                         <a class="Mrphs-sitesNav__dropdown" href="#" data-site-id="${site.siteId}" aria-haspopup="true" aria-label="$rloader.getFormattedMessage("sit_open_menu", ${rloader.sit_mywor})"></a>
-                    </li>           
+                    </li> 
+                #if ($quickLinks)
+                        #foreach($quickLink in $quickLinks)
+                            <li class="Mrphs-sitesNav__menuitem Mrphs-sitesNav__menuitem-quicklink">
+                                <a class="link-container" href="${quickLink.url}" title="${quickLink.name}">
+                                    #if(${quickLink.iconType} == "image")
+                                        <span style="background-image:url(${quickLink.imageURI})"></span>
+                                    #elseif (${quickLink.iconType} == "icon")
+                                        <span class="${quickLink.iconClass}"></span>
+                                    #end
+                                    <span>${quickLink.name}</span>
+                                </a>
+                             </li>
+                        #end
+                    #end ## quicklinks          
                 #end ## END of IF (${site.isMyWorkspace})
 
                 ## Only show other sites if they're the current site, a favorite of the current user, or if there *is* no current user and we're showing Gateway sites.
