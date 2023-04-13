@@ -2,6 +2,9 @@
 	background: var(--tool-background-color);
 	min-height: $hierarchy-size;
 	transition:var(--sak-theme-switch-ease);
+	height: 0 !important;
+        visibility: hidden !important;
+        padding: 0 !important;
 
 	h1{
 		color: var(--sakai-background-color-1);
@@ -28,6 +31,9 @@
 		min-height: initial;
 		margin: 0;
 		padding: $standard-spacing;
+		margin-top: 48px;
+                margin-left: 48px;
+                margin-right: 48px;
 		
 		.#{$namespace}hierarchy--sites {
 			@include display-flex;

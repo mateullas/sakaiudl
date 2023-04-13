@@ -28,19 +28,29 @@ $PBJQ(document).ready(function() {
 		var serverLocalOffset = serverDateAndGMTOffset.getTime() - (new Date()).getTime();
 
 		return function() {
+			var dateString = "";
 			var offsetDate = new Date((new Date()).getTime() + serverLocalOffset);
-			var dateString = offsetDate.toUTCString()
-					.replace(/GMT/, serverTzDisplay)
-					.replace(/UTC/, serverTzDisplay);
 
+			if (portal.locale) { 
+				var newDate = new Date(offsetDate.toUTCString()
+ 						.replace(/GMT/, "")
+ 						.replace(/UTC/, ""));
+ 				dateString = newDate.toLocaleString(portal.locale);
+			}
+			else {
+				dateString = offsetDate.toUTCString()
+						.replace(/GMT/, preferredTzDisplay)
+						.replace(/UTC/, preferredTzDisplay);
+                        }
 			$PBJQ('#serverTime').text(dateString);
 	
 			if( $PBJQ('#preferredTime').length == 1 ) {
 				var offsetDate = new Date((new Date()).getTime() + preferredLocalOffset);
+
 				var dateString = offsetDate.toUTCString()
-						.replace(/GMT/, preferredTzDisplay)
-						.replace(/UTC/, preferredTzDisplay);
-	
+					.replace(/GMT/, serverTzDisplay)
+					.replace(/UTC/, serverTzDisplay);
+
 				$PBJQ('#preferredTime').text(dateString);
 			}
 			

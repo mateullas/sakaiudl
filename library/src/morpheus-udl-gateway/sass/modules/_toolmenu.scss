@@ -14,7 +14,13 @@ body.is-logged-out{
 	#toolMenuWrap {
 		min-height: 100vh;				// alternative for browswers who cannot do calculations
 		min-height: calc(100vh - #{$banner-height});	// viewport minus the top banner when logged out
+		background: url(#{$skin-path}images/bg_udl.jpg);
+		background-size: cover;
 	}
+}
+
+#toolMenu .Mrphs-toolsNav__menuitem--link .Mrphs-toolsNav__menuitem--title, #toolMenu .Mrphs-toolsNav__menuitem--link .Mrphs-toolsNav__menuitem--status-block {
+  display: inline;
 }
 
 // Prevent tool menu collapsed styles being applied when using a mobile sized screen - an issue
@@ -47,6 +53,10 @@ body.is-logged-out{
 		#toolMenu, #subSites:not(.floating) {	// subsites menu, but not the floating one
 			display: none;
 		}
+
+		&.Mrphs-portalBody.is-logged-out::before {
+                        display: none;
+                }
   }
 
 	// LHS tool menu collapsed to show icons only and not tool titles.
@@ -93,10 +103,10 @@ body.is-logged-out{
 								margin: 0;
 							}
 						}
-						.#{$namespace}toolsNav__menuitem--status-block {
-							display: none;
-						}
 						&.is-invisible {
+							&:after {
+                                                                display: none;
+                                                        }
 							&:hover, &:focus {
 								.#{$namespace}toolsNav__menuitem--title{
 									background: var(--tool-menu-item-hidden-hover-background-color);
@@ -105,24 +115,6 @@ body.is-logged-out{
 						}
 						span.#{$namespace}toolsNav__menuitem--title{
 							white-space: pre;
-						}
-					}
-					&.is-current{
-						.Mrphs-toolsNav__menuitem--link{
-							&:hover, &:focus {
-								.#{$namespace}toolsNav__menuitem--title{
-									background: var(--tool-menu-item-selected-hover-background-color);
-								}
-							}
-						}
-					}
-					&.is-current{
-						.Mrphs-toolsNav__menuitem--link{
-							&:hover{
-								.#{$namespace}toolsNav__menuitem--title{
-									background: var(--tool-menu-item-selected-hover-background-color);
-								}
-							}
 						}
 					}
 					.#{$namespace}toolsNav__menuitem--title{
@@ -193,7 +185,21 @@ body.is-logged-out{
 
 #toolMenuWrap{
 	#toolMenu {
-		position: relative;
+		background: #a06e8b;
+                position: absolute;
+                top: 95px;
+                left: 0;
+                right: 0;
+                z-index: 2;
+                padding: 8px 0 9px 5px;
+                text-align: left;
+                @media #{$phone} {
+                        background: transparent;
+                        top: 10vh;
+                        left: 8px;
+                        right: 50%;
+                }
+
 	}
 	background: var(--tool-menu-background-color);
 	display: block;
@@ -208,15 +214,18 @@ body.is-logged-out{
 	@include transition( left 0.25s linear 0s );
 	
 	@media #{$phone}{
-		left: -100%;
-		position: absolute;
-		display: none;			// remove the height of the tool menu from the page to reduce the length of the page
 		padding: 0;
 		margin: 0;
+		background: transparent;
+                top: 10vh;
+                left: 8px;
+                right: 50%;
+                max-width: 0 !important;
+                width: 0 !important;
+                min-width: 0 !important;
 
 		@if $skin-with-icons {
 			.#{$namespace}toolsNav__menuitem--title{
-				display: none;
 			}
 		} @else {
 			.#{$namespace}toolsNav__menuitem--title{
@@ -316,12 +325,14 @@ nav#subSites{
 		margin:  0;
 		list-style: none;
 		
-		@media #{$nonPhone}	{
-			margin-bottom: calc(#{$tool-menu-collapseButton-height} + 1em); // space at the bottom of the list to avoid the collapse button overlapping tools
-		}
-		
 		li{
-			border-bottom: 1px solid var(--tool-menu-item-separator-color);
+			display: inline-block;
+
+			 @media #{$phone} {
+                                border-right: 0px none;
+                                display: block;
+                                margin: 1em 0;
+                        }
 
 			&.#{$namespace}collapseTools
 			{
@@ -341,6 +352,7 @@ nav#subSites{
 				color: var(--tool-menu-collapse-text-color);
 				background-color: var(--tool-menu-collapse-background-color);
 				box-shadow: var(--tool-menu-collapse-shadow);
+				display: none;
 
 				&:hover, &:focus
 				{
@@ -405,224 +417,11 @@ nav#subSites{
 					display: none !important;
 				}
 			}
-	
-			// add a top border to the first tool to prevent jitter on hover when collapsed
-			&:first-of-type a {
-				border-top: 1px solid var(--tool-menu-item-separator-color);
-			}
-	
+
 			.Mrphs-toolsNav__menuitem--link{
-				position: relative;
-				@include display-flex;
-				@include align-items(center);
-				@if not($tool-menu-icon-on-left) {
-					@include flex-direction(column);
-				}
-				background-color: var(--tool-menu-item-background-color);
-				font-size: 1em;
-				line-height: 1.5;
-				font-weight: $tool-menu-item-text-weight;
-				text-decoration: none;
-				color: var(--tool-menu-item-text-color);
-				
-				@if $tool-menu-icon-on-left {
-					text-align: left;
-					border-radius: $tool-menu-item-border-radius;
-					margin-right: $tool-menu-item-margin-right;
-					margin-bottom: 2px; //prevent clipping from elevation change
-					padding: $tool-menu-item-padding;
-				} @else {
-					text-align: center;
-					padding: 0.5em 0.25em;
-					min-height: 3em;
-					line-height: 1.25;
-				}
-				
-				&:before{
-					content: '';
-					height: 100%;
-					display: inline-block;
-					position: absolute;
-					top: 0;
-					left: 0;
-					border-left: $tool-menu-item-border-left;
-				}
-
-				&:hover, &:focus {
-					color: var(--tool-menu-item-hover-text-color);
-					background: var(--tool-menu-item-hover-background-color);
-
-					&:before{
-						border-left: $tool-menu-item-hover-border-left;
-					}
-
-					.#{$namespace}toolsNav__menuitem--icon{
-						color: var(--tool-menu-item-hover-icon-color);
-					}
-				}
-				&:hover {
-					box-shadow: var(--elevation-2dp);
-					transition: $active-transition-hover;
-				}
-				&:active {
-					box-shadow: var(--elevation-1dp);
-					transition: $active-transition-active;
-				}
-				&:focus {
-					outline:none;
-					box-shadow: $sakai-box-shadow-emulate-focus var(--focus-outline-color);
-					color: var(--tool-menu-item-active-text-color);
-					background: var(--tool-menu-item-active-background-color);
-
-					.#{$namespace}toolsNav__menuitem--icon{
-						color: var(--tool-menu-item-active-icon-color);
-					}
-				}
-				@media #{$phone}{
-					@if $tool-menu-icon-on-left {
-						border: none;
-						font-size: 0.9em;
-						font-weight: 700;
-						min-height: 4em;
-					}
-					@else {
-						border-width: 1px;
-						border-style: solid;
-						border-color: var(--tool-menu-hover-background-color);
-						height:  5.5em;
-					}
-					overflow: hidden;
-				}
-				
-				.#{$namespace}toolsNav__menuitem--icon{
-					@extend .fa-fw;
-					color: var(--tool-menu-item-icon-color);
-					
-					@if $tool-menu-icon-on-left {
-						height: 100%;
-						font-size: 16px;
-					} @else {
-						margin: 0 0.25em 0 0;
-						@media #{$phone}{
-							margin: 0.5em 0;
-						}
-					}
-				}
-				
-				.#{$namespace}toolsNav__menuitem--title{
-					@if $tool-menu-icon-on-left {
-						width: calc(#{$tool-menu-width} - #{$tool-menu-width-collapsed} - #{$standard-spacing});
-						vertical-align: middle;
-						margin-left: $standard-spacing;
-					}
-					text-overflow: ellipsis;
-					white-space: pre;
-					overflow: hidden;
-				}
-				.#{$namespace}toolsNav__menuitem--status-block {
-					margin-right: 10px;
-					margin-left: 4px;
-					display: flex;
-					div {
-						margin-right: 10px;
-						&.tool-status-icon {
-							font-size: 16px;
-						}
-					}
-				}
-				&.is-invisible {
-					font-style: italic;
-					color: var(--tool-menu-item-hidden-text-color);
-					background: var(--tool-menu-item-hidden-background-color);
-
-					&:before{
-						border-left: $tool-menu-item-hidden-border-left;
-					}
-
-					&:hover{
-						color: var(--tool-menu-item-hidden-hover-text-color);
-						background: var(--tool-menu-item-hidden-hover-background-color);
-
-						&:before{
-							border-left: $tool-menu-item-hidden-hover-border-left;
-						}
-
-						.#{$namespace}toolsNav__menuitem--icon{
-							color: var(--tool-menu-item-hidden-hover-icon-color);
-						}
-					}
-					&:active{
-						color: var(--tool-menu-item-hidden-active-text-color);
-						background: var(--tool-menu-item-hidden-active-background-color);
-
-						&:before{
-							border-left: $tool-menu-item-hidden-active-border-left;
-						}
-
-						.#{$namespace}toolsNav__menuitem--icon{
-							color: var(--tool-menu-item-hidden-active-icon-color);
-						}
-					}
-					
-					.#{$namespace}toolsNav__menuitem--icon{
-						color: var(--tool-menu-item-hidden-icon-color);
-					}
-				}
+			
 			}
-			&.is-current{
-				position: relative;
-				margin-right: -1px;
-
-				.Mrphs-toolsNav__menuitem--link{
-					color: var(--tool-menu-item-selected-text-color);
-					background: var(--tool-menu-item-selected-background-color);
-
-					&:before{
-						border-left: $tool-menu-item-selected-border-left;
-					}
-
-					.#{$namespace}toolsNav__menuitem--icon{
-						color: var(--tool-menu-item-selected-icon-color);
-					}
-
-					.#{$namespace}toolsNav__menuitem--title{
-						font-weight: 700;
-					}
-
-					&:hover{
-						color: var(--tool-menu-item-selected-hover-text-color);
-						background: var(--tool-menu-item-selected-hover-background-color);
-
-						&:before{
-							border-left: $tool-menu-item-selected-hover-border-left;
-						}
-
-						.#{$namespace}toolsNav__menuitem--icon{
-							color: var(--tool-menu-item-selected-hover-icon-color);
-						}
-					}
-					&:active{
-						color: var(--tool-menu-item-selected-active-text-color);
-						background: var(--tool-menu-item-selected-active-background-color);
-
-						&:before{
-							border-left: $tool-menu-item-selected-active-border-left;
-						}
-
-						.#{$namespace}toolsNav__menuitem--icon{
-							color: var(--tool-menu-item-selected-active-icon-color);
-						}
-					}
-					@media #{$phone}{
-						@if $tool-menu-icon-on-left {
-							border: none;
-						}
-						@else {
-							border: 1px solid var(--tool-menu-item-separator-color);
-						}
-					}
-				}
-			}
+	
 			.#{$namespace}toolsNav__subnav{
 				padding: 0 0 0 0;
 				li{
@@ -659,6 +458,24 @@ nav#subSites{
 					display: none;
 				}
 			}
+
+			a[href] {
+                                color: #fff;
+                                font-weight: 600;
+                                line-height: 1;
+                                padding: 10px 0.5em 9px 0.5em;
+                                text-decoration: none;
+                                transition: background 0.15s linear;
+
+                                &:hover {
+                                        background: #831453;
+                                }
+
+                                @media #{$phone}{
+                                        font-size: 0.9em;
+                                }
+                        }
+
 		}
 	}
 }
@@ -1032,4 +849,44 @@ body {
 			}
 		}
 	}
+}
+
+#udlheader{
+    position: absolute;
+    height: 40px;
+    width: 149px;
+    top: 152px;
+    left: 12px;
+    z-index: 2;
+	
+    @media #{$phone}{
+           top: 35vh;
+           width: 100%;
+           text-align: center;
+           left: 0;
+           right: 0;
+           background-color: #521839;
+           padding: 5px 0;
+           height: 50px;
+           z-index: 999;
+	}
+}
+
+#sociallinks{
+       ul{
+                list-style: none;
+                margin:  0 0 0 0;
+                padding: 0 0 0 0;
+                li{
+                        display: inline-block;
+                        line-height: 1;
+                        font-size: 38px;
+                        margin: 0 0 0 0.2em;
+                        .fa{
+                                &.fa-twitter-square,  &.fa-twitter-square:hover { color: #fff; }
+                                &.fa-facebook-square, &.fa-facebook-square:hover{ color: #fff; }
+                                &.fa-youtube-square,  &.fa-youtube-square:hover { color: #fff; }
+                        }
+                }
+        }
 }

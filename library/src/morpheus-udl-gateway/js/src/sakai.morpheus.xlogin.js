@@ -27,5 +27,7 @@ $PBJQ(document).ready(function(){
 
     });
   }
+  
+  $PBJQ('._form-toggler, #loginForm .close').on('click', function(){ $PBJQ('#loginForm, #loginForm .close').toggle() });
 
 });

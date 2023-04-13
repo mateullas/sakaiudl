@@ -9,9 +9,36 @@ body{
 	scroll-behavior: $scroll-behavior;
 	&.#{$namespace}portalBody{
 		@media #{$phone}{
-			padding: $banner-height 0 0 0;
+			padding: 0 0 0 0;
 		}
 	}
+	&.is-logged-out {
+ 			.#{$namespace}topHeader::before {
+ 				content: " ";
+ 				height: 419px;
+ 				display: block;
+ 				position: absolute;
+ 				top: -194px;
+ 				left: -51px;
+ 				background: hsl(326, 50%, 25%);
+ 				box-shadow: inset 0px 0px 7px 0px rgba(87,13,55,0.5);
+ 				z-index: 1;
+ 				width: 374px;
+ 				transform: rotate(72deg);
+
+ 				@media #{$phone} {
+ 					content: " ";
+ 					height: 54vh;
+ 					top: -27vh;
+ 					right: 0;
+ 					transform: rotate(45deg);
+ 					width: 54vh;
+				}
+			}
+	}
+	&.#{$namespace}portalBody.xlogin-body-container{
+                background: hsl(308, 4%, 57%);
+        }
 	#maximised-indicator {
 		position: fixed;
 		overflow: hidden;

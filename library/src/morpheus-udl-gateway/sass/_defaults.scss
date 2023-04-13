@@ -3,7 +3,7 @@
 $namespace : "Mrphs-" !default;
 
 $break-tiny-end:	400px !default;
-$break-small-end: 	800px !default;
+$break-small-end: 	1030px !default;
 $break-medium-end: 	1030px !default;
 
 $smallPhone:    "only screen and (max-width : #{$break-tiny-end})" !default;
@@ -154,7 +154,7 @@ $all-sites-tool-menu-hover-left-border:                   4px solid !default;
 
 /* Wide tool menu, icons on left */
 $tool-menu-icon-on-left: true !default;
-$tool-menu-width: 200px + $standard-spacing !default;
+$tool-menu-width: 260px !default;
 $tool-menu-padding: calc(#{$standard-spacing} / 2) 0 0 0 !default;
 $tool-menu-width-collapsed: 52px !default;
 $tool-menu-collapseButton-height: $tool-menu-width-collapsed !default;
@@ -250,7 +250,7 @@ $font-family: "Open Sans",sans-serif !default;
 $header-font-family: $font-family !default;
 $header-font-weight: 700 !default;										// 400 or 700 as you wish
 
-$skin-name : "morpheus-default" !default; // This is used for bootstrap font behaviour.
+$skin-name : "morpheus-udl-gateway" !default; // This is used for bootstrap font behaviour.
 $skin-path: if($skin-name, "/library/skin/" + $skin-name + "/", "");
 
 $sites-nav-submenu-top: -#{$standard-spacing} !default; //fallback to calc( #{$default-font-size} + #{$sites-nav-menu-item-border-thickness})

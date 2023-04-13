@@ -22,11 +22,32 @@
 	@include align-items(stretch);
 	@include display-flex;
 	@include flex-direction(row);
+	padding-top: 36px;
+
+        @media #{$phone} {
+                padding-top: 18px;
+        }
 	
 	> .#{$namespace}pagebody{
 		@include display-flex;
 		@include flex-direction(column);
 		width: 100%;
+
+		&::before {
+                        position: fixed;
+                        content: " ";
+                        width: 260px;
+                        height: 100%;
+                        left: 0;
+                        top: 0;
+                        bottom: 0;
+                        background: url(#{$skin-path}images/bg_udl.jpg);
+                        background-size: cover;
+
+                        @media #{$phone} {
+                                display: none;
+                        }
+                }
 	}
 }
 
@@ -42,7 +63,7 @@
 	
 	@media #{$phone}{
 		margin: 0;
-		padding-top: $standard-spacing; // make way for the button container
+		padding-top: 0; // make way for the button container
 	}
 
 	#col1of2, #col2of2{
@@ -77,10 +98,14 @@ body.#{$namespace}container {
 .#{$namespace}pageColumns--single {
 	margin: 0;
 	clear: both;
-	width: 100%;
+	width: calc(100% - 96px);
+        margin-left: 48px;
+        margin-right: 48px;
+
 	
 	@media #{$phone}{
 		margin: 0;
+		width: 100%;
 	}
 			
 	.#{$namespace}container {

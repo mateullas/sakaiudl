@@ -31,7 +31,7 @@
     // predefined with gray, blue, teal, gold, green, orange,
     // purple, and red palettes available for you to use.
     // More info about defineColorHSL in sass/themes/_base.scss
-    @include defineColorHSL(--sakai-brand, 203, 76%, 25%);
+    @include defineColorHSL(--sakai-brand, 323, 100%, 26%);
     /////////////////////////////////////////////////////////////
 
     /////////////////////////////////////////////////////////////
@@ -42,11 +42,12 @@
     /////////////////////////////////////////////////////////////
 
     // Logo
-    --logo: url(#{$skin-path}images/logo-jewel.png);
+    --logo: url(#{$skin-path}images/logo-udl.png);
     --logo-height: 36px;
     --logo-width: 126px;
     --logo-opacity: 1;
     --logo-background-color: var(--sakai-primary-color-1);
+    --logo-login: url(#{$skin-path}images/logo-udl.png);
 
     // Primary branding color. 
     // Suggested: Your institution's main branding color.
