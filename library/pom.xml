@@ -366,6 +366,9 @@
 				<sakai.skin.source2>morpheus-udl</sakai.skin.source2>
 				<sakai.skin.target2>morpheus-udl</sakai.skin.target2>
 				<sakai.skin.customization.file2>src/${sakai.skin.source2}/sass/examples/_customization_example_empty.scss</sakai.skin.customization.file2>
+				<sakai.skin.source3>morpheus-udl-gateway</sakai.skin.source3>
+                                <sakai.skin.target3>morpheus-udl-gateway</sakai.skin.target3>
+				<sakai.skin.customization.file3>src/${sakai.skin.source3}/sass/examples/_customization_example_empty.scss</sakai.skin.customization.file3>
 			</properties>
 			<build>
 				<plugins>
@@ -512,6 +515,76 @@
 									</resources>
 								</configuration>
 							</execution>
+							<execution>
+								<id>copy-images3</id>
+								<phase>compile</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${basedir}/src/webapp/skin/${sakai.skin.target3}/images/</outputDirectory>
+									<resources>
+										<resource>
+											<directory>src/${sakai.skin.source3}/images/</directory>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+							<execution>
+								<id>copy-js3</id>
+								<phase>generate-resources</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${basedir}/src/webapp/skin/${sakai.skin.target3}/js/</outputDirectory>
+									<resources>
+										<resource>
+											<directory>src/${sakai.skin.source3}/js/</directory>
+											<includes>
+												<include>lib/**/*.js</include>
+												<include>ie/**/*.js</include>
+											</includes>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+							<execution>
+								<id>copy-fonts3</id>
+								<phase>generate-resources</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${basedir}/src/webapp/skin/${sakai.skin.target3}/fonts/</outputDirectory>
+									<resources>
+										<resource>
+											<directory>${basedir}/src/${sakai.skin.source3}/font-awesome-sass-${font-awesome-version}/assets/fonts/</directory>
+										</resource>
+										<resource>
+										  <directory>${basedir}/src/${sakai.skin.source3}/bootstrap-sass-${bootstrap-version}/assets/fonts/</directory>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+							<execution>
+								<id>copy-fonts-css3</id>
+								<phase>generate-resources</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${basedir}/src/webapp/skin/${sakai.skin.target3}/font-awesome/</outputDirectory>
+									<resources>
+										<resource>
+											<directory>src/${sakai.skin.source3}/fonts/</directory>
+											<includes>
+												<include>*.css</include>
+											</includes>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
 						</executions>
                     </plugin>
 
@@ -545,7 +618,20 @@
                                     <jsEngine>CLOSURE</jsEngine>
                                 </configuration>
                                 <goals><goal>minify</goal></goals>
-                            </execution>
+			    </execution>
+			     <execution>
+                                <id>default-minify3</id>
+                                <configuration>
+                                    <charset>UTF-8</charset>
+                                    <webappSourceDir>${basedir}/src/${sakai.skin.source3}</webappSourceDir>
+                                    <jsSourceDir>js/src/</jsSourceDir>
+                                    <jsIncludes>*.js</jsIncludes>
+                                    <jsTargetDir>skin/${sakai.skin.target3}/js</jsTargetDir>
+                                    <jsFinalFile>morpheus.scripts.js</jsFinalFile>
+                                    <jsEngine>CLOSURE</jsEngine>
+                                </configuration>
+                                <goals><goal>minify</goal></goals>
+			      </execution>
                             <execution>
                                 <id>elfinder-minify</id>
                                 <configuration>
@@ -647,7 +733,22 @@
 							       <includePath>${basedir}/src/${sakai.skin.source2}/bootstrap-sass-${bootstrap-version}/assets/stylesheets/${path.separator}${basedir}/src/${sakai.skin.source2}/font-awesome-sass-${font-awesome-version}/assets/stylesheets/</includePath>
 							       <sourceMapOutputPath>${basedir}/src/webapp/skin/${sakai.skin.target2}</sourceMapOutputPath>
 							   </configuration>
-					       </execution>
+						</execution>
+						<execution>
+                                                   <id>sass_3</id>
+                                                   <phase>process-resources</phase>
+                                                   <goals>
+                                                       <goal>compile</goal>
+                                                   </goals>
+                                                           <configuration>
+                                                               <outputStyle>${sakai.skin.outputStyle}</outputStyle>
+                                                               <imgPath>${basedir}/src/${sakai.skin.source3}/images/</imgPath>
+                                                               <inputPath>${basedir}/src/${sakai.skin.source3}/sass/</inputPath>
+                                                               <outputPath>${basedir}/src/webapp/skin/${sakai.skin.target3}</outputPath>
+                                                               <includePath>${basedir}/src/${sakai.skin.source3}/bootstrap-sass-${bootstrap-version}/assets/stylesheets/${path.separator}${basedir}/src/${sakai.skin.source3}/font-awesome-sass-${font-awesome-version}/assets/stylesheets/</includePath>
+                                                               <sourceMapOutputPath>${basedir}/src/webapp/skin/${sakai.skin.target3}</sourceMapOutputPath>
+                                                           </configuration>
+						   </execution>
 					   </executions>
 					</plugin>
 					<plugin>
@@ -682,7 +783,20 @@
                                                                         </filesets>
                                                                 </configuration>
                                                         </execution>
-
+							<execution>
+								<id>remove-skin3</id>
+								<phase>clean</phase>
+								<goals>
+									<goal>clean</goal>
+								</goals>
+								<configuration>
+									<filesets>
+										<fileset>
+											<directory>${basedir}/src/webapp/skin/${sakai.skin.target3}</directory>
+										</fileset>
+									</filesets>
+								</configuration>
+							</execution>
 						</executions>
 					</plugin>
 					<plugin>
@@ -710,6 +824,17 @@
 								<configuration>
 									<sourceFile>${sakai.skin.customization.file2}</sourceFile>
 									<destinationFile>${basedir}/src/${sakai.skin.source2}/sass/_customization.scss</destinationFile>
+								</configuration>
+							</execution>
+							<execution>
+								<id>copy-customizations3</id>
+								<phase>generate-resources</phase>
+								<goals>
+									<goal>copy</goal>
+								</goals>
+								<configuration>
+									<sourceFile>${sakai.skin.customization.file}</sourceFile>
+									<destinationFile>${basedir}/src/${sakai.skin.source3}/sass/_customization.scss</destinationFile>
 								</configuration>
 							</execution>
 						</executions>
@@ -790,3 +915,4 @@
 		</plugins>
 	</build>
 </project>
+
