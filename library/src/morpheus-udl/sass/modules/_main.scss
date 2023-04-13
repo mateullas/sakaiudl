@@ -22,6 +22,7 @@
 	@include align-items(stretch);
 	@include display-flex;
 	@include flex-direction(row);
+	width: 100%;
 	
 	> .#{$namespace}pagebody{
 		@include display-flex;

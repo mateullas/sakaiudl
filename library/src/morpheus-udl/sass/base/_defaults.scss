@@ -12,6 +12,9 @@ body{
 			padding: $banner-height 0 0 0;
 		}
 	}
+	&.#{$namespace}portalBody.xlogin-body-container{
+                background: hsl(308, 4%, 57%);
+        }
 	#maximised-indicator {
 		position: fixed;
 		overflow: hidden;

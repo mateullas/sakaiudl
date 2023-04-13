@@ -98,7 +98,10 @@
     kaltura-admin : ( extend : fa-gear ),
     kaltura-media : ( extend : fa-file-video-o ),
     kaltura-my-media : ( extend : fa-file-video-o ),
+    sakai-kaltura-mymedia : ( extend : fa-file-video-o ),
+    sakai-kaltura-mediagallery : ( extend : fa-file-video-o ),
     sakai-bbb : ( extend : fa-video-camera ),
+    sakai-bbc : ( extend :fa-video-camera ),
     sakai-rsf-evaluation : ( extend : fa-commenting ),
     alerts : ( extend : fa-bell, padding-right: 5px ),
     sakai-irubric : (extend: fa-table),
@@ -107,6 +110,18 @@
     sakai-clog : ( extend : fa-pencil-square-o ),
     sakai-scorm-tool : ( extend : fa-file-archive-o ),
     sakai-scorm-singlepackage-tool : ( extend : fa-file-archive-o ),
+
+    // UdL Tools
+    sakai-iframe-myworkspace : (extend : fa-map-signs),
+    sakai-iframe-intranet : (extend :fa-sitemap),
+    sakai-iframe-actes : (extend :fa-file-excel-o),
+    sakai-iframe-biblioteca : (extend :fa-bookmark),
+
+    sakai-iframe-expedient : (extend :fa-graduation-cap),
+    sakai-iframe-utilitats : (extend :fa-briefcase),
+    sakai-guiadocent-ice : (extend :fa-file-o),
+    sakai-datacollector-biblioteca : (extend :fa-bookmark),
+    sakai-einahelpdesk : (extend :fa-wrench),
 
     // other icons
     check : ( extend : fa-check ),

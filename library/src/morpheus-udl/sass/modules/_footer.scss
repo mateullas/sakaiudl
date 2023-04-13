@@ -34,7 +34,70 @@
 			}
 		}
 	}
-	
+        > .row {
+                display: flex;
+                flex-wrap: wrap;
+                margin: 0;
+                width: 100%;
+
+                > div {
+                        padding: 0 10px;
+                        display: flex;
+                        text-align: left;
+
+                        &:first-of-type {
+                                padding-left: 0;
+                        }
+
+                        &:last-of-type {
+                                padding-right: 0;
+                        }
+
+                        @media #{$phone} {
+                                padding: 0 3px;
+                                margin-bottom: 13px;
+                                text-align: left;
+                                &:last-of-type {
+                                        margin-bottom: 0;
+                                }
+                        }
+
+                        .#{$namespace}footer-box {
+                                background-color: #eeeeee;
+                                flex: 1;
+                                padding: 13px 15px;
+
+                                a {
+                                        color: $link-color;
+                                }
+
+                                h4 {
+                                        margin: 0 0 7px 0;
+                                        font-size: 14px;
+                                }
+
+                                > ul {
+                                        padding: 0;
+                                        margin: 0;
+
+                                        > li {
+                                                list-style: none;
+
+                                                li {
+                                                        list-style: none;
+							text-indent: -5px;
+
+                                                        &::before {
+                                                          content: "- ";
+                                                          text-indent: -5px;
+                                                        }
+                                                }
+                                        }
+                                }
+                        }
+                }
+        }
+
 	##{$namespace}footer--poweredBy {
 		a {
 			background-color: var(--footer-PoweredBy-bg);

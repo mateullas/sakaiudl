@@ -47,6 +47,10 @@ body.is-logged-out{
 		#toolMenu, #subSites:not(.floating) {	// subsites menu, but not the floating one
 			display: none;
 		}
+
+		#udlheader {
+                        display: none;
+                }
   }
 
 	// LHS tool menu collapsed to show icons only and not tool titles.
@@ -93,10 +97,10 @@ body.is-logged-out{
 								margin: 0;
 							}
 						}
-						.#{$namespace}toolsNav__menuitem--status-block {
-							display: none;
-						}
 						&.is-invisible {
+							&:after {
+                                                                display: none;
+                                                        }
 							&:hover, &:focus {
 								.#{$namespace}toolsNav__menuitem--title{
 									background: var(--tool-menu-item-hidden-hover-background-color);
@@ -499,6 +503,7 @@ nav#subSites{
 					color: var(--tool-menu-item-icon-color);
 					
 					@if $tool-menu-icon-on-left {
+						display: inline-block;
 						height: 100%;
 						font-size: 16px;
 					} @else {
@@ -511,26 +516,23 @@ nav#subSites{
 				
 				.#{$namespace}toolsNav__menuitem--title{
 					@if $tool-menu-icon-on-left {
+						display: inline-block;
 						width: calc(#{$tool-menu-width} - #{$tool-menu-width-collapsed} - #{$standard-spacing});
 						vertical-align: middle;
 						margin-left: $standard-spacing;
+						@media #{$phone}{
+							width: 90%;
+						}
+					} @else {
+						display: block;
+						width: 100%;
 					}
 					text-overflow: ellipsis;
 					white-space: pre;
 					overflow: hidden;
 				}
-				.#{$namespace}toolsNav__menuitem--status-block {
-					margin-right: 10px;
-					margin-left: 4px;
-					display: flex;
-					div {
-						margin-right: 10px;
-						&.tool-status-icon {
-							font-size: 16px;
-						}
-					}
-				}
 				&.is-invisible {
+					position: relative;
 					font-style: italic;
 					color: var(--tool-menu-item-hidden-text-color);
 					background: var(--tool-menu-item-hidden-background-color);
@@ -538,6 +540,21 @@ nav#subSites{
 					&:before{
 						border-left: $tool-menu-item-hidden-border-left;
 					}
+
+					&:after {
+						@extend .fa-lg;
+						@extend .fa;
+						content: '\f070';
+						@if $tool-menu-icon-on-left {
+							margin-right: $standard-spacing;
+						}
+						@else {
+							position: absolute;
+							top: 4px;
+							right: 4px;
+						}
+					}
+
 
 					&:hover{
 						color: var(--tool-menu-item-hidden-hover-text-color);
@@ -1029,6 +1046,59 @@ body {
 						content: '';	// remove the go-to arrow when collapsed to match the other tools
 					}
 				}
+			}
+		}
+	}
+}
+
+#udlheader{
+	position: fixed;
+    left: 200px;
+    z-index: 1001;
+	@media #{$phone}{
+		display: none;
+	}
+	.#{$namespace}headerLogo{
+		overflow: 	hidden;
+		padding: 0;
+		margin: 0 1em 0 0;
+		text-align: left;
+		width: 		auto;
+		.#{$namespace}headerLogo--institution{
+			background: var(--logo) no-repeat center left;
+			background-size: auto 100%;
+			width: 		166px;
+			height: 	31px;
+			display:	inline-block;
+			position: relative;
+			top: 2px;
+			margin: 0 0 0 4px;
+			@media #{$phone}{
+				margin: 0.2em 0 0 0.2em;
+				float: none;
+			}
+		}
+	}
+}
+
+#sociallinks{
+	float: right;
+	position: relative;
+	right: 0;
+	margin: 13px 6px 0 0px;
+	ul{
+		list-style: none;
+		margin:  0 0 0 0;
+		padding: 0 0 0 0;
+		li{
+			display: inline-block;
+			line-height: 1;
+			font-size: 26px;
+			margin: 0 0 0 0.2em;
+			.fa{
+				&.fa-twitter-square,  &.fa-twitter-square:hover { color: #55acee; }
+				&.fa-facebook-square, &.fa-facebook-square:hover{ color: #3b5999; }
+				&.fa-youtube-square,  &.fa-youtube-square:hover { color: #cd201f; }
 			}
 		}
 	}
