@@ -14,7 +14,7 @@
 	<packaging>war</packaging>
 	<properties>
 		<!-- This is used in re-write rules as well -->
-		<ckeditor.version>4.16.1</ckeditor.version>
+		<ckeditor.version>4.21.0</ckeditor.version>
 		<bootstrap-version>3.3.7</bootstrap-version>
 		<font-awesome-version>4.7.0</font-awesome-version>
 		<!-- Default extra plugins enabled -->
@@ -93,8 +93,8 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.webjars.bower</groupId>
-			<artifactId>github-com-bahriddin-ckeditor-html5-video</artifactId>
+			<groupId>org.webjars</groupId>
+			<artifactId>ckeditor-html5-video</artifactId>
 			<version>${ckeditor.html5video.version}</version>
 			<scope>runtime</scope>
 		</dependency>
