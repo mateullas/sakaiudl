@@ -31,11 +31,6 @@
       <artifactId>sakai-kernel-api</artifactId>
     </dependency>
     <dependency>
-      <groupId>commons-logging</groupId>
-      <artifactId>commons-logging</artifactId>
-      <version>1.2</version>
-    </dependency>
-    <dependency>
     	<groupId>commons-lang</groupId>
     	<artifactId>commons-lang</artifactId>
     </dependency>

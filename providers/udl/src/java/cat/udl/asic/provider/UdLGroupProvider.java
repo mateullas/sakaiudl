@@ -28,8 +28,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import lombok.extern.slf4j.Slf4j;
+
 import org.sakaiproject.authz.api.GroupProvider;
 import org.sakaiproject.util.StringUtil;
 import org.sakaiproject.user.cover.UserDirectoryService;
@@ -38,9 +38,8 @@ import org.sakaiproject.user.api.User;
 
 import cat.udl.asic.provider.Provider;
 
+@Slf4j
 public class UdLGroupProvider implements GroupProvider {
-	/** Our log (commons). */
-	private static Log M_log = LogFactory.getLog(UdLGroupProvider.class);
 	
 	public Map<String, Provider> m_providers;
 	private GroupProvider cm_provider = null;
@@ -56,9 +55,9 @@ public class UdLGroupProvider implements GroupProvider {
 	 */
 	public void init() {
 		try {
-			M_log.info("init()");
+			log.info("init()");
 		} catch (Throwable t) {
-			M_log.warn("init(): ", t);
+			log.warn("init(): ", t);
 		}
 	}
 
@@ -66,7 +65,7 @@ public class UdLGroupProvider implements GroupProvider {
 	 * Cleanup before shutting down.
 	 */
 	public void destroy() {
-		M_log.info("destroy()");
+		log.info("destroy()");
 	}
 
 	/**********************************************************************************************************************************************************************************************************************************************************
@@ -116,7 +115,7 @@ public class UdLGroupProvider implements GroupProvider {
 	 */
 	public Map getUserRolesForGroup(String id){
 
-		M_log.info("getUserRolesForGroup()" + id + " ---");
+		log.info("getUserRolesForGroup()" + id + " ---");
 		Map rv = new HashMap();
 		
 		/*Just put the cm roles in case we want */
@@ -132,7 +131,7 @@ public class UdLGroupProvider implements GroupProvider {
 	public Map getGroupRolesForUser(String userId) {
 		Map rv = new HashMap();
 
-		M_log.info("getGroupRolesForUser()" + userId);
+		log.info("getGroupRolesForUser()" + userId);
 		try {
 
 			User u = UserDirectoryService.getUserByEid(userId);
