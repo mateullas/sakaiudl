@@ -32,6 +32,7 @@ import org.sakaiproject.microsoft.api.exceptions.MicrosoftCredentialsException;
 import org.sakaiproject.microsoft.api.exceptions.MicrosoftGenericException;
 
 public interface MicrosoftCommonService {
+	public static final String PERM_VIEW_ALL_CHANNELS = "microsoft.channels.view.all";
 	public static enum PermissionRoles { READ, WRITE }
 
 	void resetCache();

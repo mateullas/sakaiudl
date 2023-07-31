@@ -36,6 +36,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.sakaiproject.authz.api.FunctionManager;
 import org.sakaiproject.messaging.api.MicrosoftMessage;
 import org.sakaiproject.messaging.api.MicrosoftMessage.MicrosoftMessageBuilder;
 import org.sakaiproject.messaging.api.MicrosoftMessagingService;
@@ -139,6 +140,9 @@ public class MicrosoftCommonServiceImpl implements MicrosoftCommonService {
 	MicrosoftAuthorizationService microsoftAuthorizationService;
 
 	@Setter
+	private FunctionManager functionManager;
+
+	@Setter
 	private CacheManager cacheManager;
 	private Cache cache = null;
 
@@ -160,6 +164,8 @@ public class MicrosoftCommonServiceImpl implements MicrosoftCommonService {
 
 	public void init() {
 		log.info("Initializing MicrosoftCommonService Service");
+		// register functions
+		functionManager.registerFunction(PERM_VIEW_ALL_CHANNELS, true);
 	}
 
 	private Cache getCache() {
