@@ -49,6 +49,7 @@ import org.sakaiproject.time.api.TimeRange;
 import org.sakaiproject.time.api.TimeService;
 import org.sakaiproject.tool.api.Session;
 import org.sakaiproject.tool.api.SessionManager;
+import org.sakaiproject.tool.api.ToolManager;
 import org.sakaiproject.user.api.PreferencesService;
 import org.sakaiproject.user.api.User;
 import org.sakaiproject.user.api.UserDirectoryService;
@@ -71,6 +72,9 @@ public class SakaiProxyImpl implements SakaiProxy {
 
 	@Autowired
 	private SiteService siteService;
+
+	@Autowired
+	private ToolManager toolManager;
 
 	@Autowired
 	private UserDirectoryService userDirectoryService;
@@ -198,6 +202,16 @@ public class SakaiProxyImpl implements SakaiProxy {
 	}
 
 	// ------------------------------------------ SITES ----------------------------------------------------
+	@Override
+	public String getCurrentSiteId() {
+		return toolManager.getCurrentPlacement().getContext();
+	}
+
+	@Override
+	public boolean isMyWorkspace() {
+		return siteService.isUserSite(getCurrentSiteId());
+	}
+
 	@Override
 	public List<Site> getSakaiSites(){
 		return getSakaiSites(new SakaiSiteFilter());

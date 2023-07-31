@@ -50,6 +50,8 @@ public interface SakaiProxy {
 	ZoneId getUserTimeZoneId();
 
 	// ------------------------------------------ SITES ----------------------------------------------------
+	String getCurrentSiteId();
+	boolean isMyWorkspace();
 	List<Site> getSakaiSites();
 	List<Site> getSakaiSites(SakaiSiteFilter filter);
 	Site getSite(String siteId);
