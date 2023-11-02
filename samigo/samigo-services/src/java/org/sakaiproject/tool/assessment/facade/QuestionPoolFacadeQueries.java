@@ -1458,7 +1458,7 @@ public class QuestionPoolFacadeQueries
   	  for (QuestionPoolData poolTransfer : transferPoolsData) {
   		  Long poolId = poolTransfer.getQuestionPoolId();	
   		  updatePoolOwnerIdList.add(poolId);
-  		  
+  		  System.out.println("Anem a actualitzar "+poolId.toString());
   		  // Get remove child-parent relationship list
   		  Long poolIdRemoveParent = poolTransfer.getParentPoolId();
   		  if (!poolIdRemoveParent.equals(new Long("0")) && !transferPoolIds.contains(poolIdRemoveParent)) {
@@ -1468,7 +1468,6 @@ public class QuestionPoolFacadeQueries
   
   	  // updatePoolOwnerIdList will not be empty, so no need to check the size
   	  String updateOwnerIdInPoolTableQueryString = createQueryString(updatePoolOwnerIdList);
-  
   	  // If all parent-children structure transfer, needUpdatedPoolParentIdList will be empty.	  
   	  String removeParentPoolString = "";
   	  if (needUpdatedPoolParentIdList.size() > 0) {
@@ -1478,15 +1477,20 @@ public class QuestionPoolFacadeQueries
   	  // I used jdbc update here since I met difficulties using hibernate to update SAM_QUESTIONPOOLACCESS_T. (it used composite-id there)
   	  // For updating SAM_QUESTIONPOOL_T, I can use hibernate but it will have many db calls. (I didn't find an efficient way to bulk update.) So used jdbc here again.
   	  try {
+		  System.out.println("Accedim al try dels updates "+ownerId);
   		  session = getSessionFactory().openSession();
           session.beginTransaction();
   		  String query = "";
   		  if (!"".equals(updateOwnerIdInPoolTableQueryString)) {
   			  query = "UPDATE SAM_QUESTIONPOOLACCESS_T SET agentid = :id WHERE questionpoolid IN (" + updateOwnerIdInPoolTableQueryString + ") AND accesstypeid = 34";
+
+ 	                  System.out.println("La query és  "+query); 
   			  session.createSQLQuery(query).setParameter("id", ownerId).executeUpdate();
 
   			  query = "UPDATE SAM_QUESTIONPOOL_T SET ownerid = :id WHERE questionpoolid IN (" + updateOwnerIdInPoolTableQueryString + ")";
+			  System.out.println("La 2a query és  "+query);
 			  session.createSQLQuery(query).setParameter("id", ownerId).executeUpdate();
+              System.out.println("Fem el flush");
               session.flush();
   		  }
   
@@ -1498,6 +1502,7 @@ public class QuestionPoolFacadeQueries
   		  }
   		  session.getTransaction().commit();
   	  } catch (Exception ex) {
+		  System.out.println("Error "+ex.getMessage());
   		  log.warn(ex.getMessage());
 	  } finally {
   		  if (session != null) {
