@@ -89,7 +89,7 @@ public class IgniteConfigurationAdapter extends AbstractFactoryBean<IgniteConfig
             Map<String, Object> attributes = new HashMap<>();
             // disable banner
             System.setProperty("IGNITE_NO_ASCII", "true");
-            System.setProperty("IGNITE_QUIET", "true");
+            System.setProperty("IGNITE_QUIET", "false");
             System.setProperty("IGNITE_PERFORMANCE_SUGGESTIONS_DISABLED", "true");
 
             configureName();
