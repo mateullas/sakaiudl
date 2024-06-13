@@ -167,7 +167,21 @@
 
         <!-- Allow this to be set -->
         <configuration name="functions.require" />
-    </tool>
+      </tool>
+
+      <tool
+                id="sakai.iframe.guiadocent"
+            title="Academic Guide UdL"
+            description="View Academic Guide UdL">
+
+        <configuration name="height" value="2400px" type="final" />
+	<configuration name="special" value="guiadocent" type="final" />
+	<configuration name="popup" value="false" type="final" />
+        <configuration name="reset.button" value="false" type="final" />
+
+        <!-- Allow this to be set -->
+        <configuration name="functions.require" />
+      </tool>
 
 
 </registration>

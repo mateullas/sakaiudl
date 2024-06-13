@@ -174,8 +174,9 @@ public class PortletIFrame extends GenericPortlet {
     /** Special value for worksite. */
     protected final static String SPECIAL_INTRANET = "intranet";
     protected final static String SPECIAL_UTILITATS = "utilitats";
-	protected final static String SPECIAL_ACTES = "actes";
+    protected final static String SPECIAL_ACTES = "actes";
     protected final static String SPECIAL_EXPEDIENT = "expedient";
+    protected final static String SPECIAL_GUIADOCENT = "guiadocent";
 
     /** If set, always hide the OPTIONS button */
     protected final static String HIDE_OPTIONS = "hide.options";
@@ -1020,6 +1021,10 @@ public class PortletIFrame extends GenericPortlet {
 	    {
 		special = SPECIAL_EXPEDIENT;
 	    }
+	    else if ("true".equals(config.getProperty("guiadocent")))
+	    {
+		special = SPECIAL_GUIADOCENT;
+	    }
         }
         return special;
     }
@@ -1064,7 +1069,21 @@ public class PortletIFrame extends GenericPortlet {
 			{
 			}
 		} 
-		
+		else if (SPECIAL_GUIADOCENT.equals(special)) 
+		{
+			try {
+				Site s = SiteService.getSite(context);
+                        	String siteId = s.getId();
+				String urlServer = ServerConfigurationService.getString("guiadocent.info.url");
+                        	// String urlServer = "https://guiadocentold.udl.cat/html/ca/";
+                        	rv = urlServer+siteId;
+                        	log.info("Url Guia "+rv);
+			}
+			catch (Exception any)
+                            {
+                                        log.error(any.getMessage(), any);
+                        }
+		}	
 		else if (SPECIAL_INTRANET.equals(special)) 
 		{
 			rv = StringUtils.trimToNull(getLocalizedURL("intranet.info.url"));
