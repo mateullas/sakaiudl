@@ -81,7 +81,8 @@ public abstract class Log4jConfigurationManager implements LogConfigurationManag
 				loggerContext = LoggerContext.getContext(false);
 			}
 		    // Load optional log4j.properties file from sakai home
-		    String log4jConfigFilePath = serverConfigurationService().getSakaiHomePath() + "log4j2.properties";
+		    // String log4jConfigFilePath = serverConfigurationService().getSakaiHomePath() + "log4j2.properties";
+		    String log4jConfigFilePath = System.getProperty("catalina.home") + "/conf/log4j2.properties";
 		    if (StringUtils.isNotEmpty(log4jConfigFilePath)) {
 		    	loggerContext.setConfigLocation(new File(log4jConfigFilePath).toURI());
 		    }
