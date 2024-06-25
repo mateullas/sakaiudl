@@ -170,9 +170,7 @@
       </tool>
 
       <tool
-                id="sakai.iframe.guiadocent"
-            title="Academic Guide UdL"
-            description="View Academic Guide UdL">
+                id="sakai.iframe.guiadocent">
 
         <configuration name="height" value="2400px" type="final" />
 	<configuration name="special" value="guiadocent" type="final" />
