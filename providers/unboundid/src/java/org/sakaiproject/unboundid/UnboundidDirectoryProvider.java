@@ -1643,6 +1643,10 @@ public class UnboundidDirectoryProvider implements UserDirectoryProvider, LdapCo
 		}
 		
 		String filter = ldapAttributeMapper.getFindUserByCrossAttributeSearchFilter(criteria);
+		// Afegim wrapFilter a la cerca d'usuaris externs
+		// passem true perquè hi ha diversos atributs en la cerca
+		filter = wrapFilter (filter,true);
+		log.debug("searchExternalUsers. Apliquem el següent filtre "+filter);
 		List<UserEdit> users = new ArrayList<UserEdit>();
 		
 		try {
@@ -1680,6 +1684,10 @@ public class UnboundidDirectoryProvider implements UserDirectoryProvider, LdapCo
     public Collection findUsersByEmail(String email, UserFactory factory) {
 
 		String filter = ldapAttributeMapper.getFindUserByEmailFilter(email);
+		// Afegim wrapFilter a la cerca per mail
+		// passem false perquè només hi ha el mail com atribut en la cerca
+		filter = wrapFilter (filter,false);
+		log.debug("findUsersByEmail. Apliquem el següent filtre "+filter);
 		List<User> users = new ArrayList<User>();
 
                 if (!allowSearchExternal) {
