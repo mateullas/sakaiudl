@@ -1442,6 +1442,14 @@ public abstract class BaseSiteService implements SiteService, Observer
 				.build()
 		);
 
+		//send message to (ignite) MicrosoftMessagingService
+                microsoftMessagingService().send(MicrosoftMessage.Topic.CREATE_ELEMENT, MicrosoftMessage.builder()
+                                .action(MicrosoftMessage.Action.CREATE)
+                                .type(MicrosoftMessage.Type.SITE)
+                                .siteId(id)
+                                .build()
+                );
+
 		return site;
 	}
 
