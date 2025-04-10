@@ -713,6 +713,15 @@ public class SakaiProxyImpl implements SakaiProxy, Observer {
         rosterMember.setInstructor(isAllowed(userId, RosterFunctions.ROSTER_FUNCTION_VIEWALL, site.getReference()));
         rosterMember.setCanViewProfilePicture(true);
 
+	String propDNI = user.getProperties().getProperty("dni");
+ 		String dni = "";
+
+ 		if (propDNI != null){
+ 			dni = propDNI;
+ 		}
+ 	rosterMember.setDni (dni);
+
+
         SakaiPerson sakaiPerson = sakaiPersonManager.getSakaiPerson(userId, sakaiPersonManager.getUserMutableType());
         if (sakaiPerson != null) {
             rosterMember.setPronouns(sakaiPerson.getPronouns());

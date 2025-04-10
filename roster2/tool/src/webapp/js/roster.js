@@ -10,13 +10,14 @@ roster.setupPrintButton = function () {
     const button = e.target;
 
     button.disabled = true;
+    $('.roster-print-button').prepend ('<span class="spincircle fa fa-circle-o-notch fa-spin"></span>');  
 
     e.preventDefault();
     roster.renderMembership({
       renderAll: true,
       printMode: true,
+      forceOfficialPicture: roster.officialPictureMode,
       callback: function () {
-
         const doIt = () => {
 
           Promise.all(Array.from(document.querySelectorAll("sakai-user-photo"))
@@ -24,6 +25,7 @@ roster.setupPrintButton = function () {
 
             imagesLoaded("#roster-members-content", () => {
 
+              $('.spincircle').remove();
               button.disabled = false;
               window.print();
             });

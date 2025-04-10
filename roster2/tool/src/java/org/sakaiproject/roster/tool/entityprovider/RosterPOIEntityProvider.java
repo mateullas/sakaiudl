@@ -504,6 +504,8 @@ public class RosterPOIEntityProvider extends AbstractEntityProvider implements
 	private List<String> addUserDataRow(final RosterMember member, final String siteId) {//roster12345678
 		final List<String> row = new ArrayList<String>();
 
+		row.add (member.getDni());
+
 		if (this.sakaiProxy.getFirstNameLastName()) {
 			row.add(member.getDisplayName());
 		} else {
@@ -541,6 +543,36 @@ public class RosterPOIEntityProvider extends AbstractEntityProvider implements
 
 		return row;
 	}
+
+	private void addGroupMembershipUngroupedRows(List<List<String>> dataInRows,
+ 			List<RosterMember> rosterMembers, List<String> header) {
+
+ 		dataInRows.add(header);
+ 		// blank line
+ 		dataInRows.add(new ArrayList<String>());
+
+ 		for (final RosterMember member : rosterMembers) {
+
+ 			final List<String> row = new ArrayList<String>();
+
+ 			row.add (member.getDni());
+
+ 			if (sakaiProxy.getFirstNameLastName()) {
+ 				row.add(member.getDisplayName());
+ 			} else {
+ 				row.add(member.getSortName());
+ 			}
+
+ 			if (sakaiProxy.getViewUserDisplayId()) {
+ 				row.add(member.getDisplayId());
+ 			}
+
+ 			row.add(member.getRole());
+ 			row.add(member.getGroupsToString());
+
+ 			dataInRows.add(row);
+ 		}
+ 	}
 
 	/**
 	 * Rows will be filled with Sections and regular Groups spread over different cells, taking into account that:
@@ -708,6 +740,7 @@ public class RosterPOIEntityProvider extends AbstractEntityProvider implements
 	private List<String> createColumnHeader(final String viewType, final String siteId, boolean isGroupsSheetHeader) {
 
 		final List<String> header = new ArrayList<>();
+		header.add(rl.getString("facet_dni"));
 		header.add(rl.getString("facet_name"));
 
 		if (this.sakaiProxy.getViewUserDisplayId(siteId)) {
