@@ -305,7 +305,7 @@ public interface PortalService
 	/**
 	 * @return the quick links for display in the top navigation bar. Will return and empty List if no quick links are set.
 	 */
-    List<Map> getQuickLinks(String siteSkin);
+    List<Map> getQuickLinks(String siteSkin,String userId);
 
 	/**
 	 * Add a single pinned or unpinned site, for the specified user
