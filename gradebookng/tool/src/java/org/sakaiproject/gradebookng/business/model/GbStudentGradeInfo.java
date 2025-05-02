@@ -52,6 +52,9 @@ public class GbStudentGradeInfo implements Serializable {
 	private boolean hasCourseGradeComment;
 	private List<String> sections;
 
+	@Getter
+	private String DNI;
+
 	public GbStudentGradeInfo() {
 	}
 
@@ -69,6 +72,7 @@ public class GbStudentGradeInfo implements Serializable {
 		studentNumber = u.getStudentNumber();
 		grades = new HashMap<>();
 		categoryAverages = new HashMap<>();
+		this.DNI = u.getDNI();
 		sections = u.getSections();
 	}
 
@@ -82,6 +86,7 @@ public class GbStudentGradeInfo implements Serializable {
 		this.studentNumber = studentNumber;
 		this.grades = new HashMap<>();
 		this.categoryAverages = new HashMap<>();
+		this.DNI = (u.getProperties().getProperty("dni") != null) ? u.getProperties().getProperty("dni") : "";
 		sections = new ArrayList<>();
 	}
 
