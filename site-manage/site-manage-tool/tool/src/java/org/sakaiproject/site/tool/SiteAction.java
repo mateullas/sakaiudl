@@ -347,6 +347,9 @@ public class SiteAction extends PagedResourceActionII {
 	
 	private static final String STATE_TERM_VIEW_SELECTED = "site.termview.selected";
 
+	/** Canvi UDL per número màxim d'espais tipus projecte */
+	private final static String PROJECT_SITES_MAXNUM = ServerConfigurationService.getString("maxNumOfProjectSites","0");
+
 	/** Names of lists related to tools groups */
 	private static final String STATE_TOOL_GROUP_LIST = "toolsByGroup";
 
@@ -398,6 +401,14 @@ public class SiteAction extends PagedResourceActionII {
 	private static final String STATE_PROJECT_SITE_TYPE = "project";
 	
 	private static final String STATE_SITE_IMPORT_ARCHIVE = "canImportArchive";
+
+	private static final String STATE_SITE_ADD_PROJECTEDOCENT = "canAddProjectedocent";
+
+	private static final String STATE_PROJECTEDOCENT_SITE_TYPE = "projectedocent";
+
+	public final static String SITE_SECTIONS_LIST_SELECTED = "iSectionsSelectedIds";
+
+	private final static String ORLA_DELETED_CONFIRMATION_TOKEN = "deleteOrlaConfirmation";
 	
 	// SAK-23468
 	private static final String STATE_NEW_SITE_STATUS_ISPUBLISHED = "newSiteStatusIsPublished";
@@ -1559,6 +1570,7 @@ public class SiteAction extends PagedResourceActionII {
 		// all site types
 		context.put("courseSiteTypeStrings", siteService.getSiteTypeStrings("course"));
 		context.put("projectSiteTypeStrings", siteService.getSiteTypeStrings("project"));
+		context.put("projectedocentSiteTypeStrings", SiteService.getSiteTypeStrings("projectedocent"));
 		
 		//can the user create course sites?
 		context.put(STATE_SITE_ADD_COURSE, siteService.allowAddCourseSite());
@@ -1569,6 +1581,10 @@ public class SiteAction extends PagedResourceActionII {
 		
 		// can the user user create sites from archives?
 		context.put(STATE_SITE_IMPORT_ARCHIVE, siteService.allowImportArchiveSite());
+
+		// can the user create projectedocent sites?
+		context.put("projectedocentSiteType", STATE_PROJECTEDOCENT_SITE_TYPE);
+		context.put(STATE_SITE_ADD_PROJECTEDOCENT, SiteService.allowAddProjectedocentSite());
 
 		Site site = getStateSite(state);
 
@@ -1614,14 +1630,18 @@ public class SiteAction extends PagedResourceActionII {
 			views.put(SITE_TYPE_MYWORKSPACE, rb.getFormattedMessage("java.sites", rb.getString("java.my")));
 			for (int sTypeIndex = 0; sTypeIndex < sTypes.size(); sTypeIndex++) {
 				String type = (String) sTypes.get(sTypeIndex);
-				views.put(type, rb.getFormattedMessage("java.sites", type));
+				String typei18n = "site.type." + type;
+				String inttype = rb.getString (typei18n,type);
+				views.put(type, rb.getFormattedMessage("java.sites", inttype));
 			}
 			List<String> moreTypes = siteTypeProvider.getTypesForSiteList();
 			if (!moreTypes.isEmpty())
 			{
 				for(String mType : moreTypes)
 				{
-					views.put(mType, rb.getFormattedMessage("java.sites", mType));
+					String typei18n = "site.type." + mType;
+					String inttype = rb.getString (typei18n,mType);
+					views.put(mType, rb.getFormattedMessage("java.sites", inttype));
 				}
 			}
 				// Allow SuperUser to see all deleted sites.
@@ -1795,6 +1815,23 @@ public class SiteAction extends PagedResourceActionII {
 				types.addAll(mTypes);
 			}
 			context.put("siteTypes", types);
+			int maxProjReached = maxProjectSitesReached();
+
+			if(maxProjReached == -2)
+			{
+				context.put("maxNumOfProjectSites","unlimited");
+				context.put("maxProjectNotReached",true);
+			}
+			else{
+				context.put("maxNumOfProjectSites",PROJECT_SITES_MAXNUM);
+
+				if( maxProjReached == -1) context.put("maxProjectNotReached",false)
+				else{
+					context.put("maxProjectNotReached",true);
+					context.put("actualNumOfProjectSites",Integer.toString(maxProjReached));
+				}
+
+			}
 			context.put("templateControls", serverConfigurationService.getString("site.setup.templateControls",serverConfigurationService.getString("templateControls", "")));
 			// put selected/default site type into context
 			String typeSelected = (String) state.getAttribute(STATE_TYPE_SELECTED);
@@ -3579,6 +3616,7 @@ public class SiteAction extends PagedResourceActionII {
 			
 			// SAK-21706/SAK-23255
 			context.put( CONTEXT_IS_ADMIN, securityService.isSuperUser() );
+			context.put( CONTEXT_SKIP_MANUAL_COURSE_CREATION, ServerConfigurationService.getBoolean( SAK_PROP_SKIP_MANUAL_COURSE_CREATION, Boolean.FALSE ) );
 			context.put( CONTEXT_SKIP_COURSE_SECTION_SELECTION, serverConfigurationService.getBoolean( SAK_PROP_SKIP_COURSE_SECTION_SELECTION, Boolean.FALSE ) );
 			context.put( CONTEXT_FILTER_TERMS, serverConfigurationService.getBoolean( SAK_PROP_FILTER_TERMS, Boolean.FALSE ) );
 			
@@ -5118,6 +5156,12 @@ public class SiteAction extends PagedResourceActionII {
 		if (providerCourseList != null && providerCourseList.size() > 0) {
 			rv = true;
 			state.setAttribute(SITE_PROVIDER_COURSE_LIST, providerCourseList);
+			/*** UDL: Afegim la crida a aquesta funció que retorna les sections en les quals l'usuari te permisos per treure llistes de classe  ***
+			 *** i ho afegim al context ***/
+
+			List <String> iSectionsIds = isOfficialInstructor(state);
+			context.put("iSectionsIds", iSectionsIds);
+			/*** FI UDL ***/
 			
 			Hashtable<String, String> sectionTitles = new Hashtable<String, String>();
 			for(int i = 0; i < providerCourseList.size(); i++)
@@ -5148,6 +5192,29 @@ public class SiteAction extends PagedResourceActionII {
 		boolean rv3 = courseListFromStringIntoContext(state, context, site, PROP_SITE_REQUEST_COURSE, SITE_MANUAL_COURSE_LIST, "manualCourseList");
 		
 		return (rv || rv2 || rv3);
+	}
+
+	/*** UDL Llista a quines sections te permisos l'usuari per afegir/treure ***/
+	private List<String> isOfficialInstructor(SessionState state){
+
+		List<String> iSectionsIds = new ArrayList();
+
+		String userId = (String) state.getAttribute(STATE_CM_CURRENT_USERID);
+
+		Map map = groupProvider.getGroupRolesForUser(userId);
+		if (map != null){
+
+			Set keys = map.keySet();
+			Set roleSet = getRolesAllowedToAttachSection(state);
+			for (Iterator i = keys.iterator(); i.hasNext();) {
+				String sectionEid = (String) i.next();
+				String role = (String) map.get(sectionEid);
+				if (includeRole(role, roleSet)) {
+					iSectionsIds.add(sectionEid);
+				}
+			}
+		}
+		return iSectionsIds;
 	}
 
 	public void doUser_search(RunData data, Context context) {
@@ -6004,7 +6071,14 @@ public class SiteAction extends PagedResourceActionII {
 				// redirect
 				redirectCourseCreation(params, state, "selectTerm");
 			} else if (SiteTypeUtil.isProjectSite(type)) { // UMICH-1035
-				state.setAttribute(STATE_TEMPLATE_INDEX, "13");
+				if(maxProjectSitesReached() == -1)
+					{
+						addAlert(state, rb.getFormattedMessage("sitetype.maxnumofprojects",new Object[]{PROJECT_SITES_MAXNUM}));
+						state.setAttribute(STATE_TEMPLATE_INDEX, "1");
+					}
+				else{
+					state.setAttribute(STATE_TEMPLATE_INDEX, "13");
+				}
 			} else if (pSiteTypes != null && pSiteTypes.contains(SiteTypeUtil.getTargetSiteType(type))) {  // UMICH-1035
 				// if of customized type site use pre-defined site info and exclude
 				// from public listing
@@ -10715,15 +10789,59 @@ private Map<String, List<MyTool>> getTools(SessionState state, String type, Site
 			 * actionForTemplate chef_site-editClass.vm
 			 * 
 			 */
+			//estat inicial de petició, no hi ha cap orla seleccionada.
+ 			state.removeAttribute(SITE_SECTIONS_LIST_SELECTED);
+ 			String confirmacio = (String) state.getAttribute("confirmacio");
+ 			state.setAttribute("confirmacio", "novalue");
 			if (forward) {
 				if (params.getStrings("providerClassDeletes") == null
 						&& params.getStrings("manualClassDeletes") == null
 						&& params.getStrings("cmRequestedClassDeletes") == null
 						&& !"back".equals(direction)) {
 					addAlert(state, rb.getString("java.classes"));
+					state.setAttribute("confirmacio", "novalue");
+ 					}else{
+ 						if(confirmacio == null || confirmacio != null && confirmacio.equals("novalue")){
+ 							//UDL: mostrem alerta d'eliminació...
+ 							addAlert(state, rb.getString("sitegen.siteinfolist.deleteClassWarning"));
+ 							state.setAttribute("confirmacio", "ok");
+ 						}else{
+ 							state.setAttribute("confirmacio", "novalue");
+ 						}
 				}
-
+				//UDL: mirem els grups que s'han seleccionat per a esborrar per tornar-los a marcar a la tornada i esperar confirmació...
+ 				List<String> iSectionsSelectedIds = new ArrayList();
 				if (params.getStrings("providerClassDeletes") != null) {
+					List providerCourseDeleteList = new ArrayList(Arrays
+ 							.asList(params.getStrings("providerClassDeletes")));
+ 					for (ListIterator i = providerCourseDeleteList
+ 							.listIterator(); i.hasNext();) {
+ 						iSectionsSelectedIds.add((String) i.next());
+ 					}
+ 				}
+ 
+ 				if (params.getStrings("manualClassDeletes") != null){
+ 
+ 					List manualCourseDeleteList = new ArrayList(Arrays
+ 							.asList(params.getStrings("manualClassDeletes")));
+ 					for (ListIterator i = manualCourseDeleteList
+ 							.listIterator(); i.hasNext();) {
+ 						iSectionsSelectedIds.add((String) i.next());
+ 					}
+ 				}
+ 
+ 				if (params.getStrings("cmRequestedClassDeletes") != null){
+ 
+ 					List<String> cmRequestedCourseDeleteList = new ArrayList(Arrays.asList(params.getStrings("cmRequestedClassDeletes")));
+ 					for (ListIterator i = cmRequestedCourseDeleteList
+ 							.listIterator(); i.hasNext();) {
+ 						iSectionsSelectedIds.add((String) i.next());
+ 					}
+ 				}
+ 				state.setAttribute(SITE_SECTIONS_LIST_SELECTED, iSectionsSelectedIds);
+ 				// fi udl
+ 
+ 				if (params.getStrings("providerClassDeletes") != null && confirmacio != null && confirmacio.equals("ok")) {
 					// build the deletions list
 					List providerCourseList = (List) state
 							.getAttribute(SITE_PROVIDER_COURSE_LIST);
@@ -10780,6 +10898,7 @@ private Map<String, List<MyTool>> getTools(SessionState state, String type, Site
 						}
 					}
 					state.setAttribute(STATE_CM_REQUESTED_SECTIONS, cmRequestedCourseList);
+					state.setAttribute("confirmacio", "novalue");
 				}
 
 				updateCourseClasses(state, new Vector(), new Vector());
@@ -11105,6 +11224,8 @@ private Map<String, List<MyTool>> getTools(SessionState state, String type, Site
 		
 		// clean the related site groups
 		// if the group realm provider id is not listed for the site, remove the related group
+		boolean deleteGroup = false;
+ 		ArrayList<Group> gds = null;
 		for (Iterator iGroups = site.getGroups().iterator(); iGroups.hasNext();)
 		{
 			Group group = (Group) iGroups.next();
@@ -11120,6 +11241,10 @@ private Map<String, List<MyTool>> getTools(SessionState state, String type, Site
 					{
 						// if none of those three lists contains the provider id, remove the group and realm
 						authzGroupService.removeAuthzGroup(group.getReference());
+						deleteGroup = true;
+ 						if(gds == null)
+ 							gds = new ArrayList<Group>();
+ 						gds.add(group);
 					}
 				}
 			}
@@ -11131,6 +11256,27 @@ private Map<String, List<MyTool>> getTools(SessionState state, String type, Site
 
 		if (state.getAttribute(STATE_MESSAGE) == null) {
 			commitSite(site);
+			// udl
+ 						try
+ 						{
+ 							if(deleteGroup){
+ 								// eliminem el grup
+ 								//log.warn("elimnant grupet/s...");
+ 								for (Group gd : gds){
+ 									site.removeGroup(gd);
+ 								}
+ 								SiteService.save(site);
+ 								gds.clear();
+ 							}
+ 							deleteGroup = false;
+ 						}
+ 						catch (IdUnusedException e) {
+ 							log.warn(this + ".processDeleteGroups: Problem of saving site after group removal: site id =" + site.getId(), e);
+ 						}
+ 						catch (PermissionException e) {
+ 							log.warn(this + ".processDeleteGroups: Permission problem of saving site after group removal: site id=" + site.getId(), e);
+ 						}
+ 			// fi udl
 		} else {
 		}
 		if (requestClasses != null && requestClasses.size() > 0
@@ -12665,7 +12811,14 @@ private Map<String, List<MyTool>> getTools(SessionState state, String type, Site
 						siteInfo.site_contact_name);
 				rp.addProperty(Site.PROP_SITE_CONTACT_EMAIL,
 						siteInfo.site_contact_email);
-				
+			        if (siteInfo.site_type.equals("projectedocent")){
+ 					log.debug("Tipus projectedocent. Afegim propietat nonOfficialAccount");
+ 					rp.addProperty("nonOfficialAccount","true");
+ 				} 
+ 				if (siteInfo.site_type.equals("course")){
+ 					log.debug("Tipus course. Afegim propietat nonOfficialAccount");
+ 					rp.addProperty("nonOfficialAccount","true");
+ 				} 	
 				// SAK-22790 add props from SiteInfo object
 				rp.addAll(siteInfo.getProperties());
 				
@@ -14315,7 +14468,7 @@ private Map<String, List<MyTool>> getTools(SessionState state, String type, Site
 				{
 					if( serverConfigurationService.getBoolean( SAK_PROP_FILTER_TERMS,  false ) )
 					{
-						terms = filterTermDropDowns();
+						terms = filterTermDropDowns(state);
 					}
 				}
 			}
@@ -14339,7 +14492,7 @@ private Map<String, List<MyTool>> getTools(SessionState state, String type, Site
 	 * 
 	 * @return the filtered list of academic sessions
 	 */
-	public List<AcademicSession> filterTermDropDowns()
+	public List<AcademicSession> filterTermDropDowns(SessionState state)
 	{
 		List<AcademicSession> academicSessions = new ArrayList<AcademicSession>();
 		User user = userDirectoryService.getCurrentUser();
@@ -14347,7 +14500,7 @@ private Map<String, List<MyTool>> getTools(SessionState state, String type, Site
 		if( courseManagementService != null && user != null && groupProvider != null)
 		{
 			Map<String, String> sectionsToRoles = groupProvider.getGroupRolesForUser(user.getEid());
-			final Set<String> rolesAllowed = getRolesAllowedToAttachSection();
+			final Set<String> rolesAllowed = getRolesAllowedToAttachSection(state);
 			Map<String, String> filteredSectionsToRoles = sectionsToRoles.entrySet().stream()
 				.filter(entry->rolesAllowed.contains(entry.getValue()))
 				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
@@ -14392,7 +14545,7 @@ private Map<String, List<MyTool>> getTools(SessionState state, String type, Site
 	private void prepareCourseAndSectionMap(String userId,
 											String academicSessionEid,
 											Map<String, CourseOffering> courseOfferingHash,
-											Map<String, List<SectionObject>> sectionHash) {
+											Map<String, List<SectionObject>> sectionHash, SessionState state) {
 
 		// looking for list of courseOffering and sections that should be
 		// included in
@@ -14410,7 +14563,7 @@ private Map<String, List<MyTool>> getTools(SessionState state, String type, Site
 		Map<String, String> groupRoles = groupProvider.getGroupRolesForUser(userId, academicSessionEid);
 		if (groupRoles == null) return;
 
-		Set<String> roleSet = getRolesAllowedToAttachSection();
+		Set<String> roleSet = getRolesAllowedToAttachSection(state);
         for (String sectionEid : groupRoles.keySet()) {
             String role = groupRoles.get(sectionEid);
             if (includeRole(role, roleSet)) {
@@ -14473,18 +14626,66 @@ private Map<String, List<MyTool>> getTools(SessionState state, String type, Site
 		return includeRole;
 	} // includeRole
 
-	protected Set<String> getRolesAllowedToAttachSection() {
-		// Use !site.template.[site_type]
-		String azgId = "!site.template.course";
-		AuthzGroup azgTemplate;
-		try {
-			azgTemplate = authzGroupService.getAuthzGroup(azgId);
-		} catch (GroupNotDefinedException e) {
-			log.error(this + ".getRolesAllowedToAttachSection: Could not find authz group " + azgId, e);
-			return new HashSet();
+	protected Set<String> getRolesAllowedToAttachSection(SessionState state) {
+ 		String azgIdEtUdl = "!rols.et.udl";
+ 		String azgIdCourseUdl = "!rols.course.udl";
+ 
+ 		Set roles = new HashSet();
+ 
+ 		AuthzGroup azgTemplateEtUdl;
+ 		AuthzGroup azgTemplateCourseUdl;				
+ 
+ 		Site site = getStateSite(state);
+ 
+ 		if (site!=null){ //Estem en un site, mirem de quin tipus
+ 
+ 			String siteType = site.getType();			
+ 			if(siteType!=null && siteType.equals("course")){ //tipus course, mirem si es tracta d'espai comunicacio
+ 
+ 				ResourceProperties siteProperties = site.getProperties();				
+ 				if(siteProperties.getProperty("tipus_espai")!=null && siteProperties.getProperty("tipus_espai").equals("espai_comunicacio")){
+ 
+ 					try {
+ 						azgTemplateEtUdl = authzGroupService.getAuthzGroup(azgIdEtUdl);
+ 					} catch (GroupNotDefinedException e) {
+ 						log.warn(this + ".getRolesAllowedToAttachSection: Could not find authz group " + azgIdEtUdl, e);
+ 						return new HashSet();
+ 					}
+ 					roles = azgTemplateEtUdl.getRolesIsAllowed("site.upd");
+ 					roles.addAll(azgTemplateEtUdl.getRolesIsAllowed("realm.upd"));
+ 				}
+ 
+ 				//22-07-2015: Si estem en un site de tipus doctorat no podem afegir ni treure sections, per tant no retornem cap rol
+ 				else if (siteProperties.getProperty("tipus_espai")!=null && siteProperties.getProperty("tipus_espai").equals("doctorat")){
+ 
+ 					roles = new HashSet();
+ 				}
+ 
+ 				else{ //tipus course, assignatura (creada amb jobs o manualment)
+ 
+ 					try {
+ 						azgTemplateCourseUdl = authzGroupService.getAuthzGroup(azgIdCourseUdl);
+ 					} catch (GroupNotDefinedException e) {
+ 						log.warn(this + ".getRolesAllowedToAttachSection: Could not find authz group " + azgIdCourseUdl, e);
+ 						return new HashSet();
+ 					}
+ 					roles = azgTemplateCourseUdl.getRolesIsAllowed("site.upd");
+ 					roles.addAll(azgTemplateCourseUdl.getRolesIsAllowed("realm.upd"));
+ 				}
+ 			}
+ 
+ 		}
+ 		else { //estem al worksite setup
+ 
+ 			try {
+ 				azgTemplateCourseUdl = authzGroupService.getAuthzGroup(azgIdCourseUdl);
+ 			} catch (GroupNotDefinedException e) {
+ 				log.warn(this + ".getRolesAllowedToAttachSection: Could not find authz group " + azgIdCourseUdl, e);
+ 				return new HashSet();
+ 			}
+ 			roles = azgTemplateCourseUdl.getRolesIsAllowed("site.upd");
+ 			roles.addAll(azgTemplateCourseUdl.getRolesIsAllowed("realm.upd"));
 		}
-		Set<String> roles = azgTemplate.getRolesIsAllowed("site.upd");
-		roles.addAll(azgTemplate.getRolesIsAllowed("realm.upd"));
 		return roles;
 	} // getRolesAllowedToAttachSection
 
@@ -14508,7 +14709,7 @@ private Map<String, List<MyTool>> getTools(SessionState state, String type, Site
 		// sectionHash = (courseOfferingEid, list of sections)
 		Map<String, CourseOffering> courseOfferingHash = new HashMap<>();
 		Map<String, List<SectionObject>> sectionHash = new HashMap<>();
-		prepareCourseAndSectionMap(userId, academicSessionEid, courseOfferingHash, sectionHash);
+		prepareCourseAndSectionMap(userId, academicSessionEid, courseOfferingHash, sectionHash, state);
 		// courseOfferingHash & sectionHash should now be filled with stuffs
 		// put section list in state for later use
 
@@ -16264,6 +16465,31 @@ private Map<String, List<MyTool>> getTools(SessionState state, String type, Site
 
 		return true;
 	}
+
+	private int maxProjectSitesReached(){
+ 
+ 		String cuEid = UserDirectoryService.getCurrentUser().getEid();
+ 
+ 		int maxNumInt = Integer.parseInt(PROJECT_SITES_MAXNUM);
+ 
+ 		if(maxNumInt > 0)
+ 		{
+ 			List<Site> mySitesUpdate = SiteService.getSites(org.sakaiproject.site.api.SiteService.SelectionType.UPDATE,"project", null, null, null, null);
+ 
+ 			int countMySites = 0;
+ 
+ 			for(Iterator i = mySitesUpdate.iterator(); i.hasNext();)
+ 			{
+ 				Site s = (Site) i.next();
+ 
+ 				if (s.getCreatedBy().getEid() == cuEid) countMySites++;
+ 			}
+ 
+ 			if (countMySites >= maxNumInt) return (-1);
+ 			else return countMySites;
+ 		}
+ 		else return (-2);
+ 	}
 
 	/**
 	 * Generate a HashMap of all the variables stored within the state.
