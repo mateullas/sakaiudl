@@ -814,17 +814,13 @@ public abstract class BaseMailArchiveService extends BaseMessage implements Mail
 		public MailArchiveMessage addMailArchiveMessage(String subject, String fromAddress, Instant dateSent, List mailHeaders,
 				List attachments, String[] body) throws PermissionException
 		{
-			StringBuilder alertMsg = new StringBuilder();
-			final String cleanedHtml = formattedText.processFormattedText(body[1], alertMsg);
-			final String cleanedText = formattedText.encodeUnicode(body[0]);
-			final String cleanedSubject = formattedText.processFormattedText(subject, alertMsg);
 
 			MailArchiveMessageEdit edit = (MailArchiveMessageEdit) addMessage();
 			MailArchiveMessageHeaderEdit archiveHeaders = edit.getMailArchiveHeaderEdit();
-			edit.setBody(cleanedText);
-			edit.setHtmlBody(cleanedHtml);
+			edit.setBody(body[0]);
+			edit.setHtmlBody(body[1]);
 			archiveHeaders.replaceAttachments(attachments);
-			archiveHeaders.setSubject(cleanedSubject);
+			archiveHeaders.setSubject(subject);
 			archiveHeaders.setFromAddress(fromAddress);
 			archiveHeaders.setInstantSent(dateSent);
 			archiveHeaders.setMailHeaders(mailHeaders);
