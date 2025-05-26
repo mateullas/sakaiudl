@@ -718,10 +718,10 @@ function includeWebjarLibrary(library, options = {}) {
 			libraryVersion = "2.29.1";
 			jsReferences.push('/min/moment-with-locales.min.js');
 			break;
-		case 'dropzone':
-			libraryVersion = "5.9.3";
-			jsReferences.push('/dist/min/dropzone.min.js');
-			cssReferences.push('/dist/min/dropzone.min.css');
+		case 'dropzone-udl':
+			libraryVersion = "5.2.0";
+			document.write(`<script src="${webjars}/dropzone/${libraryVersion}/dropzone.js${ver}"></script>`);
+			document.write(`<script src="${webjars}/dropzone/${libraryVersion}/min/dropzone.min.css${ver}"></script>`);
 			break;
 		case 'select2':
 			libraryVersion = "4.0.13";

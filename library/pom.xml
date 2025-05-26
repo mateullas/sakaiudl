@@ -102,9 +102,9 @@
 		</dependency>
 		<!--Used in Resources, drag&drop resources -->
 		<dependency>
-			<groupId>org.webjars.npm</groupId>
-			<artifactId>dropzone</artifactId>
-			<version>5.9.3</version>
+			<groupId>org.webjars</groupId>
+			<artifactId>dropzone-udl</artifactId>
+			<version>5.2.0</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
