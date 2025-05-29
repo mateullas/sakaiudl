@@ -347,9 +347,6 @@ public class SiteAction extends PagedResourceActionII {
 	
 	private static final String STATE_TERM_VIEW_SELECTED = "site.termview.selected";
 
-	/** Canvi UDL per número màxim d'espais tipus projecte */
-	private final static String PROJECT_SITES_MAXNUM = ServerConfigurationService.getString("maxNumOfProjectSites","0");
-
 	/** Names of lists related to tools groups */
 	private static final String STATE_TOOL_GROUP_LIST = "toolsByGroup";
 
@@ -388,6 +385,8 @@ public class SiteAction extends PagedResourceActionII {
 	private static String[] PUBLIC_CHANGEABLE_SITE_TYPES_SAK_PROP;
 	private static String[] PUBLIC_SITE_TYPES_SAK_PROP;
 	private static String[] PRIVATE_SITE_TYPES_SAK_PROP;
+	/** Canvi UDL per número màxim d'espais tipus projecte */
+	private static String PROJECT_SITES_MAXNUM;
 
 	private static final String SAK_PROP_DEFAULT_SITE_VIS = "wsetup.defaultSiteVisibility";
 	private static final boolean SAK_PROP_DEFAULT_SITE_VIS_DFLT = true;
@@ -919,6 +918,8 @@ public class SiteAction extends PagedResourceActionII {
 		PUBLIC_CHANGEABLE_SITE_TYPES_SAK_PROP = serverConfigurationService.getStrings("site.types.publicChangeable");
 		PUBLIC_SITE_TYPES_SAK_PROP = serverConfigurationService.getStrings("site.types.publicOnly");
 		PRIVATE_SITE_TYPES_SAK_PROP = serverConfigurationService.getStrings("site.types.privateOnly");
+		/** Canvi UDL per número màxim d'espais tipus projecte */
+	        PROJECT_SITES_MAXNUM = serverConfigurationService.getString("maxNumOfProjectSites","0");
 
 		showOrphanedMembers = serverConfigurationService.getString("site.setup.showOrphanedMembers", "admins");
 		m_userSiteCache = memoryService.newCache("org.sakaiproject.site.api.siteService.userSiteCache");
