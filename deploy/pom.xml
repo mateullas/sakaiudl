@@ -946,7 +946,7 @@
         </dependency>
         <dependency>
             <groupId>org.apache.ignite</groupId>
-            <artifactId>ignite-slf4j</artifactId>
+            <artifactId>ignite-log4j2</artifactId>
             <scope>compile</scope>
         </dependency>
         <dependency>

@@ -433,7 +433,7 @@
       </dependency>
       <dependency>
         <groupId>org.apache.ignite</groupId>
-        <artifactId>ignite-slf4j</artifactId>
+        <artifactId>ignite-log4j2</artifactId>
         <version>${sakai.ignite.version}</version>
         <scope>provided</scope>
       </dependency>

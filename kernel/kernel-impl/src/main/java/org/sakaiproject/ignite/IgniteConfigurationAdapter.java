@@ -32,7 +32,7 @@ import org.apache.ignite.configuration.DeploymentMode;
 import org.apache.ignite.configuration.IgniteConfiguration;
 import org.apache.ignite.configuration.TransactionConfiguration;
 import org.apache.ignite.failure.FailureHandler;
-import org.apache.ignite.logger.slf4j.Slf4jLogger;
+import org.apache.ignite.logger.log4j2.Log4J2Logger;
 import org.apache.ignite.plugin.segmentation.SegmentationPolicy;
 import org.apache.ignite.spi.checkpoint.cache.CacheCheckpointSpi;
 import org.apache.ignite.spi.collision.fifoqueue.FifoQueueCollisionSpi;
@@ -117,7 +117,11 @@ public class IgniteConfigurationAdapter extends AbstractFactoryBean<IgniteConfig
             igniteConfiguration.setIgniteInstanceName(name);
             igniteConfiguration.setDeploymentMode(DeploymentMode.CONTINUOUS);
 
-            igniteConfiguration.setGridLogger(new Slf4jLogger());
+            try {
+		    igniteConfiguration.setGridLogger(new Log4J2Logger(System.getProperty("catalina.home") + "/conf/log4j2.properties"));
+            } catch (Exception e) {
+                log.error("Error trying to set log4j configuration " + e.getMessage());
+            }
 
             // configuration for metrics update frequency
             igniteConfiguration.setMetricsUpdateFrequency(serverConfigurationService.getLong(IGNITE_METRICS_UPDATE_FREQ, IgniteConfiguration.DFLT_METRICS_UPDATE_FREQ));
