@@ -197,7 +197,24 @@ public class SakaiProxyImpl implements SakaiProxy, Observer {
     @Override
     public boolean showPermsToMaintainers() {
         boolean showToMaintainers = serverConfigurationService.getBoolean(SAK_PROP_SHOW_PERMS_TO_MAINTAINERS, SAK_PROP_SHOW_PERMS_TO_MAINTAINERS_DEFAULT);
-        return (showToMaintainers && isSiteMaintainer(getCurrentSiteId())) || securityService.isSuperUser();
+        return (showToMaintainers && isSiteMaintainer(getCurrentSiteId()) && (!isProjectSite(getCurrentSiteId()))) || securityService.isSuperUser();
+    }
+
+    public boolean isProjectSite(String siteId) {
+	    
+	    String[] projectSiteTypes = serverConfigurationService.getStrings("projectSiteType");
+	    if (projectSiteTypes == null || projectSiteTypes.length == 0)
+	    {
+		    projectSiteTypes = new String[] {"project"};
+	    }
+	    List <String> types = Arrays.asList(projectSiteTypes);
+	    Site s = getSite(siteId);
+	    if (types.contains(s.getType())) {
+		    return true;
+	    }
+	    else {
+		    return false;
+	    }
     }
 
     @Override
