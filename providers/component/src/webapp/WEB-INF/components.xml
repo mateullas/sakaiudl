@@ -180,7 +180,8 @@
 					<entry key="udl.aluUESTIU"><ref bean="cat.udl.asic.provider.EspaiAlumnesUESTIU"/></entry>
 					<entry key="udl.aluUdL"><ref bean="cat.udl.asic.provider.EspaiAlumnes"/></entry>
 					<entry key="udl.intranet"><ref bean="cat.udl.asic.provider.EspaiIntranet"/></entry>
-               		<entry key="udl.paspdi"><ref bean="cat.udl.asic.provider.EspaiPASPDI"/></entry>
+					<entry key="udl.paspdi"><ref bean="cat.udl.asic.provider.EspaiPASPDI"/></entry>
+					<entry key="udl.profextern"><ref bean="cat.udl.asic.provider.EspaiProfEXTERN"/></entry>
                		
                </map>
 			</property>
@@ -561,7 +562,25 @@
 					
 				</map>
 			</property>		
-	</bean>
+		</bean>
+
+		<bean
+                        id="cat.udl.asic.provider.EspaiProfEXTERN"
+                        class="cat.udl.asic.provider.UserPropertiesProvider"
+                        init-method="init"
+                        destroy-method="destroy"
+			>
+
+                        <property name="properties">
+                                <map>
+                                        <entry key="tipus">
+                                                <map>
+                                                        <entry key="CONVIDAT"><value>access</value></entry>
+                                                </map>
+                                        </entry>
+                                </map>
+                        </property>
+        </bean>
 
 	
 

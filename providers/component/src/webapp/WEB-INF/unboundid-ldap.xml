@@ -351,7 +351,8 @@
  				<entry key="DOCTORAT"><value>aluDOCTORAT</value></entry>
  				<entry key="MOBILITAT"><value>aluMOBILITAT</value></entry> 
  				<entry key="EXTERNS"><value>aluEXTERNS</value></entry>
- 				<entry key="PDIPAS"><value>personUdL</value></entry>
+				<entry key="PDIPAS"><value>personUdL</value></entry>
+				<entry key="CONVIDAT"><value>profExtern</value></entry>
  			</map>
  		</property>
 
