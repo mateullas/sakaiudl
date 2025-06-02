@@ -173,8 +173,9 @@ public class PortletIFrame extends GenericPortlet {
     /** Special value for worksite. */
     protected final static String SPECIAL_INTRANET = "intranet";
     protected final static String SPECIAL_UTILITATS = "utilitats";
-	protected final static String SPECIAL_ACTES = "actes";
+    protected final static String SPECIAL_ACTES = "actes";
     protected final static String SPECIAL_EXPEDIENT = "expedient";
+    protected final static String SPECIAL_GUIADOCENT = "guiadocent";
 
     /** If set, always hide the OPTIONS button */
     protected final static String HIDE_OPTIONS = "hide.options";
@@ -1038,6 +1039,10 @@ public class PortletIFrame extends GenericPortlet {
 	    {
 		special = SPECIAL_EXPEDIENT;
 	    }
+	    else if ("true".equals(config.getProperty("guiadocent")))
+	    {
+		special = SPECIAL_GUIADOCENT;
+	    }
         }
         return special;
     }
@@ -1082,7 +1087,69 @@ public class PortletIFrame extends GenericPortlet {
 			{
 			}
 		} 
-		
+		else if (SPECIAL_GUIADOCENT.equals(special)) 
+		{
+			try {
+				Site s = SiteService.getSite(context);
+                        	String siteId = s.getId();
+				String urlServer = ServerConfigurationService.getString("guiadocent.info.url");
+                        	// String urlServer = "https://guiadocent.udl.cat/ca/html/2024-25";
+                        	// Primer pas, recuperem any acadèmic de la urlServer
+                        	String anyAcad = urlServer.substring(urlServer.lastIndexOf('/') + 1);
+                        	log.debug("AnyAcad "+anyAcad);
+				// Construïm cadena amb el període, tipus 2425
+                        	String retall = anyAcad.replace("20","");
+                        	String periode = retall.replace("-","");
+                        	log.debug("Periode "+periode);
+				// recuperem període del siteId
+                        	String periodeSite = siteId.substring(siteId.lastIndexOf('-') + 1);
+                        	log.debug("Periode Site "+periodeSite);
+				// recuperem el locale
+				Locale locale = new ResourceLoader().getLocale();
+				log.debug("Locale "+locale);
+				String idioma = "ca";
+				if (locale != null) {
+                                                idioma = locale.getLanguage();
+						// sembla que en el cas de l'anglès torna una cadena buida
+                                                if (idioma.isEmpty()) {
+                                                        idioma = "en";
+							log.debug("Locale buit, posem "+idioma);
+                                                }
+                                                else {
+                                                        log.debug("Idioma prefs. "+idioma);
+                                                }
+				}
+                                else {
+					log.debug("Locale null, posem ca");
+					idioma = "ca";
+                                }
+				// si el site és del curs actual
+				if (periodeSite.equals(periode)) {
+					String codiAss = siteId.substring(0, siteId.indexOf('-'));
+					// configurem l'idioma
+					if (!idioma.equals("ca")){
+						String urlServerLocalized = urlServer.replace("ca/",idioma+"/");
+						rv = urlServerLocalized+"_"+codiAss;
+					}
+					else {
+						 rv = urlServer+"_"+codiAss;
+					}
+                        		log.debug("Url guia actual "+rv);
+                        	}
+				else {
+                        		//no és del curs actual
+                        		String urlServerOld = urlServer.replace("ca/html/"+anyAcad,"");
+                        		log.debug("Url old "+urlServerOld);
+                        		rv = urlServerOld+"pdf/"+idioma+"/"+siteId;
+                        		log.debug("Url guies antigues "+rv);
+                        	}
+                        	log.info("Url Guia Docent"+rv);
+			}
+			catch (Exception any)
+                            {
+                                        log.error(any.getMessage(), any);
+                        }
+		}		
 		else if (SPECIAL_INTRANET.equals(special)) 
 		{
 			rv = StringUtils.trimToNull(getLocalizedURL("intranet.info.url"));
