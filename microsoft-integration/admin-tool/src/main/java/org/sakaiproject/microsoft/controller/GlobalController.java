@@ -38,7 +38,6 @@ import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
-import lombok.extern.slf4j.Slf4j;
 
 
 /**
@@ -47,7 +46,6 @@ import lombok.extern.slf4j.Slf4j;
  * This is the controller used by Spring MVC to handle requests
  * 
  */
-@Slf4j
 @ControllerAdvice
 public class GlobalController {
 

@@ -15,7 +15,7 @@
  */
 package org.sakaiproject.microsoft.controller;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.sakaiproject.microsoft.api.MicrosoftCommonService;
 import org.sakaiproject.microsoft.api.MicrosoftConfigurationService;
@@ -56,7 +56,7 @@ import static org.sakaiproject.microsoft.api.MicrosoftCommonService.MAX_CHANNELS
  * This is the controller used by Spring MVC to handle Group Synchronizations related requests
  * 
  */
-@Slf4j
+@Log4j2
 @Controller
 public class GroupSynchronizationController {
 	

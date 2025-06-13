@@ -16,7 +16,7 @@
 package org.sakaiproject.microsoft.impl;
 
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.sakaiproject.messaging.api.MicrosoftMessage;
 import org.sakaiproject.messaging.api.MicrosoftMessagingService;
@@ -70,7 +70,7 @@ import java.util.stream.StreamSupport;
 import static org.sakaiproject.microsoft.api.MicrosoftCommonService.MAX_CHANNELS;
 
 
-@Slf4j
+@Log4j2
 @Transactional
 public class MicrosoftSynchronizationServiceImpl implements MicrosoftSynchronizationService {
 
@@ -213,6 +213,7 @@ public class MicrosoftSynchronizationServiceImpl implements MicrosoftSynchroniza
 	public List<SiteSynchronization> getFilteredSiteSynchronizations(boolean fillSite, SakaiSiteFilter filter, ZonedDateTime fromDate, ZonedDateTime toDate) {
 		List<SiteSynchronization> result = microsoftSiteSynchronizationRepository.findByDate(fromDate, toDate);
 
+		log.debug("MicrosoftService: getFilteredSiteSynchronizations");
 		if(filter.getSiteProperty().isEmpty()){
 			return result.stream().map(ss -> {
 						if (fillSite) {
@@ -223,8 +224,10 @@ public class MicrosoftSynchronizationServiceImpl implements MicrosoftSynchroniza
 					.collect(Collectors.toList());
 		}
 
+		log.debug("MicrosoftService: Filter by property");
 		final List<Site> sites = sakaiProxy.getSakaiSites(filter);
 
+		log.debug("MicrosoftService: Recovered "+sites.size()+" sites");
 		return result.stream().map(ss -> {
 					Site site = null;
 					if (fillSite) {

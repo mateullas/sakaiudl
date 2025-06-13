@@ -60,9 +60,9 @@ import org.sakaiproject.user.api.UserNotDefinedException;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 
-@Slf4j
+@Log4j2
 @Transactional
 public class SakaiProxyImpl implements SakaiProxy {
 	

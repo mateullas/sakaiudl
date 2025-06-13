@@ -16,7 +16,7 @@
 package org.sakaiproject.microsoft.controller;
 
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2
 import org.apache.commons.lang3.StringUtils;
 import org.sakaiproject.microsoft.api.MicrosoftCommonService;
 import org.sakaiproject.microsoft.api.MicrosoftConfigurationService;
@@ -74,7 +74,7 @@ import static org.sakaiproject.microsoft.api.MicrosoftCommonService.MAX_CHANNELS
  * This is the controller used by Spring MVC to handle requests
  * 
  */
-@Slf4j
+@Log4j2
 @Controller
 public class AutoConfigController {
 	
@@ -110,7 +110,7 @@ public class AutoConfigController {
 		
 		HttpSession session = request.getSession();
 		
-		AutoConfigSessionBean autoConfigSessionBean = autoConfigSessionBean = (AutoConfigSessionBean)session.getAttribute("AutoConfigSessionBean");
+		AutoConfigSessionBean autoConfigSessionBean = (AutoConfigSessionBean)session.getAttribute("AutoConfigSessionBean");
 		if(autoConfigSessionBean == null) {
 			autoConfigSessionBean = new AutoConfigSessionBean();
 			session.setAttribute("AutoConfigSessionBean", autoConfigSessionBean);

@@ -79,6 +79,8 @@ import com.microsoft.graph.requests.GroupRequest;
 import com.microsoft.graph.requests.UserCollectionRequest;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.LoggerContext;
 import org.sakaiproject.authz.api.FunctionManager;
 import org.sakaiproject.messaging.api.MicrosoftMessage;
 import org.sakaiproject.messaging.api.MicrosoftMessage.MicrosoftMessageBuilder;
@@ -154,9 +156,9 @@ import com.microsoft.graph.options.HeaderOption;
 import com.microsoft.graph.options.Option;
 import com.microsoft.graph.requests.ChannelCollectionRequest;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 
-@Slf4j
+@Log4j2
 @Transactional
 public class MicrosoftCommonServiceImpl implements MicrosoftCommonService {
 
@@ -195,6 +197,10 @@ public class MicrosoftCommonServiceImpl implements MicrosoftCommonService {
 	final private Object lock = new Object();
 
 	public void init() {
+		LoggerContext context = (LoggerContext) LogManager.getContext(false);
+		context.setConfigLocation(new File(System.getProperty("catalina.home") + "/conf/log4j2.properties").toURI());
+		context.reconfigure();
+
 		// register functions
 		functionManager.registerFunction(PERM_VIEW_ALL_CHANNELS, true);
 		functionManager.registerFunction(PERM_CREATE_FILES, true);
@@ -622,8 +628,10 @@ public class MicrosoftCommonServiceImpl implements MicrosoftCommonService {
 	public Map<String, MicrosoftTeam> retrieveCacheTeams() throws MicrosoftCredentialsException {
 		Cache.ValueWrapper cachedValue = getCache().get(CACHE_TEAMS);
 		if (cachedValue != null) {
+			log.debug("CommonService: cache is not null");
 			return (Map<String, MicrosoftTeam>) cachedValue.get();
 		}
+		log.debug("CommonService: Empty hash");
 		return new HashMap<>();
 	}
 

@@ -15,7 +15,7 @@
  */
 package org.sakaiproject.microsoft.controller;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.sakaiproject.microsoft.api.MicrosoftCommonService;
 import org.sakaiproject.microsoft.api.MicrosoftConfigurationService;
@@ -65,7 +65,7 @@ import java.util.stream.Collectors;
  * This is the controller used by Spring MVC to handle requests
  * 
  */
-@Slf4j
+@Log4j2
 @Controller
 public class MainController {
 	
@@ -148,6 +148,7 @@ public class MainController {
 		ZonedDateTime toDate = null;
 		boolean filterByDate = !requestBody.getFromDate().isEmpty() && !requestBody.getToDate().isEmpty();
 
+		log.debug("MainController: filter by date");
 		if (filterByDate) {
 			fromDate = LocalDate.parse(requestBody.getFromDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay(ZoneOffset.UTC);
 			toDate = LocalDate.parse(requestBody.getToDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay(ZoneOffset.UTC);
@@ -168,6 +169,7 @@ public class MainController {
 					.collect(Collectors.toList());
 		}
 
+		log.debug("MainController: after filter");
 		//sort elements
 		if (StringUtils.isNotBlank(sortBy)) {
 			String finalSortBy = sortBy;
