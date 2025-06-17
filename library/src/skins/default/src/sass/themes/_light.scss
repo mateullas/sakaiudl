@@ -29,7 +29,7 @@
     // predefined with gray, blue, teal, gold, green, orange,
     // purple, and red palettes available for you to use.
     // More info about defineColorHSL in sass/themes/_base.scss
-    @include defineColorHSL(--sakai-brand, 203, 76%, 25%);
+    @include defineColorHSL(--sakai-brand, 323, 100%, 26%);
     /////////////////////////////////////////////////////////////
 
     /////////////////////////////////////////////////////////////
@@ -40,11 +40,12 @@
     /////////////////////////////////////////////////////////////
 
     // Logo
-    --logo: url(./images/sakaiLogoBlack.png);
+    --logo: url(./images/logo.png);
     --logo-height: 30px;
     --logo-width: 103px;
     --logo-opacity: 1;
     --logo-background-color: var(--sakai-primary-color-1);
+    --logo-login: url(#{$skin-path}images/logo-udl.png);
 
     .logo-light {
         display: block;
@@ -213,7 +214,7 @@
     --tool-tab-active-background-color: var(--sakai-background-color-1);
     --tool-tab-active-highlight-color:var(--sakai-active-color-3);
 
-    --top-header-background: var(--sakai-background-color-1);
+    --top-header-background: var(--sakai-primary-color-1);
     --top-header-background-logo: var(--top-header-background);
     --top-header-border-color: transparent;
     --top-header-text-color: var(--sakai-text-color-1);

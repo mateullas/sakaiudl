@@ -117,11 +117,19 @@ $fa-font-path: "./fonts";
     sakai-rsf-evaluation : bi-chat-left-dots,
     sakai-scorm-singlepackage-tool : bi-file-zip,
     sakai-scorm-tool : bi-file-zip,
+     // UdL Tools
+    sakai-iframe-myworkspace : bi-signpost-2-fill,
+    sakai-iframe-intranet : bi-diagram-3-fill,
+    sakai-iframe-actes : bi-file-earmark-excel,
+    sakai-iframe-biblioteca : bi-bookmark-fill,
+
+    sakai-iframe-expedient : bi-mortarboard-fill,
+    sakai-iframe-utilitats : bi-briefcase-fill,
+    sakai-iframe-guiadocent : bi-file-earmark,
+    sakai-datacollector-biblioteca : bi-bookmark-fill,
+
+
     // other icons
-
-    // UdL Tools
-    sakai-iframe-guiadocent : (extend :fa-file-o),
-
     add : bi-plus,
     attachment : bi-paperclip,
     check : bi-check,

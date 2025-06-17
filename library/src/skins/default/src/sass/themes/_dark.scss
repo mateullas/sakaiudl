@@ -179,6 +179,7 @@
     --sakai-image-invert: grayscale(100%) invert(100%);
 
     // Overrides _light.scss variables when necessary
+    --logo-background-color: var(--sakai-background-color-1);
     //--top-header-background: var(--sakai-background-color-1);
     //--top-header-background-logo: var(--top-header-background);
     //--top-header-border-color: transparent;
