@@ -233,15 +233,6 @@ public class MoreSiteViewImpl extends AbstractSiteViewImpl
 		//SAK-30712
 		String[] moresitesExternalSites = serverConfigurationService.getStrings("moresites.externalConfig.siteTypes");
 		String moresitesExternalPrefix = serverConfigurationService.getString("moresites.externalConfig.prefix","moresites_");
-		String visibleTerms = serverConfigurationService.getString("portal.term.visibleTerms");
-		List <String> visibleTermTabs = new ArrayList<String> ();
-
-		String [] termTabs = visibleTerms.split (","); 
-
-		if (termTabs != null){
-			visibleTermTabs.addAll(Arrays.asList(termTabs));
-		}
-
 		boolean moresitesExternalConfig = (moresitesExternalSites!=null) && (moresitesExternalSites.length>0);
 		
 		Map<String, String> moresitesExternalSiteTypes = new HashMap<String, String>();
@@ -270,11 +261,8 @@ public class MoreSiteViewImpl extends AbstractSiteViewImpl
 				term = siteProperties.getProperty("term");
 				if(null==term) {
 					term = rb.getString("moresite_unknown_term");
-				} else if ("9999-99".equals (term)){
-					term = rb.getString("moresite_doctorat");
-				} else if (!visibleTermTabs.contains(term)){
-					term = rb.getString ("moresite_other_terms");
 				}
+
 			}
 			else if (isProjectType(type))
 			{
@@ -289,18 +277,14 @@ public class MoreSiteViewImpl extends AbstractSiteViewImpl
 				term = rb.getString("moresite_other");
 			}
 
-
-			if (!"hidden".equals (type)){
-				List<Site> currentList = new ArrayList();
-				if (termsToSites.containsKey(term))
-				{
-					currentList = termsToSites.get(term);
-					termsToSites.remove(term);
-				}
-				currentList.add(site);
-				termsToSites.put(term, currentList);
+			List<Site> currentList = new ArrayList();
+			if (termsToSites.containsKey(term))
+			{
+				currentList = termsToSites.get(term);
+				termsToSites.remove(term);
 			}
-			
+			currentList.add(site);
+			termsToSites.put(term, currentList);
 		}
 
 		class TitleSorter implements Comparator<Map>
@@ -366,11 +350,7 @@ public class MoreSiteViewImpl extends AbstractSiteViewImpl
 						.orElse(null);
 				if (isCourseType(type)) {
 					result.sitesInLeftPane.get(term).add(site);
-				} else if (	"projectedocent".equals(type) ||
-							"coord".equals (type)) {				
-						result.sitesInLeftPane.get(term).add(site);
-				}
-				else {
+				} else {
 					result.sitesInRightPane.get(term).add(site);
 				}
 			}
