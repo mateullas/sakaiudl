@@ -40,9 +40,12 @@
     /////////////////////////////////////////////////////////////
 
     // Logo
-    --logo: url(./images/sakaiLogoBlack.png);
-    --logo-height: 30px;
-    --logo-width: 103px;
+    --logo: url(./images/logo.png);
+    --logo-gateway: url(./images/logo-udl.png);
+    --logo-height: 50px;
+    --logo-width: 146px;
+    --logo-gateway-height: 65px;
+    --logo-gateway-width: 290px;
     --logo-opacity: 1;
     --logo-background-color: var(--sakai-primary-color-1);
 
