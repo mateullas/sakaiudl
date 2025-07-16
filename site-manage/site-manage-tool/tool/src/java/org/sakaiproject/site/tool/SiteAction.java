@@ -12832,14 +12832,16 @@ private Map<String, List<MyTool>> getTools(SessionState state, String type, Site
 						siteInfo.site_contact_name);
 				rp.addProperty(Site.PROP_SITE_CONTACT_EMAIL,
 						siteInfo.site_contact_email);
+
 			        if (siteInfo.site_type.equals("projectedocent")){
  					log.debug("Tipus projectedocent. Afegim propietat nonOfficialAccount");
  					rp.addProperty("nonOfficialAccount","true");
  				} 
  				if (siteInfo.site_type.equals("course")){
  					log.debug("Tipus course. Afegim propietat nonOfficialAccount");
- 					rp.addProperty("nonOfficialAccount","true");
+ 					rp.addProperty("nonOfficialAccount","false");
  				} 	
+
 				// SAK-22790 add props from SiteInfo object
 				rp.addAll(siteInfo.getProperties());
 				
