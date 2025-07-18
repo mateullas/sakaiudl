@@ -65,7 +65,7 @@
 #loginForm button,
 #loginForm .input-group-text {
   border-color: var(--top-header-text-color);
-  color: var(--top-header-text-color);
+  color: var(--sakai-text-color-1);
 }
 
 @include media-breakpoint-up(md) {
