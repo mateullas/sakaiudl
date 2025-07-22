@@ -266,13 +266,25 @@ $breadcrumb-divider: '>';
 
 @media (max-width: 767px) {
     :root {
-        --portal-header-height: 5.5rem;
+        --portal-header-height-base: 5.5rem;
+        --portal-header-height: var(--portal-header-height-base);
+    }
+    /* fer capçalera portal amb més alçada */
+    body.is-logged-out {
+      --portal-header-height: calc(var(--portal-header-height-base) + 5rem);
+      --logo-gateway-height: calc(var(--portal-header-height) * 0.75);
     }
 }
 
 @media (min-width: 768px) {
     :root {
-        --portal-header-height: 4.5rem;
+         --portal-header-height-base: 4.5rem;
+        --portal-header-height: var(--portal-header-height-base);
+    }
+    /* fer capçalera portal amb més alçada */
+    body.is-logged-out {
+      --portal-header-height: calc(var(--portal-header-height-base) + 5rem);
+      --logo-gateway-height: calc(var(--portal-header-height) * 0.75);
     }
 }
 
