@@ -1,6 +1,6 @@
 ## Header that shows institution and/or banner logos
 
-<header class="portal-header d-flex align-items-center justify-content-between" role="banner">
+<header class="portal-header d-flex align-items-center justify-content-between #if (!${userIsLoggedIn}) is-gateway #end  " role="banner">
 
   <div class="d-flex align-items-center h-100 ms-3 ms-md-0 #if (${userIsLoggedIn}) w-100 #end">
     <div id="logoWrapper" class="portal-header-logo d-flex h-100 align-items-center">

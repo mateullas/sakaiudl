@@ -15,6 +15,9 @@
       "header"
       "mainContainer"
       "mobilebar";
+  &.is-logged-out {
+	  grid-template-rows: auto auto 90px 1fr var(--portal-header-height);
+  }
 }
 
 @include media-breakpoint-up(md) {
@@ -34,7 +37,11 @@
           "header header"
           "mainContainer mainContainer";
     }
-  }
+    &.is-logged-out {
+          grid-template-rows: auto auto 90px 1fr;
+    }
+
+ }
   #portal-nav-sidebar {
     visibility: visible;
     box-shadow: none;
@@ -59,6 +66,9 @@
   grid-area: header;
   background-color: var(--top-header-background);
   border-bottom: 3px solid var(--sakai-border-color);
+  &.is-gateway {
+	  height: 90px;
+  }
 }
 
 #loginForm input,
