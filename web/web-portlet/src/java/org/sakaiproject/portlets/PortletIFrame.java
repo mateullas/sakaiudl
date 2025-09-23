@@ -1096,16 +1096,18 @@ public class PortletIFrame extends GenericPortlet {
                         	String siteId = s.getId();
 				String urlServer = ServerConfigurationService.getString("guiadocent.info.url");
                         	// String urlServer = "https://guiadocent.udl.cat/ca/html/2024-25";
-                        	// Primer pas, recuperem any acadèmic de la urlServer
-                        	String anyAcad = urlServer.substring(urlServer.lastIndexOf('/') + 1);
+                        	// Primer pas, recuperem any acadèmic
+                        	String anyAcad = ServerConfigurationService.getString("portal.term.actual");
+
                         	log.debug("AnyAcad "+anyAcad);
-				// Construïm cadena amb el període, tipus 2425
-                        	String retall = anyAcad.replace("20","");
-                        	String periode = retall.replace("-","");
-                        	log.debug("Periode "+periode);
+				// Inici nova guia docent 2425
+                        	String periodeInici = "2425";
+                        	log.debug("Periode "+periodeInici);
 				// recuperem període del siteId
                         	String periodeSite = siteId.substring(siteId.lastIndexOf('-') + 1);
-                        	log.debug("Periode Site "+periodeSite);
+                        	String anySite = "20"+periodeSite.substring(0,2)+"-"+periodeSite.substring(periodeSite.length()-2);
+				log.debug("Any Site "+anySite);
+				log.debug("Periode Site "+periodeSite);
 				// recuperem el locale
 				Locale locale = new ResourceLoader().getLocale();
 				log.debug("Locale "+locale);
@@ -1125,22 +1127,22 @@ public class PortletIFrame extends GenericPortlet {
 					log.debug("Locale null, posem ca");
 					idioma = "ca";
                                 }
-				// si el site és del curs actual
-				if (periodeSite.equals(periode)) {
+				// si el curs del site és posterior o igual al 2024-25 
+                        	if (periodeSite.compareTo(periodeInici)>=0) {
 					String codiAss = siteId.substring(0, siteId.indexOf('-'));
 					// configurem l'idioma
 					if (!idioma.equals("ca")){
 						String urlServerLocalized = urlServer.replace("ca/",idioma+"/");
-						rv = urlServerLocalized+"_"+codiAss;
+						rv = urlServerLocalized+anySite+"_"+codiAss;
 					}
 					else {
-						 rv = urlServer+"_"+codiAss;
+						 rv = urlServer+anySite+"_"+codiAss;
 					}
                         		log.debug("Url guia actual "+rv);
                         	}
 				else {
-                        		//no és del curs actual
-                        		String urlServerOld = urlServer.replace("ca/html/"+anyAcad,"");
+                        		//si és ANTERIOR al 2024-25
+                        		String urlServerOld = urlServer.replace("ca/html/","");
                         		log.debug("Url old "+urlServerOld);
                         		rv = urlServerOld+"pdf/"+idioma+"/"+siteId;
                         		log.debug("Url guies antigues "+rv);
