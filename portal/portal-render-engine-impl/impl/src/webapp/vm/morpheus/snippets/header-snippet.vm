@@ -17,7 +17,6 @@
         <span class="visually-hidden">$rloader.portal_home</span>
       </a>
     </div>
-    #parse("/vm/morpheus/includeGatewayNav.vm")
     #parse("/vm/morpheus/includePortalHeaderBreadcrumb.vm")
   </div>
 
@@ -29,6 +28,7 @@
     <span class="d-none d-md-inline">View System Alert</span>
   </a>
 
+  #parse("/vm/morpheus/includeGatewayNav.vm")
   #if (!${userIsLoggedIn})
     #if (${loginTopLogin})
       #parse("/vm/morpheus/includeLoginNav.vm")

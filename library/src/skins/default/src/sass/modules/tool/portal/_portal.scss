@@ -86,6 +86,24 @@
   .portal-main-content .portal-header-breadcrumb {
       display: none !important;
   }
+  .portal-header .portal-header-gateway {
+      display: flex !important;
+      flex-direction: column;
+      margin: 0 1rem;
+  }
+   .portal-main-content .portal-header-gateway {
+      display: none !important;
+  }
+
+  .portal-header-breadcrumb-separator, .portal-header-breadcrumb-item > a, .portal-header-gateway-item > a {
+  	color: var(--sakai-color-white) !important;
+  	text-decoration: none;
+  	font-weight: 600;
+  	&:hover {
+    		text-decoration: underline;
+  	}
+  }
+
 }
 
 @include media-breakpoint-down(md) {
@@ -96,20 +114,29 @@
       display: flex !important;
       margin-bottom: 1.5rem !important;
   }
+  .portal-header .portal-header-gateway {
+      display: none !important;
+  }
+  .portal-main-content .portal-header-gateway {
+      display: flex !important;
+      flex-direction: row;
+      column-gap: 5px;
+      margin-bottom: 1.5rem !important;
+  }
+
+  .portal-header-breadcrumb-separator, .portal-header-breadcrumb-item > a, .portal-header-gateway-item > a {
+	color: var(--sakai-text-color-1) !important;
+	text-decoration: none;
+  	font-weight: 600;
+  	&:hover {
+    		text-decoration: underline;
+  	}
+  }
 }
 
 .portal-header-breadcrumb {
   flex-wrap: wrap;
   gap: 0rem 0.5rem;
-}
-
-.portal-header-breadcrumb-separator, .portal-header-breadcrumb-item > a {
-  color: var(--sakai-color-white) !important;
-  text-decoration: none;
-  font-weight: 600;
-  &:hover {
-    text-decoration: underline;
-  }
 }
 
 .portal-header-breadcrumb-separator {
