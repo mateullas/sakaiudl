@@ -1,6 +1,7 @@
 <script src="/library/js/portal/portal.sidebar.sites.js$!{portalCDNQuery}"></script>
 <script src="/library/js/portal/portal.sidebar.collapse.js$!{portalCDNQuery}"></script>
 <script src="/library/js/portal/portal.serverinfo.js$!{portalCDNQuery}"></script>
+<script src="/library/js/portal/portal.changeIdiom.js$!{portalCDNQuery}"></script>
 #if ($loggedIn)
     <script src="/library/js/sub-page-navigation.js$!{portalCDNQuery}"></script>
     <script src="/library/js/portal/portal.init.js$!{portalCDNQuery}"></script>
