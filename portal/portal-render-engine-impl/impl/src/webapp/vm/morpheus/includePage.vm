@@ -40,6 +40,7 @@
         #end
 
         #parse("/vm/morpheus/snippets/roleSwitch-snippet.vm")
+        #parse("/vm/morpheus/includeGatewayNav.vm")
         #parse("/vm/morpheus/includePortalHeaderBreadcrumb.vm")
 
         #parse("/vm/morpheus/snippets/siteStatus-snippet.vm")
