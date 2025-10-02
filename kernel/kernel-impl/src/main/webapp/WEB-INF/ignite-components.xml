@@ -157,7 +157,10 @@
                 </bean>
                 <bean parent="org.sakaiproject.ignite.cache.atomic">
                     <property name="name" value="org.sakaiproject.coursemanagement.impl.AbstractMembershipContainerCmImpl"/>
-	        </bean>
+	    </bean>
+	        <bean parent="org.sakaiproject.ignite.cache.atomic">
+                    <property name="name" value="cat.udl.asic.cm.impl.AbstractMembershipContainerUdlCmImpl"/>
+                </bean>
                 <bean parent="org.sakaiproject.ignite.cache.atomic">
                     <property name="name" value="cat.udl.asic.cm.impl.MembershipContainerUdlCmImpl"/>
                 </bean>
