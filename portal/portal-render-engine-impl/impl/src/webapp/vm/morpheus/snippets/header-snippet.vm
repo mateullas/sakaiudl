@@ -17,7 +17,6 @@
         <span class="visually-hidden">$rloader.portal_home</span>
       </a>
     </div>
-    #parse("/vm/morpheus/includeGatewayNav.vm")
     #parse("/vm/morpheus/includePortalHeaderBreadcrumb.vm")
   </div>
 
@@ -33,7 +32,15 @@
     #if (${loginTopLogin})
       #parse("/vm/morpheus/includeLoginNav.vm")
     #else
+      #* 
+       EVDOC01-206  PORTAL Llista gateways UdL
+       Contenidor de la dreta de la capçalera
+        amb login i llista d'idiomes a sota      
+      *#
+      <div class="portal-header-right-container">
       #parse("/vm/morpheus/snippets/loginImage-snippet.vm")
+      #parse("/vm/morpheus/includeGatewayNav.vm")
+      </div>
     #end
   #else
     #parse("/vm/morpheus/includeAccountNav.vm")
