@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="ca"><head>
+<html lang="ca" data-lt-installed="true"><head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Intranet UdL</title>
-  <link rel="stylesheet" href="Intranet_fitxers/all.min.css">
   <style>
     :root {
       --primary-color: #830051;
@@ -105,45 +104,48 @@
       cursor: pointer;
     }
   </style>
+<script src="Intranet_fitxers/prompt.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 </head>
 <body>
 
   <main>
     <div class="filter-bar">
-      <input type="text" id="searchInput" placeholder="Cerca per nom o descripció...">
+      <input type="text" id="searchInput" placeholder="Search by name or description...">
     </div>
 
     <div class="section">
-      <h2>Utilitats</h2>
+      <h2>Utilities</h2>
       <div class="grid">
-        <a href="https://cautic.udl.cat/" target="_blank" class="card"><i class="fas fa-desktop"></i><div class="card-title">CAU TIC</div><div class="card-subtitle">Centre d'atenció a l'usuari/a (TIC)</div></a>
-        <a href="https://gcu.udl.cat/" target="_blank" class="card"><i class="fas fa-user-cog"></i><div class="card-title">Compte</div><div class="card-subtitle">Gestió de compte d'usuari/a</div></a>
-        <a href="https://outlook.office365.com/mail/" target="_blank" class="card"><i class="fas fa-envelope"></i><div class="card-title">Correu</div><div class="card-subtitle">Outlook Web</div></a>
-        <a href="https://cv.udl.cat/portal/site/directori" target="_blank" class="card"><i class="fas fa-address-book"></i><div class="card-title">Directori</div><div class="card-subtitle">Cercador de presones</div></a>
-        <a href="https://adas2fa.udl.cat/" target="_blank" class="card"><i class="fas fa-key"></i><div class="card-title">Doble Factor (2FA)</div><div class="card-subtitle">Gestió del doble factor d'autenticació</div></a>
-        <a href="https://data.udl.cat/" target="_blank" class="card"><i class="fas fa-database"></i><div class="card-title">DW</div><div class="card-subtitle">Datawarehouse</div></a>
-        <a href="https://gestioespais.udl.cat/gec" target="_blank" class="card"><i class="fas fa-university"></i><div class="card-title">GEC</div><div class="card-subtitle">Gestió d'espais comuns</div></a>
-        <a href="https://guiadocent.udl.cat/" target="_blank" class="card"><i class="fas fa-book"></i><div class="card-title">Guia docent</div><div class="card-subtitle">Edició Guies Docents</div></a>
-        <a href="https://udlcat.atlassian.net/servicedesk/customer/portal/21" target="_blank" class="card"><i class="fas fa-wrench"></i><div class="card-title">Manteniment</div><div class="card-subtitle">Formulari de manteniment</div></a>
-        <a href="https://pda.udl.cat/" target="_blank" class="card"><i class="fas fa-clipboard"></i><div class="card-title">PDA</div><div class="card-subtitle">Pla de Dedicació Acadèmica</div></a>
-        <a href="https://portalempleat.udl.cat/" target="_blank" class="card"><i class="fas fa-users-rectangle"></i><div class="card-title">Portal Empleat/da</div><div class="card-subtitle">Portal de l'empleat/da</div></a>
-        <a href="http://cv.udl.cat/portal/site/preinscripcio" target="_blank" class="card"><i class="fas fa-graduation-cap"></i><div class="card-title">Preinscripció M.</div><div class="card-subtitle">Gestió preinscripció màsters</div></a>
-        <a href="https://udldisc.udl.cat/" target="_blank" class="card"><i class="fas fa-hdd"></i><div class="card-title">UdLDisc</div><div class="card-subtitle">Espai de disc UdL</div></a>
+        <a href="https://cautic.udl.cat/" target="_blank" class="card"><i class="bi bi-display"></i><div class="card-title">CAU TIC</div><div class="card-subtitle">User support center (IT)</div></a>
+        <a href="https://gcu.udl.cat/language=en" target="_blank" class="card"><i class="bi bi-person-fill-gear"></i><div class="card-title">Account</div><div class="card-subtitle">User account management</div></a>
+        <a href="https://outlook.office365.com/mail/" target="_blank" class="card"><i class="bi bi-envelope-fill"></i><div class="card-title">Email</div><div class="card-subtitle">Outlook Web</div></a>
+	<a href="https://persones.udl.cat/language=en" target="_blank" class="card"><i class="bi bi-person-vcard-fill"></i><div class="card-title">Directory</div><div class="card-subtitle">Search udl's staff contact information</div></a>
+        <a href="https://adas2fa.udl.cat/" target="_blank" class="card"><i class="bi bi-key-fill"></i><div class="card-title">Double Factor (2FA)</div><div class="card-subtitle">2FA management</div></a>
+        <a href="https://data.udl.cat/" target="_blank" class="card"><i class="bi bi-database-fill"></i><div class="card-title">DW</div><div class="card-subtitle">Datawarehouse</div></a>
+        <a href="https://gestioespais.udl.cat/gec" target="_blank" class="card"><i class="bi bi-building-fill"></i><div class="card-title">GEC</div><div class="card-subtitle">Common spaces management</div></a>
+        <a href="https://guiadocent.udl.cat/" target="_blank" class="card"><i class="bi bi-book-half"></i><div class="card-title">Academic guide</div><div class="card-subtitle">Academic guide editing</div></a>
+        <a href="https://udlcat.atlassian.net/servicedesk/customer/portal/21" target="_blank" class="card"><i class="bi bi-wrench-adjustable"></i><div class="card-title">Maintenance</div><div class="card-subtitle">Maintenance form</div></a>
+        <a href="https://pda.udl.cat/" target="_blank" class="card"><i class="bi bi-clipboard-fill"></i><div class="card-title">PDA</div><div class="card-subtitle">Academic dedication plan</div></a>
+        <a href="https://portalempleat.udl.cat/" target="_blank" class="card"><i class="bi bi-person-bounding-box"></i><div class="card-title">Employee portal</div><div class="card-subtitle">Employee portal</div></a>
+        <a href="http://cv.udl.cat/portal/site/preinscripcio" target="_blank" class="card"><i class="bi bi-mortarboard-fill"></i><div class="card-title">Master pre-registration</div><div class="card-subtitle">Master pre-registration management</div></a>
+        <a href="https://udldisc.udl.cat/" target="_blank" class="card"><i class="bi bi-hdd-fill"></i><div class="card-title">UdLDisc</div><div class="card-subtitle">Disk space UdL</div></a>
       </div>
     </div>
 
     <div class="section">
-      <h2>Espais Intranet d'Unitats i documentació</h2>
+      <h2>Units intranet sites and documentacion</h2>
       <div class="grid">
-        <a href="https://cv.udl.cat/portal/site/gestioarxdocs" target="_blank" class="card"><i class="fas fa-folder"></i><div class="card-title">Arxiu i Gestió de Documents</div></a>
-        <a href="https://cv.udl.cat/portal/site/oti" target="_blank" class="card"><i class="fas fa-tools"></i><div class="card-title">Infraestructures</div></a>
-        <a href="https://cv.udl.cat/portal/site/uop" target="_blank" class="card"><i class="fas fa-sync"></i><div class="card-title">Organització i Processos</div></a>
-        <a href="https://cv.udl.cat/portal/site/arh" target="_blank" class="card"><i class="fas fa-users"></i><div class="card-title">Personal</div></a>
-        <a href="https://cv.udl.cat/portal/site/sprl" target="_blank" class="card"><i class="fas fa-exclamation-triangle"></i><div class="card-title">Prevenció de Riscos Laborals</div></a>
-        <a href="https://cv.udl.cat/portal/site/eadmin" target="_blank" class="card"><i class="fas fa-pen-nib"></i><div class="card-title">Procediment administratiu i signatura electrònica</div></a>
-        <a href="https://cv.udl.cat/portal/site/7de9afcf-c250-431b-9134-707019ede707" target="_blank" class="card"><i class="fas fa-chart-line"></i><div class="card-title">Qualitat i planificació docent</div></a>
-        <a href="https://cv.udl.cat/portal/site/scc" target="_blank" class="card"><i class="fas fa-briefcase"></i><div class="card-title">Secció de Contractació i Compres</div></a>
-        <a href="https://cv.udl.cat/portal/site/segu_inf_corp" target="_blank" class="card"><i class="fas fa-shield-alt"></i><div class="card-title">Seguretat Informativa i Corporativa</div></a>
+        <a href="https://cv.udl.cat/portal/site/gestioarxdocs" target="_blank" class="card"><i class="bi bi-folder-fill"></i><div class="card-title">Archiving and document management</div></a>
+        <a href="https://cv.udl.cat/portal/site/oti" target="_blank" class="card"><i class="bi bi-tools"></i><div class="card-title">Infrastructures</div></a>
+        <a href="https://cv.udl.cat/portal/site/uop" target="_blank" class="card"><i class="bi bi-arrow-repeat"></i><div class="card-title">Organization and processes</div></a>
+        <a href="https://cv.udl.cat/portal/site/arh" target="_blank" class="card"><i class="bi bi-people-fill"></i><div class="card-title">Staff unit</div></a>
+        <a href="https://cv.udl.cat/portal/site/pla_igualtat" target="_blank" class="card"><div style="display: flex"><i class="bi bi-person-standing-dress"></i><i class="bi bi-person-standing"></i></div><div class="card-title">Equality plan between women and men</div></a>
+        <a href="https://cv.udl.cat/portal/site/sprl" target="_blank" class="card"><i class="bi bi-exclamation-triangle-fill"></i><div class="card-title">Occupational risk prevention</div></a>
+        <a href="https://cv.udl.cat/portal/site/eadmin" target="_blank" class="card"><i class="bi bi-vector-pen"></i><div class="card-title">Administrative procedure and electronic signature</div></a>
+        <a href="https://cv.udl.cat/portal/site/7de9afcf-c250-431b-9134-707019ede707" target="_blank" class="card"><i class="bi bi-graph-up"></i><div class="card-title">Academic quality and planning</div></a>
+        <a href="https://cv.udl.cat/portal/site/scc" target="_blank" class="card"><i class="bi bi-briefcase-fill"></i><div class="card-title">Contracting and Purchasing Section</div></a>
+        <a href="https://cv.udl.cat/portal/site/segu_inf_corp" target="_blank" class="card"><i class="bi bi-shield-shaded"></i><div class="card-title">Information and Corporate Security</div></a>
       </div>
     </div>
   </main>
@@ -165,6 +167,4 @@
       });
     });
   </script>
-
-
-</body></html>
+<div style="all: initial; position: fixed !important; display: block !important; z-index: 2147483647 !important"></div></body></html>
