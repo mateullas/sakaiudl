@@ -56,7 +56,8 @@
       <artifactId>mockito-core</artifactId>
       <scope>test</scope>
     </dependency>
-	<dependency>
+
+    <dependency>
 	    <groupId>org.springframework.security.extensions</groupId>
 	    <artifactId>spring-security-saml2-core</artifactId>
 	    <version>1.0.10.RELEASE</version>
@@ -67,7 +68,8 @@
             </exclusion>
         </exclusions>
     </dependency>
-      <dependency>
+
+    <dependency>
           <groupId>org.jasig.cas.client</groupId>
           <artifactId>cas-client-core</artifactId>
           <version>3.6.4</version>
