@@ -33,6 +33,7 @@
 		// -->
 		</script>
 		<script type="text/javascript" language="JavaScript" src="/library/js/sakai-iframe-copy-classes.js"></script>
+		<script type="text/javascript" language="JavaScript" src="/library/webjars/jquery/1.12.4/jquery.min.js"></script>
 	</head>
 
 	<body style="background-color:transparent">
@@ -43,6 +44,37 @@
 			schedule, store resources, and much more.</p>
 			<p style="color:var(--sakai-color-gray--darker-2)">The default information displayed here for a new user can be modified by the Sakai
 				Administrator by editing the file sakai.properties configuration value "myworkspace.info.url" to point to the HTML file desired.</p>
+			<p>Below there is a list of your course sites. </p>
+			<ul id="contenidor">
+
+			</ul>
 		</div>
+		<script>
+			$(document).ready (function (){
+
+				$.getJSON('/direct/section/llistaassignatures_llistat/site/llistaassignatures/datasource/llistaassignatures.json?rnd='+ (new Date()).toLocaleDateString(), function(dataSites) {
+
+					var $cont = $("#contenidor");
+					$.each(dataSites.value, function(i,site) { 
+					$cont.append("<li><a target='_parent' href='/portal/site/"+site.value.site_id+"'  class='field'>" + site.value.title + "</a></li>");
+			
+					});
+					addContent();
+				}).error(function() { 
+					$("#contenidor").append("<span>S'ha produit un error obtenint el llistat d'espais dels quals sou membre, possiblement perquè algun d'ells conté caràcters invàlids per al format Json.</span>"); 
+				});
+			});
+
+
+			var addContent = function() {
+				window.parent.setMainFrameHeight(window.parent.$("iframe")[0].id)
+				var height = document.body.offsetHeight;
+				var iframe = window.parent.$("iframe")[0];
+				$(iframe).height(height + 20 +"px");
+			};
+
+		</script>
+
+	
 	</body>
 </html>

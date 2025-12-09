@@ -33,6 +33,7 @@
 		// -->
 		</script>
 		<script type="text/javascript" language="JavaScript" src="/library/js/sakai-iframe-copy-classes.js"></script>
+		<script type="text/javascript" language="JavaScript" src="/library/webjars/jquery/1.12.4/jquery.min.js"></script>
 	</head>
 
 	<body>
@@ -42,6 +43,35 @@
 			Es tracta d'un espai on poder desar els documents personals, crear espais nous, gestionar l'agenda, el perfil, entre altres possibilitats.</p>
 			<p class="instruction">L'administrador pot modificar la informaci&oacute;n predeterminada que apareix aqu&iacute; pel cas d'un usuari nou.
 			   Per fer-ho cal que editi la propietat "myworkspace.info.url" del fitxer sakai.properties per a que es mostri el fitxer html que desitgi.</p>
+			<p> A continuaci&oacute; trobareu un llistat amb els espais d&#39;assignatura als quals esteu assignats</p>
+			<ul id="contenidor">
+
+			</ul>
 		</div>
+		<script>
+			$(document).ready (function (){
+
+				$.getJSON('/direct/section/llistaassignatures_llistat/site/llistaassignatures/datasource/llistaassignatures.json?rnd='+ (new Date()).toLocaleDateString(), function(dataSites) {
+
+					var $cont = $("#contenidor");
+					$.each(dataSites.value, function(i,site) { 
+					$cont.append("<li><a target='_parent' href='/portal/site/"+site.value.site_id+"'  class='field'>" + site.value.title + "</a></li>");
+			
+					});
+					addContent();
+				}).error(function() { 
+					$("#contenidor").append("<span>S'ha produit un error obtenint el llistat d'espais dels quals sou membre, possiblement perquè algun d'ells conté caràcters invàlids per al format Json.</span>"); 
+				});
+			});
+
+
+			var addContent = function() {
+				window.parent.setMainFrameHeight(window.parent.$("iframe")[0].id)
+				var height = document.body.offsetHeight;
+				var iframe = window.parent.$("iframe")[0];
+				$(iframe).height(height + 20 +"px");
+			};
+
+		</script>
 	</body>
 </html>
