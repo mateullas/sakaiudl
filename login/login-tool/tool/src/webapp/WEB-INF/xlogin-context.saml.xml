@@ -98,7 +98,9 @@
     <bean id="metadataGeneratorFilter" class="org.springframework.security.saml.metadata.MetadataGeneratorFilter">
         <constructor-arg>
             <bean class="org.springframework.security.saml.metadata.MetadataGenerator">
-                <property name="entityId" value="SakaiSAMLAppDevel"/>
+		    <property name="entityId" value="SakaiSAMLAppDevel"/>
+		    <property name="requestSigned" value="false"/>
+		    <property name="entityBaseURL" value="https://sakai25devel.udl.cat:8443/sakai-login-tool/container"/>
                 <!-- <property name="includeDiscoveryExtension" value="true"/> -->
                 <!-- <property name="extendedMetadata">
                     <bean class="org.springframework.security.saml.metadata.ExtendedMetadata">
@@ -195,7 +197,7 @@
                 
                 <bean class="org.opensaml.saml2.metadata.provider.FilesystemMetadataProvider">
                     <constructor-arg>
-			    <value type="java.io.File">/server/tomcat/sakai/autenticacio_devel.xml</value>
+			    <value type="java.io.File">/home/sakai/server/tomcat/sakai/autenticacio_devel.xml</value>
                     </constructor-arg>
                     <property name="parserPool" ref="parserPool"/>
                 </bean>
@@ -205,14 +207,14 @@
         <!-- OPTIONAL used when one of the metadata files contains information about this service provider -->
         <!-- <property name="hostedSPName" value=""/> -->
         <!-- OPTIONAL property: can tell the system which IDP should be used for authenticating user by default. -->
-	<property name="defaultIDP" value="https://autenticaciodevel.udl.cat/metadata/saml2/"/>
+	<property name="defaultIDP" value="https://autenticaciodevel.udl.cat/SAML2/"/>
     </bean>
 
     <!-- SAML Authentication Provider responsible for validating of received SAML messages -->
     <bean id="samlAuthenticationProvider" class="org.springframework.security.saml.SAMLAuthenticationProvider">
         <!-- OPTIONAL property: can be used to store/load user data after login -->
 	    <!-- Uncomment below to extract the eduPersonPrincipalName as the user id for Sakai-->
-        <property name="forcePrincipalAsString" value="false" />
+        <property name="forcePrincipalAsString" value="True" />
         <property name="userDetails">
             <bean class="org.sakaiproject.login.filter.EppnSamlFilter" />
         </property>
