@@ -1,45 +1,72 @@
 #if (!$pagepopup)
-    <footer class="portal-footer p-2 d-flex flex-column flex-xxl-row justify-content-between align-items-center mt-auto pt-3 border-top">
-        <ul class="nav">
-          #foreach ( $footerLink in $footerLinks )
-              <li class="nav-item">
-                  <a class="nav-link" href="${footerLink.href}" target="$!{footerLink.target}">${footerLink.text}</a>
-              </li>
-          #end
-          <li class="nav-item">
-              <button id="server-info"
-                      class="btn nav-link"
-                      title="${rloader.footer_serverinfo_title}"
-                      data-bs-container="footer"
-                      data-bs-toggle="popover"
-                      data-bs-placement="top"
-                      data-bs-html="true" 
-                      data-bs-content='#parse("/vm/morpheus/snippets/serverInfoPopover-snippet.vm")'
-                      data-bs-template='${popoverTemplate}'
+    <footer class="portal-footer">
+         <div class="row">
+            <div class="col-sm-4 col-xs-12">
+                <div class="portal-footer-box">
+                    <h4>${rloader.support}</h4>
+                    <ul>
+                        <li> <a href="${urlAjuda}${rloader.help_center_suffix}" target="_blank">${rloader.help_center_text}</a>
+                        </li>
+                        <li>  <a href="${urlSAAD}${rloader.teachers_technical_support_suffix}" target="_blank">${rloader.teachers_technical_support_text}</a>
+                        </li>
+                        <li>  <a href="${urlCAU}" target="_blank">${rloader.teachers_technical_problems_text}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-4 col-xs-12">
+                 <div class="portal-footer-box">
+                    <h4>${institution}</h4>
+                    <ul>
+                        <li> <a href="${urlWebUdL}${rloader.legal_notice_suffix}" target="_blank">${rloader.legal_notice_text}</a>
+                        </li>
+                        <li> <a href="${urlPublicacions}" target="_blank">${rloader.materials_publishment_protocol_text}</a>
+                        </li>
+                        <li> <a href="${urlAccessibilitat}" target="_blank">${rloader.accessibility_text}</a>
+                        </li>
+                    </ul>
+                 </div>
+            </div>
+            <div class="col-sm-4 col-xs-12">
+                 <div class="portal-footer-box">
+                    <h4>${rloader.campus_platform}</h4>
+                    <div class="copyright-powered">
+                        <span>${bottomNavCopyright}</span>
+			<span>The Apereo Foundation</span>
+                        <ul>
+                                <li class="nav-item">
+                                    <button id="server-info"
+                                        class="btn nav-link"
+                                        title="${rloader.footer_serverinfo_title}"
+                                        data-bs-container="footer"
+                                        data-bs-toggle="popover"
+                                        data-bs-placement="top"
+                                        data-bs-html="true" 
+                                        data-bs-content='#parse("/vm/morpheus/snippets/serverInfoPopover-snippet.vm")'
+                                        data-bs-template='${popoverTemplate}'
               >
-                  <span class="bi bi-info-circle" aria-hidden="true"></span>
-              </button>
-          </li>
-        </ul>
-        <div class="copyright-powered">
-            <span>${bottomNavCopyright}</span>
-            <ul>
-                #foreach($item in $bottomNavPoweredBy)
-                    <li>
-                        <a href="$item.poweredByUrl" target="_blank">
-                            <img class="poweredby__image" src="$item.poweredByImage" alt="$item.poweredByAltText" />
-                        </a>
-                    </li>
-                #end
-            </ul>
-        </div>
-        <div id="tutorial" class="Mrphs-tutorial Mrphs-modal"></div>
-    </footer>
-
-    #parse("/vm/morpheus/includeFooterExtras.vm")
+                                        <span class="bi bi-info-circle" aria-hidden="true"></span>
+                                    </button>
+                                </li>
+                            #foreach($item in $bottomNavPoweredBy)
+                                <li>
+                                     <a href="$item.poweredByUrl" target="_blank">
+                                      <img class="poweredby__image" src="$item.poweredByImage" alt="$item.poweredByAltText" />
+                                    </a>
+                                </li>
+                            #end
+                        </ul>
+                 </div>
+            </div>
+         </div>
+         <div id="tutorial" class="Mrphs-tutorial Mrphs-modal"></div>
+     </footer>
+     ##  Treiem que es mostri la presence tool 
+     ##   #parse("/vm/morpheus/includeFooterExtras.vm")
 
 #else 
 
     <!-- dont compact -->
 
 #end
+    
