@@ -1536,6 +1536,14 @@ public class SkinnableCharonPortal extends HttpServlet implements Portal {
                 rcontext.put("paSystemEnabled", true);
                 rcontext.put("paSystem", paSystem);
             }
+
+	    rcontext.put("urlAjuda", serverConfigurationService.getString("help.redirect.external.webapp"));
+	    rcontext.put("urlSAAD", serverConfigurationService.getString("url.SAAD"));
+	    rcontext.put("urlCAU", serverConfigurationService.getString("url.CAU"));
+	    rcontext.put("institution", serverConfigurationService.getString("ui.institution"));
+	    rcontext.put("urlWebUdL", serverConfigurationService.getString("url.WebUdL"));
+	    rcontext.put("urlPublicacions", serverConfigurationService.getString("url.publicacions"));
+	    rcontext.put("urlAccessibilitat", serverConfigurationService.getString("url.accessibilitat"));
         }
     }
 
