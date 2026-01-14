@@ -65,23 +65,9 @@
             <exclusion>
                 <groupId>commons-logging</groupId>
                 <artifactId>commons-logging</artifactId>
-            </exclusion>
+	    </exclusion>
         </exclusions>
     </dependency>
-
-        <!-- OpenSAML 2.x (requerido por el stack legacy) -->
-    <!--    <dependency>
-        <groupId>org.opensaml</groupId>
-        <artifactId>opensaml</artifactId>
-        <version>2.6.6</version>
-    </dependency>-->
-
-    <!-- Apache HttpClient 3.1 (LEGACY, NECESARIO) -->
-    <dependency>
-        <groupId>commons-httpclient</groupId>
-        <artifactId>commons-httpclient</artifactId>
-    </dependency>
-
 
     <dependency>
           <groupId>org.jasig.cas.client</groupId>
@@ -146,6 +132,12 @@
       <dependency>
           <groupId>org.sakaiproject.portal</groupId>
           <artifactId>sakai-portal-api</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>commons-httpclient</groupId>
+          <artifactId>commons-httpclient</artifactId>
+	  <version>3.1</version>
+	  <scope>compile</scope>
       </dependency>
   </dependencies>
   <build>

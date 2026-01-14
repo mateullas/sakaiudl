@@ -98,9 +98,9 @@
     <bean id="metadataGeneratorFilter" class="org.springframework.security.saml.metadata.MetadataGeneratorFilter">
         <constructor-arg>
             <bean class="org.springframework.security.saml.metadata.MetadataGenerator">
-		    <property name="entityId" value="SakaiSAMLAppDevel"/>
+		    <property name="entityId" value="SakaiSAMLASIC144"/>
 		    <property name="requestSigned" value="false"/>
-		    <property name="entityBaseURL" value="https://sakai25devel.udl.cat:8443/sakai-login-tool/container"/>
+		    <property name="entityBaseURL" value="https://asic144.udl.net:8443/sakai-login-tool/container"/>
                 <!-- <property name="includeDiscoveryExtension" value="true"/> -->
                 <!-- <property name="extendedMetadata">
                     <bean class="org.springframework.security.saml.metadata.ExtendedMetadata">
@@ -181,27 +181,25 @@
 			    </bean>-->
                 
                 <!-- Example of HTTP metadata without Extended Metadata -->
-                <!-- 
+		<!--  
                 <bean class="org.opensaml.saml2.metadata.provider.HTTPMetadataProvider">
                     <constructor-arg>
-                        <value type="java.lang.String">http://idp.ssocircle.com/idp-meta.xml</value>
+                        <value type="java.lang.String">https://autenticaciodevel.udl.cat/metadata/saml2</value>
                     </constructor-arg>
                     <constructor-arg>
                         <value type="int">15000</value>
                     </constructor-arg>
                     <property name="parserPool" ref="parserPool"/>
                 </bean>
-                -->
+		-->
                 
-                <!-- Example of file system metadata without Extended Metadata -->
-                
+                <!-- Example of file system metadata without Extended Metadata --> 
                 <bean class="org.opensaml.saml2.metadata.provider.FilesystemMetadataProvider">
                     <constructor-arg>
 			    <value type="java.io.File">/home/sakai/server/tomcat/sakai/autenticacio_devel.xml</value>
                     </constructor-arg>
                     <property name="parserPool" ref="parserPool"/>
                 </bean>
-               
             </list>
         </constructor-arg>
         <!-- OPTIONAL used when one of the metadata files contains information about this service provider -->
