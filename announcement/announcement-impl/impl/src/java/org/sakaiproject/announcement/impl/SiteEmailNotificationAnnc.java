@@ -87,6 +87,12 @@ public class SiteEmailNotificationAnnc extends SiteEmailNotification
 	@Setter private UserTimeService userTimeService;
 	@Setter private FormattedText formattedText;
 
+	//EVDOC01-215
+	private boolean shouldIncludeHeader(String siteId) {
+	    return !("comunicacions_udl".equals(siteId) 
+	          || "comunicacions_igualada".equals(siteId));
+	}
+
 	/**
 	 * Construct.
 	 */
@@ -164,6 +170,8 @@ public class SiteEmailNotificationAnnc extends SiteEmailNotification
 		}
 
 		// Now build up the message text.
+		//EVDOC01-215
+		if (shouldIncludeHeader(siteId)) {
 		if (AnnouncementService.SECURE_ANNC_ADD.equals(event.getEvent()))
 		{
 			if(!serverConfigurationService.getBoolean("notify.email.from.replyable", false)) {
@@ -185,9 +193,13 @@ public class SiteEmailNotificationAnnc extends SiteEmailNotification
 		buf.append(" ").append(rb.getString("at_date")).append(" ");
 		buf.append(userTimeService.shortLocalizedTimestamp(hdr.getInstant(), rb.getLocale()));
 		buf.append(newline);
+		}
+		
+		//EVDOC01-215
 		buf.append(msg.getBody());
-		buf.append(newline);
-
+		buf.append(newline);		
+		
+		
 		// add any attachments
 		List<Reference> attachments = hdr.getAttachments();
 		if (attachments.size() > 0)
@@ -574,6 +586,8 @@ public class SiteEmailNotificationAnnc extends SiteEmailNotification
 		}
 
 		// Now build up the message text.
+		//EVDOC01-215
+		if (shouldIncludeHeader(siteId)) {
 		if (AnnouncementService.SECURE_ANNC_ADD.equals(event.getEvent()))
 		{
 			if(!serverConfigurationService.getBoolean("notify.email.from.replyable", false)) {
@@ -597,6 +611,9 @@ public class SiteEmailNotificationAnnc extends SiteEmailNotification
 		buf.append(" ").append(rb.getString("at_date")).append(" ");
         buf.append(userTimeService.shortLocalizedTimestamp(hdr.getInstant(), rb.getLocale()));
 		buf.append(newline);
+		}
+		
+		//EVDOC01-215
 		buf.append(formattedText.convertFormattedTextToPlaintext(msg.getBody()));
 		buf.append(newline);
 
