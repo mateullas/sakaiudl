@@ -105,6 +105,7 @@ $input-border: var(--sakai-border-color);
 @import "base/defaults";
 @import "base/responsive";
 @import "base/icons";
+@import "base/udl";
 
 //Todo assing new values, where those are used
 $page-header-border-color: color.adjust(#000, $lightness: 46.7%) !default; // #eee

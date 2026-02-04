@@ -1,0 +1,87 @@
+.caixa_novetats {
+	display: flex;
+	flex-direction: column;
+	border: 2px solid #dfdede;
+	padding: 15px 34px;margin: 0pt 16pt;
+}
+.caixa_novetats > h3 {
+  margin-left: 0px;
+}
+.novetat {
+	display: flex;
+        flex-direction: row;
+}
+.novetat > img {
+	width: 128px;
+	height: 128px;
+	margin: 5px 20px 5px 0px;
+}
+.text_novetat {
+        display: flex;
+        flex-direction: column;
+	font-size: .95em;
+	margin-bottom: 10px;
+}
+.data_novetat {
+	color: #898989;
+	font-size: .9em;
+}
+.perfil_novetat {
+	color: #830051;
+	text-transform: uppercase;
+}
+.links_novetat {
+	display: flex;
+        flex-direction: row;
+}
+
+.links_novetat > a {
+	font-size: 0.9em;
+	padding-left: 20.0pt;
+	padding-right: 20.0pt;
+	padding-bottom: 7.0pt;
+	margin-bottom: 5.0pt;
+}
+
+.links_novetat a:hover {
+	background-color: rgb(131,20,83);
+	color: rgb(255,255,255);
+}
+.links_novetat_btn {
+	padding: 8.0px 18.0px;
+	line-height: 1;
+	margin: 0 16.0px 0 0;
+	border: 1.0px solid rgb(131,20,83);
+	color: rgb(131,20,83);
+	background-color: transparent;
+	cursor: pointer;
+	border-radius: 2.0px;
+}
+
+@include media-breakpoint-down(md) {
+	.links_novetat {
+		display: flex;
+		flex-direction: column;
+	}
+	.links_novetat > a {
+		font-size: 0.9em;
+		padding-left: 20.0pt;
+		padding-right: 20.0pt;
+		padding-bottom: 7.0pt;
+		margin-bottom: 5.0pt;
+	}
+	.links_novetat a:hover {
+		background-color: rgb(131,20,83);
+		color: rgb(255,255,255);
+	}
+	.links_novetat_btn {
+		padding: 8.0px 18.0px;
+		line-height: 1;
+		margin: 0 16.0px 0 0;
+		border: 1.0px solid rgb(131,20,83);
+		color: rgb(131,20,83);
+		background-color: transparent;
+		cursor: pointer;
+		border-radius: 2.0px;
+	}
+}
