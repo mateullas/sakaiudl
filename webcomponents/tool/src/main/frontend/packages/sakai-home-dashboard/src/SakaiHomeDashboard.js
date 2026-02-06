@@ -182,6 +182,24 @@ export class SakaiHomeDashboard extends SakaiElement {
           ${this._renderWidgetPanel()}
         </div>
       </div>
-    `;
+      `;
+  }
+
+  firstUpdated() {
+    const idioma = document.documentElement.getAttribute("lang");
+    console.log("Executem el codi: " + idioma);
+    const contenidorsMOTD = document.getElementsByClassName("contingutsMOTD");
+    console.log(contenidorsMOTD);
+    if (contenidorsMOTD.length > 0) {
+      for (let i = 0; i < contenidorsMOTD.length; i++) {
+        if (contenidorsMOTD[i].id == idioma) {
+          console.log("Mostrem continguts " + contenidorsMOTD[i].id);
+          contenidorsMOTD[i].style.display = "block";
+        }
+        else {
+          contenidorsMOTD[i].style.display = "none";
+        }
+      }
+    }
   }
 }
