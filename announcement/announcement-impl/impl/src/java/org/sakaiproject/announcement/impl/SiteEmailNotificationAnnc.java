@@ -198,7 +198,8 @@ public class SiteEmailNotificationAnnc extends SiteEmailNotification
 		//EVDOC01-215
 		buf.append(msg.getBody());
 		buf.append(newline);		
-		
+		buf.append("<p style=\"color:#830051; font-weight:bold;\">Comunicació interna</p><p>Universitat de Lleida</p>");
+		buf.append(newline);
 		
 		// add any attachments
 		List<Reference> attachments = hdr.getAttachments();
@@ -622,7 +623,13 @@ public class SiteEmailNotificationAnnc extends SiteEmailNotification
 		//EVDOC01-215
 		buf.append(formattedText.convertFormattedTextToPlaintext(msg.getBody()));
 		buf.append(newline);
+		buf.append("\u001B[1m\u001B[38;2;131;0;81mComunicacions UdL\u001B[0m");
+		buf.append(newline);
 
+		buf.append("Universitat de Lleida");
+		buf.append(newline);
+		
+		
 		// add any attachments
 		List attachments = hdr.getAttachments();
 		if (attachments.size() > 0)
