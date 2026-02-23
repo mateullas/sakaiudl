@@ -338,7 +338,13 @@ public class SiteEmailNotificationAnnc extends SiteEmailNotification
 		}
 
 		// use the message's subject
-		return rb.getFormattedMessage("noti.subj", new Object[]{title, hdr.getSubject()});
+		//EVDOC01-215
+		if (shouldIncludeHeader(siteId)) {
+			return rb.getFormattedMessage("noti.subj", new Object[]{title, hdr.getSubject()});			
+		}
+		else {
+			return rb.getFormattedMessage("noti.subj_comunicacions", new Object[]{title, hdr.getSubject()});
+		}
 	}
 	
 	/**
