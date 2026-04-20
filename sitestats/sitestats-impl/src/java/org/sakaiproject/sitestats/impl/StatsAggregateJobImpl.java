@@ -79,12 +79,13 @@ public class StatsAggregateJobImpl implements StatefulJob {
 														"order by EVENT_ID asc LIMIT ?";
 	
 	// SAK-28967 - this query is very slow, replace it with the one below
-	private String ORACLE_GET_EVENT					= "SELECT " +
+	private String ORACLE_GET_EVENT					= "SELECT * FROM ( " +
+														"SELECT " +
 															ORACLE_DEFAULT_COLUMNS + ORACLE_CONTEXT_COLUMN + " " +
 														"from SAKAI_EVENT e join SAKAI_SESSION s on e.SESSION_ID=s.SESSION_ID " +
 														"where EVENT_ID >= ? " +
-														"order by EVENT_ID asc " +
-														"FETCH FIRST ? ROWS ONLY";
+														"order by EVENT_ID asc) " +
+														"WHERE ROWNUM <= ?";
 	
 	private String MYSQL_PAST_SITE_EVENTS			= "select " + MYSQL_DEFAULT_COLUMNS + MYSQL_CONTEXT_COLUMN + " " +
 														"from SAKAI_EVENT e join SAKAI_SESSION s on e.SESSION_ID=s.SESSION_ID " +
