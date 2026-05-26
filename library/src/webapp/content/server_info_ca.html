@@ -2,9 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-		<title>Us donem la benvinguda a Sakai</title>
-		<script language="JavaScript" type="text/JavaScript">
+		<title>Portal del campus virtual de la UdL</title>
 		<!--
+		<script language="JavaScript" type="text/JavaScript">
 			var i, a, href
 			for(i=0; (a = top.document.getElementsByTagName("link")[i]); i++) 
 			{
@@ -30,17 +30,208 @@
 					}
 				}
 			}
-		// -->
 		</script>
+		-->
 		<script type="text/javascript" language="JavaScript" src="/library/js/sakai-iframe-copy-classes.js"></script>
-	</head>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+		<style>
+			:root {
+      				--primary-color: #830051;
+      				--secondary-color: #f2e6ee;
+      				--accent-color: #d63384;
+      				--text-color: #333;
+      				--background-color: ##ffffff;
+    		  	 }
+    		  	 body {
+      				font-family:  "Open Sans", sans-serif;
+      				font-size: 0.9rem;
+      				margin: 0;
+      				background-color: var(--background-color);
+      				color: var(--text-color);
+    			}
+
+    			main {
+    				  padding-right: 1rem;
+    			}
+    			
+    			.section {
+      				margin-bottom: 2rem;
+					display: grid;
+					grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));  
+      				gap: 0.4rem;
+    			}
+
+    			.section img {
+    				max-height:300px;
+    				width:100%;
+    				height:auto;
+    			}
+
+				.subsection {
+					display: grid;
+					text-align: center;
+				}
+
+				.subsection h2 {
+      					font-size: 1rem;
+      					color: var(--primary-color);
+      					margin-bottom: 1rem;
+      					/* border-bottom: 2px solid var(--primary-color); */
+      					padding-bottom: 0.5rem;
+      					text-align: center;
+    				}
+
+
+				.cardContainer {
+					display: none;
+				}
+				
+
+				.continguts:hover .cardContainer {
+					display: block;
+				}
+				
+				.continguts:focus .cardContainer {
+					display: block;
+				}
+
+				.continguts:hover p {
+					display: none;
+				}
+				
+				.continguts:focus p {
+					display: none;
+				}
+
+    			.card {
+      				background-color: white;
+      				border-radius: 10px;
+      				box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      				padding: 1rem;
+      				display: flex;
+      				flex-direction: column;
+      				align-items: center;
+      				text-align: center;
+      				transition: transform 0.2s;
+      				text-decoration: none;
+      				color: inherit;
+    			}
+
+    			.card:hover {
+      				transform: scale(1.02);
+    		  		background-color: var(--secondary-color);
+    			}
+
+    			.card i {
+      				font-size: 1.5rem;
+      				margin-bottom: 0.5rem;
+      				color: var(--primary-color);
+    			}
+
+    			.card-title {
+      				font-weight: bold;
+    			}
+
+    			.card-subtitle {
+					display: none;
+    			}
+
+				.card:hover .card-subtitle {
+					display: block;
+					font-weight: bold;
+                	color: #666;
+				}
+
+				.card:hover .card-title {
+                	display: none;
+				}
+
+    			footer {
+      				background-color: var(--secondary-color);
+      				text-align: center;
+      				padding: 1rem;
+      				font-size: 0.9rem;
+    			}
+
+   			 	a.card {
+      				cursor: pointer;
+   			 	}
+		</style>
+	</head>   
 	<body>
-		<div class="portletBody">
-			<h3> Us donem la benvinguda al Campus Virtual de la Universitat de Lleida  </h3>
-			<p> El Campus Virtual &eacute;s l&apos;espai digital en l&iacute;nia que permet a la universitat desenvolupar i donar suport a la seva activitat acad&egrave;mica i institucional. </p>
-			<p> Aqu&iacute; hi trobareu les vostres assignatures, materials docents, activitats, comunicacions i eines de treball col&middot;laboratiu. </p>
-                        <p> Aquest entorn est&agrave; pensat per donar servei a estudiants, professorat i PTGAS, i facilitar el desenvolupament de l&apos;activitat universit&agrave;ria al llarg del curs. 
-			</p>
-		</div>
+		<main>
+			<div class="section">
+      				<img src="/home/mateu/desenvolupament/Tasques/Migracio_25/skin/Imatges/campus_salut2.jpg" alt="Campus salut"></img>
+			</div>
+			<div class="section">
+				<div class="subsection">
+					<h2>El campus virtual</h2>
+					<a href="https://cautic.udl.cat/" target="_blank" class="card" aria-label="Enlla&ccedil; a p&agrave;gina externa">
+						<i class="bi bi-pencil-square"></i><div class="card-title">Contacta'ns</div>
+						<div class="card-subtitle">Feu clic per a fer-nos arribar suggeriments, queixes, agra&iuml;ments</div>
+					</a>
+					<div class="continguts">
+						<p tabindex="0"><i class="bi bi-plus-circle"></i> M&eacute;s informaci&oacute;</p>
+						<div class="cardContainer">
+							<a href="https://asic144.udl.net:8443/portal/site/!gateway/tool/e47657f8-7b0e-4903-a2ad-76726a4ca79a" target="_top" class="card">
+								<i class="bi bi-plus-circle"></i><div class="card-title">Avisos i novetats</div>
+								<div class="card-subtitle">A la part inferior teniu el darrer avís o novetat, feu clic per veure'n més
+								</div>
+							</a>
+							
+							<a href="https://www.sakailms.org/" target="_blank" class="card" title="Feu clic per a m&eacute;s informaci&oacute; de Sakai">
+								<i class="bi bi-info-circle" alt="Link to Sakai Info"></i><div class="card-title">El campus virtual</div>
+								<div class="card-subtitle">Espai digital en línia basat que dona suport a l&apos;activitat acadèmica i institucional, basat en la plataforma Sakai. Feu clic per saber-ne m&eacute;</div>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="subsection">
+					<h2>Problemes d&apos;accés?</h2>
+					<a href="https://asic144.udl.net:8443/portal/site/!gateway/tool/0ce0b322-29cf-4370-95fe-dbc04f580e89" target="_top" class="card" title="Feu clic per a m&eacute;s informaci&oacute; sobre l'acc&eacute;s al campus virtual">
+								<i class="bi bi-box-arrow-in-right"></i><div class="card-title">Com accedir al campus virtual</div>
+								<div class="card-subtitle">Si no teniu usuari UdL o qualsevol altre problema feu clic aqu&iacute;</div>
+							</a>
+					<div class="continguts">
+						<p><i class="bi bi-plus-circle"></i> M&eacute;s ajuda i suport</p>
+						<div class="cardContainer">
+							
+							<a href="https://cautic.udl.cat/" target="_blank" class="card" title="Feu clic per a obtenir ajuda t&egrave;cnica">
+								<i class="bi bi-tools"></i><div class="card-title">Suport tècnic</div>
+								<div class="card-subtitle">Centre d'atenció a l'usuari/a (TIC)</div>
+							</a>
+							<a href="https://asic144.udl.net:8443/portal/site/!gateway/tool/7d472643-4e50-4490-8a35-c213f94e91d6" target="_top" class="card" title="Feu clic per a obtenir m&eacute;s ajuda i suport">
+								<i class="bi bi-plus-circle"></i><div class="card-title">M&eacute;s enlla&ccedil;os amb ajuda</div>
+								<div class="card-subtitle">Com arribar-hi i com funcionen les eines</div>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="subsection">
+					<h2> Us pot interessar </h2>
+					<a href="https://www.udl.cat/ca/organs/vicerectors/vd/Calendari_Academic/" target="_blank" class="card" title="Feu clic per a m&eacute; informaci&oacute; sobre el calendari">
+						<i class="bi bi-calendar-check"></i><div class="card-title">Calendari acadèmic</div>
+						<div class="card-subtitle">Accedeix al calendari</div>
+					</a>
+					<a href="https://bid.udl.cat/ca/" target="_blank" class="card" title="Feu clic per a m&eacute; informaci&oacute; sobre el calendari">
+						<i class="bi bi-book-half"></i><div class="card-title">La biblioteca</div>
+						<div class="card-subtitle">Accedeix a la web de la biblioteca de la UdL</div>
+					</a>
+					<div class="continguts">
+						<p><i class="bi bi-plus-circle"></i> M&eacute;s  informacions del vostre inter&egrave;s</p>
+						<div class="cardContainer">
+							<a href="https://adia.udl.cat/ca/" target="_blank" class="card" title="Feu clic per a m&eacute; informaci&oacute; de la IA">
+								<i class="bi bi-chat-dots"></i><div class="card-title">La IA a la UdL</div>
+								<div class="card-subtitle">Tota la informaci&oacute; sobre la IA</div>
+							</a>
+							<a href="https://asic144.udl.net:8443/portal/site/!gateway/tool/78fb982d-e734-4af5-8fea-5afd661b29f6" target="_top" class="card" title="Feu clic per a saber m&eacute; sobre altres utilitats i serveis de la UdL" >
+								<i class="bi bi-plus-circle"></i><div class="card-title">Intranet UdL</div>
+								<div class="card-subtitle">Eina amb totes les utilitats i serveis de la UdL</div>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
 	</body>
 </html>

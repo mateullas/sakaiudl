@@ -69,8 +69,12 @@
 
                         #if (${tool.hasRenderResult})
 
-
+			#if (${userIsLoggedIn})
                             <nav class="Mrphs-toolTitleNav Mrphs-container--toolTitleNav align-items-center" aria-label="${rloader.sit_toolnavigation}">
+			#else 
+			    <nav class="Mrphs-toolTitleNav Mrphs-container--toolTitleNav align-items-center" aria-label="${rloader.sit_toolnavigation}" style="display: none"> 
+			#end
+		          
                                 #if (${tool.toolShowResetButton})
 
                                     #if ($!{tool.toolInline})

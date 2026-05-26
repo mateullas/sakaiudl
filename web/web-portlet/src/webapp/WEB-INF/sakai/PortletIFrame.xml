@@ -102,14 +102,43 @@
             title="Intranet page"
             description="Display intranet information">
 
-        <configuration name="height" value="600px" type="final" />
+        	<configuration name="height" value="600px" type="final" />
 
-        <configuration name="special" value="intranet" type="final" />
-        <configuration name="reset.button" value="false" type="final" />
+        	<configuration name="special" value="intranet" type="final" />
+        	<configuration name="reset.button" value="false" type="final" />
 
-        <!-- Allow this to be set -->
-        <configuration name="functions.require" />
-    </tool>
+        	<!-- Allow this to be set -->
+        	<configuration name="functions.require" />
+	</tool>
+
+	<tool
+            id="sakai.iframe.access"
+            title="Access page"
+            description="Display access information">
+
+                <configuration name="height" value="600px" type="final" />
+
+                <configuration name="special" value="intranet" type="final" />
+                <configuration name="reset.button" value="false" type="final" />
+
+                <!-- Allow this to be set -->
+                <configuration name="functions.require" />
+	</tool>
+
+	<tool
+            id="sakai.iframe.links"
+            title="Links page"
+            description="Display more links">
+
+                <configuration name="height" value="600px" type="final" />
+
+                <configuration name="special" value="intranet" type="final" />
+                <configuration name="reset.button" value="false" type="final" />
+
+                <!-- Allow this to be set -->
+                <configuration name="functions.require" />
+        </tool>
+
 
     <tool
          id="sakai.iframe.utilitats"

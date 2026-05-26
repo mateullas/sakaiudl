@@ -71,6 +71,13 @@
   }
 }
 
+.Mrphs-container--toolTitleNav {
+	&.is-gateway {
+          display: none;
+       }
+}
+
+
 #loginForm input,
 #loginForm .input-group-text {
   border-color: var(--top-header-text-color);
@@ -188,9 +195,6 @@
     word-break: break-word;
     text-overflow: ellipsis;
     max-height: 47px; /* Fallback: Setting max-height as a fallback measure */
-    &.is-gateway {
-        color: var(--sakai-color-white) !important;
-    }
   }
 }
 
@@ -200,9 +204,6 @@
     white-space: normal;
     word-wrap: break-word;
     word-break: break-word;
-    &.is-gateway {
-        color: var(--sakai-color-white) !important;
-    }
   }
 }
 
@@ -547,9 +548,6 @@
 #portal-nav-sidebar {
 
   grid-area: sidebar;
-  &.is-gateway {
-  	background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), var(--bg-image);
-  }
 
   .si-pin {
     &:hover::before,
@@ -731,9 +729,6 @@
         color: var(--site-nav-btn-page-hover-color) !important;
         background-color: transparent;
       }
-    }
-    &.is-gateway {
-	color: var(--sakai-color-white) !important;
     }
 
     span {
@@ -927,4 +922,17 @@
 .toast-body {
   color: var(--sakai-text-color-1);
   background-color: var(--sakai-background-color-2);
+}
+
+.image-sidebar {
+  	align-items: center;	
+	background-image: var(--som-lateral);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+}
+
+.more-items-sidebar{
+	justify-content: center;
+        align-items: center;
+	text-align: center;
 }
