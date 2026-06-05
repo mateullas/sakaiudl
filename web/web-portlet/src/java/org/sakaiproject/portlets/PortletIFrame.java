@@ -173,6 +173,7 @@ public class PortletIFrame extends GenericPortlet {
 
     /** Special value for worksite. */
     protected final static String SPECIAL_INTRANET = "intranet";
+    protected final static String SPECIAL_LINKS = "links";
     protected final static String SPECIAL_UTILITATS = "utilitats";
     protected final static String SPECIAL_ACTES = "actes";
     protected final static String SPECIAL_EXPEDIENT = "expedient";
@@ -670,6 +671,9 @@ public class PortletIFrame extends GenericPortlet {
 			    else if (SPECIAL_INTRANET.equals(special)) {
 					context.put("heading", rb.getString("gen.custom.intranet"));
 			    } 
+			    else if (SPECIAL_LINKS.equals(special)) {
+                                        context.put("heading", rb.getString("gen.custom.links"));
+                            }
 			    else if (SPECIAL_UTILITATS.equals(special)) {
 					context.put("heading", rb.getString("gen.custom.utilitats"));			 
 				}
@@ -726,6 +730,7 @@ public class PortletIFrame extends GenericPortlet {
             if (SPECIAL_SITE.equals(special)) template = "/vm/edit-site.vm";
             if (SPECIAL_WORKSITE.equals(special)) template = "/vm/edit-site.vm";
             if (SPECIAL_INTRANET.equals(special)) template = "/vm/edit-intranet.vm";
+	    if (SPECIAL_LINKS.equals(special)) template = "/vm/edit-links.vm";
             if (SPECIAL_ACTES.equals(special))  template = "/vm/edit-actes.vm";
     	    if (SPECIAL_EXPEDIENT.equals(special)) template = "/vm/edit-expedient.vm";
             if (SPECIAL_ANNOTATEDURL.equals(special)) template = "/vm/edit-annotatedurl.vm";
@@ -1029,6 +1034,10 @@ public class PortletIFrame extends GenericPortlet {
 	    {
 		special = SPECIAL_INTRANET;
             }
+            else if ("true".equals(config.getProperty("links")))
+            {
+                special = SPECIAL_LINKS;
+            }
 	    else if ("true".equals(config.getProperty("utilitats"))) 
 	    {
 		special = SPECIAL_UTILITATS;
@@ -1158,6 +1167,10 @@ public class PortletIFrame extends GenericPortlet {
 		{
 			rv = StringUtils.trimToNull(getLocalizedURL("intranet.info.url"));
 		} 
+		else if (SPECIAL_LINKS.equals(special))
+                {
+                        rv = StringUtils.trimToNull(getLocalizedURL("links.info.url"));
+                }
 		else if (SPECIAL_UTILITATS.equals(special)) 
 		{
 			rv = StringUtils.trimToNull(getLocalizedURL("utilitats.info.url"));
