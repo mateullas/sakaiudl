@@ -173,6 +173,7 @@ public class PortletIFrame extends GenericPortlet {
 
     /** Special value for worksite. */
     protected final static String SPECIAL_INTRANET = "intranet";
+    protected final static String SPECIAL_ACCESS = "access";
     protected final static String SPECIAL_LINKS = "links";
     protected final static String SPECIAL_UTILITATS = "utilitats";
     protected final static String SPECIAL_ACTES = "actes";
@@ -671,6 +672,9 @@ public class PortletIFrame extends GenericPortlet {
 			    else if (SPECIAL_INTRANET.equals(special)) {
 					context.put("heading", rb.getString("gen.custom.intranet"));
 			    } 
+			    else if (SPECIAL_ACCESS.equals(special)) {
+                                        context.put("heading", rb.getString("gen.custom.access"));
+                            }
 			    else if (SPECIAL_LINKS.equals(special)) {
                                         context.put("heading", rb.getString("gen.custom.links"));
                             }
@@ -730,6 +734,7 @@ public class PortletIFrame extends GenericPortlet {
             if (SPECIAL_SITE.equals(special)) template = "/vm/edit-site.vm";
             if (SPECIAL_WORKSITE.equals(special)) template = "/vm/edit-site.vm";
             if (SPECIAL_INTRANET.equals(special)) template = "/vm/edit-intranet.vm";
+	    if (SPECIAL_ACCESS.equals(special)) template = "/vm/edit-access.vm";
 	    if (SPECIAL_LINKS.equals(special)) template = "/vm/edit-links.vm";
             if (SPECIAL_ACTES.equals(special))  template = "/vm/edit-actes.vm";
     	    if (SPECIAL_EXPEDIENT.equals(special)) template = "/vm/edit-expedient.vm";
@@ -1034,6 +1039,10 @@ public class PortletIFrame extends GenericPortlet {
 	    {
 		special = SPECIAL_INTRANET;
             }
+	    else if ("true".equals(config.getProperty("access")))
+            {
+                special = SPECIAL_ACCESS;
+            }
             else if ("true".equals(config.getProperty("links")))
             {
                 special = SPECIAL_LINKS;
@@ -1167,6 +1176,10 @@ public class PortletIFrame extends GenericPortlet {
 		{
 			rv = StringUtils.trimToNull(getLocalizedURL("intranet.info.url"));
 		} 
+		else if (SPECIAL_ACCESS.equals(special))
+                {
+                        rv = StringUtils.trimToNull(getLocalizedURL("access.info.url"));
+                }
 		else if (SPECIAL_LINKS.equals(special))
                 {
                         rv = StringUtils.trimToNull(getLocalizedURL("links.info.url"));
