@@ -89,10 +89,14 @@
 }
 
 #loginForm input,
-#loginForm button,
 #loginForm .input-group-text {
   border-color: var(--top-header-text-color);
   color: var(--sakai-text-color-1);
+}
+
+#loginForm button {
+	border-color: var(--top-header-text-color);
+  	color: var(--sakai-color-white);
 }
 
 @include media-breakpoint-up(md) {

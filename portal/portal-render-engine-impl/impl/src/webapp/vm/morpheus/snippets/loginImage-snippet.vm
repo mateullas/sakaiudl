@@ -1,4 +1,4 @@
-<div id="loginLinksImage" class="mx-2">
+<div id="loginLinksImage" class="mx-2 d-flex align-items-center h-100">
 
     #if (${loginHasImage1})
 
@@ -6,7 +6,7 @@
 
     #else
 
-        <a href="${loginLogInOutUrl}" title="${loginMessage}" id="loginLink1" class="btn btn-dark btn-primary mb-1 p-3 my-1" role="button" data-warning="${logoutWarningMessage}">
+        <a href="${loginLogInOutUrl}" title="${loginMessage}" id="loginLink1" class="btn btn-dark btn-primary mb-1 p-3 my-1" style="margin: 2px; border-color: white; min-width: 150px;" role="button" data-warning="${logoutWarningMessage}">
             <i class="login-Icon"></i>
             <span>${loginMessage}</span>
         </a>
@@ -17,7 +17,7 @@
 
         #if (${loginHasImage2})
 
-            <a href="${loginLogInOutUrl2}" title="${loginMessage2}" id="loginLink2" class="btn btn-dark btn-primary mb-1 p-3 my-1" role="button"><img src="${loginImage2}" alt="${loginMessage2}"></a>
+            <a href="${loginLogInOutUrl2}" title="${loginMessage2}" id="loginLink2" class="btn btn-dark btn-primary mb-1 p-3 my-1" style="margin: 2px; border-color: white; min-width: 150px;"  role="button"><img src="${loginImage2}" alt="${loginMessage2}"></a>
 
         #else
 
