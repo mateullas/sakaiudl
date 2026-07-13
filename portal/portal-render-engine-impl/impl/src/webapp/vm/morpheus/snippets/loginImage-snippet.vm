@@ -1,4 +1,5 @@
-<div id="loginLinksImage" class="mx-2">
+<div id="loginLinksImage" class="mx-2 d-flex align-items-center h-100">
+<!-- EVDOC01-206: PORTAL Botó únic d’accés  -->
 
     #if (${loginHasImage1})
 
@@ -16,7 +17,7 @@
     #if (${loginHasLogInOutUrl2})
 
         #if (${loginHasImage2})
-
+           
             <a href="${loginLogInOutUrl2}" title="${loginMessage2}" id="loginLink2" class="btn btn-dark btn-primary mb-1 p-3 my-1" role="button"><img src="${loginImage2}" alt="${loginMessage2}"></a>
 
         #else
