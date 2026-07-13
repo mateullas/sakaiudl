@@ -95,4 +95,8 @@
         #if ($faviconURL && !$faviconURL.empty)
                 <link rel="icon" href="$!{faviconURL}" type="image/x-icon">
         #end
+        ## EVDOC01-239 Millora temps de càrrega
+        #if (!${userIsLoggedIn})
+           <link rel="preload" href="/library/skin/default-skin/images/som-UdL_CV_2_no_header.jpg" as="image" fetchpriority="high">
+        #end
     </head>
