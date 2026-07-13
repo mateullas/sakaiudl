@@ -49,6 +49,22 @@
     &.sidebar-collapsed {
       display: none;
     }
+    /* Provem amb pseudo element before per a la imatge*/
+    &.is-gateway {
+	overflow: hidden;
+	/* color de fons com el de la capçalera */
+	background-color: var(--top-header-background);
+    }
+    &.is-gateway::before {
+	content: "";
+	display: block;
+	width: 100%;
+	height: 320px;
+	background-image: var(--bg-image);
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center top;
+    }  
     a {
       text-decoration: none;
     }
@@ -65,7 +81,8 @@
   height: var(--portal-header-height);
   grid-area: header;
   background-color: var(--top-header-background);
-  border-bottom: 3px solid var(--sakai-border-color);
+  /* comentem per treure línia blanca entre header i aside i main
+  border-bottom: 3px solid var(--sakai-border-color); */
   &.is-gateway {
 	  height: 90px;
   }
@@ -184,6 +201,10 @@
     word-break: break-word;
     text-overflow: ellipsis;
     max-height: 47px; /* Fallback: Setting max-height as a fallback measure */
+    &.is-gateway {
+	/* visible contra color de fons capçalera */
+        color: var(--sakai-color-white) !important;
+    }
   }
 }
 
@@ -193,6 +214,10 @@
     white-space: normal;
     word-wrap: break-word;
     word-break: break-word;
+    &.is-gateway {
+	/* visible contra color de fons capçalera */
+        color: var(--sakai-color-white) !important;
+    }
   }
 }
 
@@ -538,6 +563,14 @@
 
   grid-area: sidebar;
 
+  /* EVDOC01-206: PORTAL Afegim imatge SomUdL
+     treiem menú i eliminem scrollbar al gateway */
+   &.is-gateway{
+       .sakai-sitesAndToolsNav {
+               overflow-y: hidden;
+       }
+  }
+
   .si-pin {
     &:hover::before,
     &:focus::before {
@@ -677,8 +710,11 @@
     }
   }
 
+  /* EVDOC01-206: PORTAL Afegim imatge SomUdL
+       treiem menú i eliminem scrollbar al gateway
+       Es recomana focus-within per accessibilitat  */
   .sakai-sitesAndToolsNav:hover,
-  .sakai-sitesAndToolsNav:focus {
+  .sakai-sitesAndToolsNav:focus-within {
     scrollbar-width: auto;
 
     &::-webkit-scrollbar-track,
@@ -719,7 +755,10 @@
         background-color: transparent;
       }
     }
-
+    &.is-gateway {
+	/* visible contra el fons -- important fa que mani aquesta  */
+	color: var(--sakai-color-white) !important;
+    }
     span {
       margin-left: 5px;
     }

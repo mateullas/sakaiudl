@@ -29,7 +29,7 @@
         #end
         <div class="site-list-item-head d-flex align-items-center py-1 w-100 justify-content-between">
             <div class="site-link-block d-flex align-items-center rounded-end me-1 pe-2">
-                <button class="btn icon-button collapsed px-2 me-1"
+                <button class="btn icon-button collapsed px-2 me-1 #if (!${userIsLoggedIn}) d-none #end"
                         data-site-id="${site.id}"
                         data-bs-toggle="collapse"
                         data-bs-target="#${type}-site-${safeSiteId}-page-list"
@@ -44,7 +44,7 @@
                 #if ( ( ${tabDisplayLabel} == 2 ) && ( ${site.shortDescription} ) )
                     #set ($displayTitle = $ftext.escapeHtml(${site.shortDescription}))
                 #end
-                <a href="$site.url" class="sidebar-site-title" title="${siteTitle}">${displayTitle}</a>
+                <a href="$site.url" class="sidebar-site-title  #if (!${userIsLoggedIn}) is-gateway #end" title="${siteTitle}">${displayTitle}</a>
 
             </div>
             #if ($loggedIn && !${site.isHome})
@@ -64,7 +64,7 @@
                 #end
             #end
         </div>
-        <div id="${type}-site-${safeSiteId}-page-list" data-site-id="${site.id}" class="site-list-item-collapse collapse #if ($isExpanded == "true") show #end">
+        <div id="${type}-site-${safeSiteId}-page-list" data-site-id="${site.id}" class="site-list-item-collapse collapse #if (!${userIsLoggedIn}) d-none #end"  #if ($isExpanded == "true") show #end">
             <ul class="site-page-list nav flex-column py-2">
             #foreach ( $page in $site.pages )
                 #if ($site.isCurrent && $activePageId == $page.id)
@@ -118,7 +118,7 @@
     #end
 
     <li class="nav-item ms-${indentation} $!{hideClass}">
-        <a class="btn btn-nav w-100 ps-3 #if ($activePageId == $page.id)selected-page#end" data-page-id="${page.id}"
+        <a class="btn btn-nav w-100 ps-3 #if ($activePageId == $page.id)selected-page #elseif (!${userIsLoggedIn}) is-gateway #end" data-page-id="${page.id}"
                 href="$!{url}"
                 title="${page.title}: ${page.description}">
             <div class="d-flex text-start align-items-center">
@@ -140,12 +140,12 @@
 #end
 
 <!-- START VM includeSiteNav.vm -->
-<aside id="portal-nav-sidebar" class="d-none portal-nav-sidebar overflow-auto #if (${sidebarCollapsed})sidebar-collapsed#end" tabindex="-1" data-bs-backdrop="true" aria-labelledby="">
+<aside id="portal-nav-sidebar" class="d-none portal-nav-sidebar overflow-auto #if (${sidebarCollapsed})sidebar-collapsed#end #if (!${userIsLoggedIn}) is-gateway #end" tabindex="-1" data-bs-backdrop="true" aria-labelledby="">
     <div class="offcanvas-header d-md-none">
         <h2 class="offcanvas-title">${rloader.sitenav_title}</h2>
         <button type="button" class="btn-close text-reset ms-auto" data-bs-dismiss="offcanvas" aria-label="Close the sites sidebar"></button>
     </div>
-    <nav id="toolMenu" role="navigation" aria-label="${rloader.sit_toolshead}" class="Mrphs-toolsNav__menu sakai-sitesAndToolsNav h-100 d-flex flex-column">
+     <nav id="toolMenu" role="navigation" aria-label="${rloader.sit_toolshead}" class="Mrphs-toolsNav__menu sakai-sitesAndToolsNav h-100 d-flex flex-column">
         <h2 class="visually-hidden d-none d-md-block" id="totoolmenu">${rloader.sitenav_title}</h2>
         #if (${userIsLoggedIn})
             <div id="sites-section-first" class="sites-section">
