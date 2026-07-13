@@ -1,25 +1,86 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Welcome to Sakai</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="/library/js/headscripts.js"></script>
-    <link rel="stylesheet" href="/library/content/gateway/gateway.scss">
-</head>
-<script>
-    includeWebjarLibrary("bootstrap", {includeCss: true});
-</script>
-<body>
-<div class="jumbotron jtop">
-    <h1>Welcome to Sakai</h1>&nbsp;
-    <p>
-        Welcome to the Sakai Demo.
-        The Demo configuration was created as a way to let you get an instance of Sakai up and running quickly and easily.
-        For information about Sakai please see <a href="https://www.sakailms.org" target="_blank">https://www.sakailms.org</a>
-        For technical information please start at the README.md at 
-        <a href="https://github.com/sakaiproject/sakai" target="_blank">https://github.com/sakaiproject/sakai</a>. 
-    </p>
-</div>
-</body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB" xml:lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<title>Portal of the UdL campus virtual</title>
+		<!--
+		<script language="JavaScript" type="text/JavaScript">
+			var i, a, href
+			for(i=0; (a = top.document.getElementsByTagName("link")[i]); i++) 
+			{
+				if(a.getAttribute("rel").indexOf("style") != -1)
+				{
+					if(a.getAttribute("href").indexOf("portal.css") != -1)
+					{
+						//normal - top is portal
+						document.write ('<link href=\"');
+						var lastSlash = a.getAttribute("href").lastIndexOf("/");
+						document.write (a.getAttribute("href").substring(0,lastSlash+1));
+						document.write ('tool.css\" type=\"text/css\" rel=\"stylesheet\" media=\"all\" />');
+						document.write ('<link href=\"');
+						document.write (a.getAttribute("href").substring(0,a.getAttribute("href").lastIndexOf("/", lastSlash-1)+1));
+						document.write ('tool_base.css\" type=\"text/css\" rel=\"stylesheet\" media=\"all\" />');
+					}
+					else
+					{
+						//not normal - top is something else - use it's stylesheets
+						document.write ('<link href=\"');
+						document.write (a.getAttribute("href"));
+						document.write ('" type=\"text/css\" rel=\"stylesheet\" media=\"all\" />');
+					}
+				}
+			}
+		</script>
+		-->
+		<script type="text/javascript" language="JavaScript" src="/library/js/sakai-iframe-copy-classes.js"></script>
+		<link rel="stylesheet" href="/library/skin/tool_base.css">
+		<link rel="stylesheet" href="/library/skin/default-skin/tool.css">
+		<link rel="stylesheet" href="/library/content/gateway/udl_cards.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+	</head>   
+	<body>
+		<main class="main-tool-udl">
+			<div class="section-tool-udl">
+				<div class="grid-tool-udl">
+				    <a href="/portal/site/!gateway-en/tool/c6bf8c75-0515-4b70-a0cb-095379b76d2b" target="_top" class="card-tool-udl" title="Click here for more information about the access to campus virtual">
+							<i class="bi bi-box-arrow-in-right"></i><div class="card-tool-udl-title">Access problems?</div>
+							<div class="card-tool-udl-subtitle">Click here in case you don't have a UdL user or any other problem</div>
+				     </a>
+    				      <a href="https://cautic.udl.cat/" target="_blank" class="card-tool-udl" title="Feu clic per a obtenir ajuda t&egrave;cnica">
+    				      	 <i class="bi bi-tools"></i><div class="card-tool-udl-title">Technical support</div>
+    				      	 <div class="card-tool-udl-subtitle">Help center (TIC)</div>
+    				      </a>
+			             <a href="https://ae-seu.udl.cat/ca/catalogo-de-servicios?p_p_id=es_tangrambpm_liferay_BpmPortlet_INSTANCE_nRkN7dKAh0GA&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&_es_tangrambpm_liferay_BpmPortlet_INSTANCE_nRkN7dKAh0GA_id=dGB4721000-1nwvBK2" target="_blank" class="card-tool-udl" title="Click here to tell us what you think">
+			                 <i class="bi bi-pencil-square"></i><div class="card-tool-udl-title">Contact us</div>
+			                 <div class="card-tool-udl-subtitle">Gratitude, complaints, suggestions</div>
+			              </a>
+				      <a href="/portal/site/!gateway-en/tool/88176741-9744-408a-b8ab-e0b64071d35d" target="_top" class="card-tool-udl" title="Click here to obtain more help and support"> 
+				      <i class="bi bi-link"></i><div class="card-tool-udl-title">Direct links</div>
+				      <div class="card-tool-udl-subtitle">More help and support</div>
+				      </a>	 				
+        
+      				</div>
+      			</div>
+      			<div class="section-tool-udl">
+				<div class="grid-tool-udl">
+				    <a href="https://www.udl.cat/ca/organs/vicerectors/vd/Calendari_Academic/" target="_blank" class="card-tool-udl" title="Click here for more information about the academic calendar">
+				      <i class="bi bi-calendar-check"></i><div class="card-tool-udl-title">Academic calendar</div>
+				      <div class="card-tool-udl-subtitle">Access to the calendar</div>
+				    </a>
+				    <a href="https://adia.udl.cat/ca/" target="_blank" class="card-tool-udl" title="Click here for more information about AI">
+				      <i class="bi bi-chat-dots"></i><div class="card-tool-udl-title">The AI in the UdL</div>
+				      <div class="card-tool-udl-subtitle">Access to the information</div>
+				    </a>
+				    <a href="https://bid.udl.cat/ca/" target="_blank" class="card-tool-udl" title="Click to obtain more information about the library">
+					<i class="bi bi-book-half"></i><div class="card-tool-udl-title">The library</div>
+					<div class="card-tool-udl-subtitle">Access to UdL library web</div>
+				</a>
+				    <a href="/portal/site/!gateway-en/tool/31857372-4524-4ab0-b04b-6a4209028334" target="_top" class="card-tool-udl" title="Click here to know more about other UdL utilities and services" >
+				      <i class="bi bi-diagram-3-fill"></i><div class="card-tool-udl-title">Intranet UdL</div>
+				      <div class="card-tool-udl-subtitle">More information about UdL utilities and services</div>
+				    </a>
+      				</div>
+			</div>
+		</main>
+	</body>
 </html>
