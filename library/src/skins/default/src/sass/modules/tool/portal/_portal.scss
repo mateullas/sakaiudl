@@ -96,6 +96,20 @@
   border-color: var(--top-header-text-color);
   color: var(--sakai-text-color-1);
 }
+/* EVDOC01-206: PORTAL Botó únic d’accés  */
+#loginLink1 {
+     border-color: var(--sakai-color-white);
+     color: var(--sakai-color-white);
+     margin: 2px;
+     min-width: 150px;
+}
+
+#loginLink2 {
+     border-color: var(--sakai-color-white);
+     color: var(--sakai-color-white);
+     margin: 2px;
+     min-width: 150px;
+}
 
 @include media-breakpoint-up(md) {
   .portal-header .portal-header-breadcrumb {
