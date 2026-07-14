@@ -97,10 +97,11 @@
     <!-- Filter automatically generates default SP metadata -->
     <bean id="metadataGeneratorFilter" class="org.springframework.security.saml.metadata.MetadataGeneratorFilter">
         <constructor-arg>
-            <bean class="org.springframework.security.saml.metadata.MetadataGenerator">
-		    <property name="entityId" value="SakaiSAMLAppDevel"/>
+		<bean class="org.springframework.security.saml.metadata.MetadataGenerator">
+		    <!-- config cv-clone -->
+		    <property name="entityId" value="SakaiSAMLClone"/>
 		    <property name="requestSigned" value="false"/>
-		    <property name="entityBaseURL" value="https://sakai25devel.udl.cat:8443/sakai-login-tool/container"/>
+		    <property name="entityBaseURL" value="https://cv-clone.udl.cat/sakai-login-tool/container"/>
                 <!-- <property name="includeDiscoveryExtension" value="true"/> -->
                 <!-- <property name="extendedMetadata">
                     <bean class="org.springframework.security.saml.metadata.ExtendedMetadata">
