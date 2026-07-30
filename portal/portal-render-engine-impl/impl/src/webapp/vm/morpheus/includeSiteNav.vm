@@ -13,11 +13,9 @@
 
     #if ($site.isCurrent)
         #set ($currentSiteClass = "is-current-site fw-bold")
-        #if ($type == "gateway")
+        #set ($isExpanded = $currentExpanded)
+    #elseif ($type == "gateway")
         	#set ($isExpanded = "true")
-        #else 
-        	#set ($isExpanded = $currentExpanded)
-        #end	
     #else
         #set ($currentSiteClass = "")
         #set ($isExpanded = "false")
