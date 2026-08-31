@@ -1,6 +1,8 @@
 ## This file controls which buttons appear in the mobile footer bar in narrow view, separate of links in the header in wide view
 
-<nav class="portal-mobilebar bg-dark d-flex d-md-none align-items-center justify-content-between">
+## EVDOC01-206 El peu només es mostra en vista mòbil i sessió autenticada
+
+<nav class="portal-mobilebar bg-dark d-flex #if (!${userIsLoggedIn}) d-none #else d-md-none #end align-items-center justify-content-between">
   <ul class="nav flex-nowrap align-items-center justify-content-around w-100">
     <li>
       <button class="btn icon-button responsive-allsites-button"
