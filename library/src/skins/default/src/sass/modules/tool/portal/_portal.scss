@@ -79,6 +79,16 @@
   comentem per treure línia blanca entre header i aside i main
   border-bottom: 3px solid var(--sakai-border-color); */
 }
+/* EVDOC01-206: PORTAL Classe pel contenidor de la part dreta 
+de la capçalera, on hi ha el botó d'accés i la llista d'idiomes
+*/
+.portal-header-right-container {
+  display: flex !important;
+  flex-direction: column;
+  margin: 0 1rem;
+  row-gap: 10px;
+  align-items: center;
+}
 
 #loginForm input,
 #loginForm button,
@@ -91,14 +101,14 @@
      border-color: var(--sakai-color-white);
      color: var(--sakai-color-white);
      margin: 2px;
-     min-width: 150px;
+     min-width: 120px;
 }
 
 #loginLink2 {
      border-color: var(--sakai-color-white);
      color: var(--sakai-color-white);
      margin: 2px;
-     min-width: 150px;
+     min-width: 120px;
 }
 
 @include media-breakpoint-up(md) {
@@ -110,9 +120,16 @@
       display: none !important;
   }
   .portal-header .portal-header-gateway {
+      /* EVDOC01-206 PORTAL Canviem a row 
+      perquè llista idiomes serà sota login 
       display: flex !important;
       flex-direction: column;
-      margin: 0 1rem;
+      margin: 0 1rem; */
+      display: flex !important;
+      flex-direction: row;
+      column-gap: 5px;
+      margin-bottom: 0.5rem !important;
+      width: auto !important;
   }
    .portal-main-content .portal-header-gateway {
       display: none !important;
@@ -145,6 +162,7 @@
       flex-direction: row;
       column-gap: 5px;
       margin-bottom: 1.5rem !important;
+      width: auto !important;
   }
 
   .portal-header-breadcrumb-separator, .portal-header-breadcrumb-item > a, .portal-header-gateway-item > a {
@@ -238,13 +256,20 @@
 }
 
 @media screen and (max-width: 560px) {
+  /* Legacy sense cap efecte actual 
+   si es detecta cap problema en 
+   pantalla petita es pot reaprofitar */
   .portal-header-logo img {
     width: 26vw;
     height: auto;
   }
-
-  .portal-main-container {
+  /* EVDOC01-206 Prova a evitar 
+   retallada en aquestes pantalles
+   i desaparició de scroll lateral 
+  */
+  .portal-container {
     display: block !important;
+    overflow: auto !important;
   }
 }
 

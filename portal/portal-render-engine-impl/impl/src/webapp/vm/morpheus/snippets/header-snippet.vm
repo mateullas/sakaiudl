@@ -28,12 +28,17 @@
     <span class="d-none d-md-inline">View System Alert</span>
   </a>
 
-  #parse("/vm/morpheus/includeGatewayNav.vm")
+  
   #if (!${userIsLoggedIn})
     #if (${loginTopLogin})
       #parse("/vm/morpheus/includeLoginNav.vm")
     #else
+      ## Contenidor de la dreta de la capçalera
+      ## amb login i llista d'idiomes a sota
+      <div class="portal-header-right-container">
       #parse("/vm/morpheus/snippets/loginImage-snippet.vm")
+      #parse("/vm/morpheus/includeGatewayNav.vm")
+      </div>
     #end
   #else
     #parse("/vm/morpheus/includeAccountNav.vm")
