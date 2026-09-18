@@ -47,7 +47,10 @@
     --logo-height: 50px;
     --logo-width: 146px;
     --logo-gateway-height: 65px;
-    --logo-gateway-width: 290px;
+    //--logo-gateway-width: 290px;
+    // EVDOC01-206: PORTAL Revisió mides screen petites
+    // opció més responsive
+    --logo-gateway-width: min(220px, 40vw);
     --logo-opacity: 1;
     --logo-background-color: var(--sakai-primary-color-1);
 
