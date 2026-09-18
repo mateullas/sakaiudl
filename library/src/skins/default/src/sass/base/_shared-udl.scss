@@ -87,6 +87,23 @@
 	}
 }
 
+/* Selecció inicial de l'idioma dels anuncis MOTD */
+.contingutsMOTD {
+    display: none;
+}
+
+html[lang="ca-ES"] .contingutsMOTD#ca-ES {
+    display: block;
+}
+
+html[lang="es-ES"] .contingutsMOTD#es-ES {
+    display: block;
+}
+
+html[lang="en-GB"] .contingutsMOTD#en-GB {
+    display: block;
+}
+
 /* classes per a eines UdL com Intranet, access, links, actes  */
 
 .main-tool-udl {
