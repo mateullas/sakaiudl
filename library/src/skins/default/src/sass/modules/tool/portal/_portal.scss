@@ -105,14 +105,16 @@ i la llista d'idiomes
      border-color: var(--sakai-color-white);
      color: var(--sakai-color-white);
      margin: 2px;
-     min-width: 150px;
+     /* EVDOC01-206: PORTAL Revisió mides screen petites  */
+     min-width: 120px;
 }
 
 #loginLink2 {
      border-color: var(--sakai-color-white);
      color: var(--sakai-color-white);
      margin: 2px;
-     min-width: 150px;
+     /* EVDOC01-206: PORTAL Revisió mides screen petites  */
+     min-width: 120px;
 }
 
 @include media-breakpoint-up(md) {
@@ -260,13 +262,20 @@ i la llista d'idiomes
 }
 
 @media screen and (max-width: 560px) {
+  /* Legacy sense cap efecte actual
+   si es detecta cap problema en
+   pantalla petita es pot reaprofitar */
   .portal-header-logo img {
     width: 26vw;
     height: auto;
   }
-
-  .portal-main-container {
+  /* EVDOC01-206: PORTAL Revisió mides screen petites 
+     Evitar retallada en aquestes pantalles
+     i desaparició de scroll lateral 
+   */
+  .portal-container {
     display: block !important;
+    overflow: auto !important;
   }
 }
 
