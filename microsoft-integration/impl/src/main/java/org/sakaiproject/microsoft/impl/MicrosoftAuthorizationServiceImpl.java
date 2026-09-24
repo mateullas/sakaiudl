@@ -50,6 +50,8 @@ import com.microsoft.graph.requests.GraphServiceClient;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 
+import static org.sakaiproject.microsoft.impl.MicrosoftConfigurationServiceImpl.decrypt;
+
 @Log4j2
 @Transactional
 public class MicrosoftAuthorizationServiceImpl implements MicrosoftAuthorizationService {
@@ -95,13 +97,19 @@ public class MicrosoftAuthorizationServiceImpl implements MicrosoftAuthorization
 				if(accessToken == null) {
 					throw new MicrosoftNoCredentialsException();
 				}
+
+				String decryptedSecret = decrypt(microsoftCredentials.getSecret());
+				if (decryptedSecret == null) {
+						log.error("Failed to decrypt Microsoft secret. Check your microsoft.encryption.key.");
+						throw new MicrosoftInvalidCredentialsException();
+				}
 				
 				DelegatedAuthProvider authProvider = DelegatedAuthProvider.builder()
 						.authorizationService(this)
 						.sakaiUserId(userId)
 						.authority(microsoftCredentials.getAuthority())
 						.clientId(microsoftCredentials.getClientId())
-						.secret(microsoftCredentials.getSecret())
+						.secret(decryptedSecret)
 						.microsoftAccessToken(accessToken)
 						.build();
 				
@@ -173,9 +181,14 @@ public class MicrosoftAuthorizationServiceImpl implements MicrosoftAuthorization
 		try {
 			MicrosoftCredentials microsoftCredentials = microsoftConfigRepository.getCredentials();
 			if(microsoftCredentials.hasValue()) {
+				String decryptedSecret = decrypt(microsoftCredentials.getSecret());
+				if (decryptedSecret == null) {
+					log.error("Failed to decrypt Microsoft secret. Check your microsoft.encryption.key.");
+					return false;
+				}
 			
 				ConfidentialClientApplication app = ConfidentialClientApplication.builder(
-						microsoftCredentials.getClientId(), ClientCredentialFactory.createFromSecret(microsoftCredentials.getSecret()))
+						microsoftCredentials.getClientId(), ClientCredentialFactory.createFromSecret(decryptedSecret))
 					.authority(microsoftCredentials.getAuthority())
 					.build();
 	
