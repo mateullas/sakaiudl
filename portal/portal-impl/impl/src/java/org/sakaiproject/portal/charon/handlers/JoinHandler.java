@@ -172,7 +172,7 @@ public class JoinHandler extends BasePortalHandler
 					boolean restrictedByAccountType = !siteService.isAllowedToJoin(site.getId());
 					context.put("restrictedByAccountType", restrictedByAccountType);
 					
-					portal.sendResponse(context, res, "join", "text/html");
+					portal.sendResponse(context, res, "join", null);
 					return;
 				}
 			}
