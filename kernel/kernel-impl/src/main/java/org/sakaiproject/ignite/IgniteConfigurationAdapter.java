@@ -118,7 +118,7 @@ public class IgniteConfigurationAdapter extends AbstractFactoryBean<IgniteConfig
             igniteConfiguration.setDeploymentMode(DeploymentMode.CONTINUOUS);
 
             try {
-		    igniteConfiguration.setGridLogger(new Log4J2Logger(System.getProperty("catalina.home") + "/conf/log4j2.properties"));
+		    igniteConfiguration.setGridLogger(new Log4J2Logger());
             } catch (Exception e) {
                 log.error("Error trying to set log4j configuration " + e.getMessage());
             }

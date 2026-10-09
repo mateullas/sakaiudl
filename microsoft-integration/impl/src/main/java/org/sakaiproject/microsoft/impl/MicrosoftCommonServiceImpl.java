@@ -203,9 +203,9 @@ public class MicrosoftCommonServiceImpl implements MicrosoftCommonService {
 	final private Object lock = new Object();
 
 	public void init() {
-		LoggerContext context = (LoggerContext) LogManager.getContext(false);
-		context.setConfigLocation(new File(System.getProperty("catalina.home") + "/conf/log4j2.properties").toURI());
-		context.reconfigure();
+		//LoggerContext context = (LoggerContext) LogManager.getContext(false);
+		//context.setConfigLocation(new File(System.getProperty("catalina.home") + "/conf/log4j2.properties").toURI());
+		//context.reconfigure();
 
 		// register functions
 		functionManager.registerFunction(PERM_VIEW_ALL_CHANNELS, true);
